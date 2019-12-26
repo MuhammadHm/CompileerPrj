@@ -295,7 +295,13 @@ expr
  | expr K_AND expr
  | expr K_OR expr
  | function_name '(' ( K_DISTINCT? expr ( ',' expr )* | '*' )? ')'
- | '(' expr ')' ;
+ | '(' expr ')'
+ | expr K_NOT? K_IN ( '(' ( select_stmt
+                           | expr ( ',' expr )*
+                           )?
+                       ')'
+                     | ( database_name '.' )? table_name )
+  | ( ( K_NOT )? K_EXISTS )? '(' select_stmt ')';
 
 foreign_key_clause
  : K_REFERENCES ( database_name '.' )? foreign_table ( '(' fk_target_column_name ( ',' fk_target_column_name )* ')' )?

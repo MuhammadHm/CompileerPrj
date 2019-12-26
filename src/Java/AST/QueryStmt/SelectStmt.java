@@ -1,5 +1,7 @@
 package Java.AST.QueryStmt;
 
+import Java.AST.Visitor.ASTVisitor;
+
 public class SelectStmt extends Statement {
 
 //    private Distinct distinct;
@@ -23,4 +25,10 @@ public class SelectStmt extends Statement {
     public String getFromItem() {
         return fromItem;
     }
+
+    @Override
+    public void accept(ASTVisitor astVisitor){
+        astVisitor.visit(this);
+    }
+
 }

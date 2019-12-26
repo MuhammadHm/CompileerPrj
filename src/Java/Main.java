@@ -1,6 +1,7 @@
 package Java;
 
 import Java.AST.Parse;
+import Java.AST.Visitor.BaseASTVisitor;
 import Java.Base.BaseVisitor;
 import generated.SQLBaseListener;
 import generated.SQLLexer;
@@ -25,6 +26,8 @@ public class Main {
             ParseTree tree = parser.parse();
 
             Parse p = (Parse) new BaseVisitor().visit(tree);
+
+            p.accept(new BaseASTVisitor());
 
             System.out.println(p.toString());
 

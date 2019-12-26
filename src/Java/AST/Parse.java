@@ -1,6 +1,7 @@
 package Java.AST;
 
 import Java.AST.QueryStmt.Statement;
+import Java.AST.Visitor.ASTVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,5 +34,13 @@ public class Parse extends Node{
     @Override
     public String toString(){
         return "sql stmts = "+ getSqlStmts().get(0).getName();
+    }
+    @Override
+    public void accept(ASTVisitor astVisitor){
+        astVisitor.visit(this);
+//        this.sqlStmts.forEach( stmt -> stmt.accept(astVisitor));
+        for(int i = 0 ; i < this.sqlStmts.size() ; i++){
+            this.sqlStmts.get(i).accept(astVisitor);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package Java.AST.QueryStmt;
 
 import Java.AST.Node;
+import Java.AST.Visitor.ASTVisitor;
 
 public class Statement extends Node {
 
@@ -12,5 +13,7 @@ public class Statement extends Node {
     public String getName() {
         return name;
     }
+    @Override
+    public void accept(ASTVisitor astVisitor){}
 
 }

@@ -1,5 +1,7 @@
 package Java.AST;
 
+import Java.AST.Visitor.ASTVisitor;
+
 public class Node {
 
     private int line;
@@ -20,5 +22,7 @@ public class Node {
     public int getCol() {
         return col;
     }
+
+    public void accept(ASTVisitor astVisitor){}
 
 }
