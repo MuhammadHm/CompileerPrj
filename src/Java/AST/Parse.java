@@ -1,6 +1,7 @@
 package Java.AST;
 
-import Java.AST.QueryStmt.Statement;
+import Java.AST.Function.FunctionDeclaration;
+import Java.AST.SQLStmt.Statement;
 import Java.AST.Visitor.ASTVisitor;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 public class Parse extends Node{
 
     private List<Statement> sqlStmts = new ArrayList<Statement>();
-    private List<FunctionDeclaration> functions = new ArrayList<FunctionDeclaration>();
+    private FunctionDeclaration function = new FunctionDeclaration();
     
     public void addQuery(Statement query){
         this.sqlStmts.add(query);
@@ -19,28 +20,28 @@ public class Parse extends Node{
         this.sqlStmts = sqlStmts;
     }
 
-    public void setFunctions(List<FunctionDeclaration> functions) {
-        this.functions = functions;
+    public void setFunction(FunctionDeclaration function) {
+        this.function = function;
     }
 
     public List<Statement> getSqlStmts() {
         return sqlStmts;
     }
 
-    public List<FunctionDeclaration> getFunctions() {
-        return functions;
+    public FunctionDeclaration getFunctions() {
+        return function;
     }
 
-    @Override
-    public String toString(){
-        return "sql stmts = "+ getSqlStmts().get(0).getName();
-    }
+//    @Override
+//    public String toString(){
+//        return "sql stmts = "+ getSqlStmts().get(0).getName();
+//    }
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
-//        this.sqlStmts.forEach( stmt -> stmt.accept(astVisitor));
         for(int i = 0 ; i < this.sqlStmts.size() ; i++){
             this.sqlStmts.get(i).accept(astVisitor);
         }
+       function.accept(astVisitor);
     }
 }

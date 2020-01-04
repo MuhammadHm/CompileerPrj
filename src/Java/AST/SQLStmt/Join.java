@@ -7,11 +7,9 @@
  * Dual licensed under GNU LGPL 2.1 or Apache License 2.0
  * #L%
  */
-package Java.AST.QueryStmt;
+package Java.AST.SQLStmt;
 
 import Java.AST.Node;
-
-import java.util.List;
 
 public class Join extends Node {
 

@@ -35,6 +35,12 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitJava_stmt(SQLParser.Java_stmtContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link SQLParser#j_function_body}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitJ_function_body(SQLParser.J_function_bodyContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SQLParser#j_if}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -101,17 +107,11 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitJ_init_var(SQLParser.J_init_varContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SQLParser#j_inir_arr_elem}.
+	 * Visit a parse tree produced by {@link SQLParser#j_init_arr_elem}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitJ_inir_arr_elem(SQLParser.J_inir_arr_elemContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SQLParser#j_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitJ_expr(SQLParser.J_exprContext ctx);
+	T visitJ_init_arr_elem(SQLParser.J_init_arr_elemContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SQLParser#j_json_object}.
 	 * @param ctx the parse tree
@@ -119,35 +119,23 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitJ_json_object(SQLParser.J_json_objectContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link SQLParser#j_json_elem}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitJ_json_elem(SQLParser.J_json_elemContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SQLParser#j_json_array}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitJ_json_array(SQLParser.J_json_arrayContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SQLParser#j_print}.
+	 * Visit a parse tree produced by {@link SQLParser#j_one_line_cond}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitJ_print(SQLParser.J_printContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SQLParser#query_var}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitQuery_var(SQLParser.Query_varContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SQLParser#added_instructions}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAdded_instructions(SQLParser.Added_instructionsContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SQLParser#j_oneline_cond}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitJ_oneline_cond(SQLParser.J_oneline_condContext ctx);
+	T visitJ_one_line_cond(SQLParser.J_one_line_condContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SQLParser#j_bool_value}.
 	 * @param ctx the parse tree
@@ -160,12 +148,6 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitJ_break(SQLParser.J_breakContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SQLParser#j_var_assignment}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitJ_var_assignment(SQLParser.J_var_assignmentContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SQLParser#j_increment_operator}.
 	 * @param ctx the parse tree
@@ -388,18 +370,6 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitOrdering_term(SQLParser.Ordering_termContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SQLParser#pragma_value}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPragma_value(SQLParser.Pragma_valueContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SQLParser#common_table_expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCommon_table_expression(SQLParser.Common_table_expressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SQLParser#result_column}.
 	 * @param ctx the parse tree

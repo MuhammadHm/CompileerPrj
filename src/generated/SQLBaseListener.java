@@ -64,6 +64,18 @@ public class SQLBaseListener implements SQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterJ_function_body(SQLParser.J_function_bodyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJ_function_body(SQLParser.J_function_bodyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterJ_if(SQLParser.J_ifContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -196,25 +208,13 @@ public class SQLBaseListener implements SQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterJ_inir_arr_elem(SQLParser.J_inir_arr_elemContext ctx) { }
+	@Override public void enterJ_init_arr_elem(SQLParser.J_init_arr_elemContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitJ_inir_arr_elem(SQLParser.J_inir_arr_elemContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterJ_expr(SQLParser.J_exprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitJ_expr(SQLParser.J_exprContext ctx) { }
+	@Override public void exitJ_init_arr_elem(SQLParser.J_init_arr_elemContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -232,6 +232,18 @@ public class SQLBaseListener implements SQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterJ_json_elem(SQLParser.J_json_elemContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJ_json_elem(SQLParser.J_json_elemContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterJ_json_array(SQLParser.J_json_arrayContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -244,49 +256,13 @@ public class SQLBaseListener implements SQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterJ_print(SQLParser.J_printContext ctx) { }
+	@Override public void enterJ_one_line_cond(SQLParser.J_one_line_condContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitJ_print(SQLParser.J_printContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterQuery_var(SQLParser.Query_varContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitQuery_var(SQLParser.Query_varContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAdded_instructions(SQLParser.Added_instructionsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAdded_instructions(SQLParser.Added_instructionsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterJ_oneline_cond(SQLParser.J_oneline_condContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitJ_oneline_cond(SQLParser.J_oneline_condContext ctx) { }
+	@Override public void exitJ_one_line_cond(SQLParser.J_one_line_condContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -311,18 +287,6 @@ public class SQLBaseListener implements SQLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitJ_break(SQLParser.J_breakContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterJ_var_assignment(SQLParser.J_var_assignmentContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitJ_var_assignment(SQLParser.J_var_assignmentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -767,30 +731,6 @@ public class SQLBaseListener implements SQLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitOrdering_term(SQLParser.Ordering_termContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPragma_value(SQLParser.Pragma_valueContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPragma_value(SQLParser.Pragma_valueContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCommon_table_expression(SQLParser.Common_table_expressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCommon_table_expression(SQLParser.Common_table_expressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

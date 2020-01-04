@@ -1,1 +1,16 @@
-select * from users;
+json(){
+var jsonObj;
+jsonObj = {
+      num: 3,
+      name: "THaseen" ,
+      state:{
+            num: 4,
+	    name: "Damascus" ,
+	    country: {
+			 id:33 ,
+			 name: "Syria",
+			 states: ["Damascus", "Aleppo", "Homs"]
+      }
+    }
+};
+}

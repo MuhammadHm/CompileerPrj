@@ -33,10 +33,10 @@ grammar SQL;
 //TODO Start Editing
 
 real_name: IDENTIFIER | STRING_LITERAL | '(' real_name ')' ;
-java_function : J_FUNCTION any_name '('  ((J_VAR any_name ('=' expr)?) ( ',' (J_VAR any_name ('=' expr)?) )*)? ')'
-    '{' java_stmt* '}' ;
+java_function : J_FUNCTION? any_name '('  ((J_VAR any_name ('=' expr)?) ( ',' (J_VAR any_name ('=' expr)?) )*)? ')'
+   j_function_body ;
 j_higher_order_func : J_FUNCTION '('  (( any_name ('=' expr)?) ( ',' ( any_name ('=' expr)?) )*)? ')'
-    '{' java_stmt* '}' ;
+    j_function_body ;
 java_stmt :
     j_if
    |j_var
@@ -48,77 +48,76 @@ java_stmt :
    |j_do_while
    |j_for_each
    |j_function_call
-   |j_var_assignment
-   |j_print
-   |'{' java_stmt* '}'
+   |j_init_var
+   |j_function_body
    |j_increment_operator ';'
    |j_break
-   |j_inir_arr_elem ';'
-   |j_oneline_cond ';'
+   |j_init_arr_elem ';'
+   |j_one_line_cond ';'
+   |expr ';'
 ;
+
+j_function_body: '{' java_stmt* '}';
 j_if :
- J_IF '(' expr ')' (('{' java_stmt* '}')| java_stmt)
- (J_ELSE ('{' java_stmt* '}'))?
+ J_IF '(' expr ')' (j_function_body | java_stmt)
+ (J_ELSE j_function_body)?
 ;
-j_var: J_VAR any_name ((j_init_var)(',' any_name (j_init_var)? )*)? ';' ;
+j_var: J_VAR  j_init_var (',' j_init_var)* ';' ;
 j_function_call :
     any_name '(' (any_name | j_higher_order_func)? (',' (any_name |j_higher_order_func))* ')' ';'
 ;
-j_return : J_RETURN (any_name | j_increment_operator | j_bool_value |j_oneline_cond |expr)? ';';
+j_return : J_RETURN (any_name | j_increment_operator | j_bool_value |j_one_line_cond | expr)? ';';
 j_while:
- J_WHILE '(' (expr | j_increment_operator) ')'
-    '{' java_stmt* '}'
+ J_WHILE '('expr')'
+    j_function_body
  ;
 j_do_while:
-  J_DO '{' java_stmt* '}'
+  J_DO j_function_body
   J_WHILE '(' expr ')' ';'
 ;
 j_for :
-    J_FOR '('J_VAR any_name '=' NUMERIC_LITERAL ';' expr ';' (expr |j_increment_operator) ')'
-    '{' java_stmt* '}'
+    J_FOR '('J_VAR any_name '=' NUMERIC_LITERAL ';' expr ';' (expr) ')'
+    j_function_body
 ;
 j_for_each :
     J_FOR '('J_VAR any_name ':' any_name ')'
-    '{' java_stmt* '}'
+    j_function_body
 ;
 j_switch_case:
     J_SWITCH '(' expr ')'
     '{'
-         J_CASE expr ':' '{' java_stmt*  '}'
-         (J_CASE expr ':' '{' java_stmt* '}')*
-         (J_DEFAULT ':' '{' java_stmt*  '}')?
+         J_CASE expr ':' j_function_body
+         (J_CASE expr ':' j_function_body)*
+         (J_DEFAULT ':' j_function_body)?
     '}'
 ;
 j_init_array :
   ('[' (NUMERIC_LITERAL)? ']'  ('=' '{' (IDENTIFIER|NUMERIC_LITERAL) (',' (IDENTIFIER|NUMERIC_LITERAL))*'}')?)
  ;
-j_init_var:  (('=' expr) | j_init_array | ('=' j_json_object) | ('=' j_function_call) | ( '=' j_json_array) | ('=' j_oneline_cond) );
-j_inir_arr_elem : (any_name '[' any_name ']') (('=' expr) | J_INCREMENT_OPERATOR)?;
-j_expr : expr ';';
+j_init_var: any_name (('=' expr) | j_init_array | ('=' j_json_object ';') | ('=' j_function_call) | ( '=' j_json_array) | ('=' j_one_line_cond) )?;
+j_init_arr_elem : (any_name '[' NUMERIC_LITERAL ']') (('=' expr) | J_INCREMENT_OPERATOR)?;
 j_json_object:
   '{'
-    ( any_name  ':' ( expr | j_json_object | j_json_array ))?
-    (',' any_name  ':' (expr | j_json_object | j_json_array))*
+    j_json_elem?
+    (',' j_json_elem)*
   '}'
 ;
-j_json_array:
- '[' ((j_json_object | expr)(',' (j_json_object |expr))*)?']'
- ;
-j_print : J_PRINT '(' ( (any_name |j_inir_arr_elem) ('+' (any_name|j_inir_arr_elem))*) ')' ';' ;
-query_var :
-    J_VAR real_name '=' select_stmt ';'
- ;          //Third Question
-added_instructions :
-    java_function
-    | query_var
+j_json_elem:
+    ( any_name  ':' ( expr | j_json_object | j_json_array ))
+    | ( expr | j_json_object | j_json_array )
 ;
-j_oneline_cond: expr '?' (java_stmt|expr|j_oneline_cond) ':' (java_stmt|expr|j_oneline_cond) ;
+j_json_array:
+ '[' (j_json_elem (',' j_json_elem)*)?']'
+ ;
+//j_print : J_PRINT '(' ( (any_name |j_init_arr_elem) ('+' (any_name|j_init_arr_elem))*) ')' ';' ;
+//query_var :  J_VAR real_name '=' select_stmt ';';          //Third Question
+j_one_line_cond: expr '?' java_stmt ':' java_stmt ;
 j_bool_value : (J_TRUE | J_FALSE);
 j_break: J_BREAK  ';';
-j_var_assignment : any_name '=' (any_name | expr | j_json_object) ';';
 j_increment_operator: ((any_name J_INCREMENT_OPERATOR) | (J_INCREMENT_OPERATOR any_name)) ;
 
 //j_json_value: any_name '.' any_name  j_init_var ;
+
 J_FUNCTION : 'function';
 J_VAR : 'var';
 J_RETURN : 'return';
@@ -139,7 +138,7 @@ J_INCREMENT_OPERATOR : ('++' | '--');
 //TODO end of editing
 
 parse
- : ( sql_stmt_list | added_instructions |  error )* EOF
+ : ( sql_stmt_list | java_function |  error )* EOF
  ;
 
 error
@@ -284,6 +283,7 @@ column_default_value
 */
 expr
  : literal_value
+ | j_increment_operator
  | ( ( database_name '.' )? table_name '.' )? column_name
  | unary_operator expr
  | expr '||' expr
@@ -363,15 +363,6 @@ qualified_table_name
 
 ordering_term
  : expr  ( K_ASC | K_DESC )?
- ;
-
-pragma_value
- : signed_number
- | name
- | STRING_LITERAL ;
-
-common_table_expression
- : table_name ( '(' column_name ( ',' column_name )* ')' )? K_AS '(' select_stmt ')'
  ;
 
 result_column

@@ -1,11 +1,11 @@
-package Java.AST.QueryStmt;
+package Java.AST.General;
 
 import Java.AST.Node;
 import Java.AST.Visitor.ASTVisitor;
 
-public class Statement extends Node {
+public class AnyName extends Node {
+    String name;
 
-    private String name;
     public void setName(String name) {
         this.name = name;
     }
@@ -13,7 +13,4 @@ public class Statement extends Node {
     public String getName() {
         return name;
     }
-    @Override
-    public void accept(ASTVisitor astVisitor){}
-
 }

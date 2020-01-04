@@ -1,4 +1,4 @@
-package Java.AST.QueryStmt;
+package Java.AST.SQLStmt;
 
 import Java.AST.Visitor.ASTVisitor;
 

@@ -48,6 +48,16 @@ public interface SQLListener extends ParseTreeListener {
 	 */
 	void exitJava_stmt(SQLParser.Java_stmtContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link SQLParser#j_function_body}.
+	 * @param ctx the parse tree
+	 */
+	void enterJ_function_body(SQLParser.J_function_bodyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SQLParser#j_function_body}.
+	 * @param ctx the parse tree
+	 */
+	void exitJ_function_body(SQLParser.J_function_bodyContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link SQLParser#j_if}.
 	 * @param ctx the parse tree
 	 */
@@ -158,25 +168,15 @@ public interface SQLListener extends ParseTreeListener {
 	 */
 	void exitJ_init_var(SQLParser.J_init_varContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SQLParser#j_inir_arr_elem}.
+	 * Enter a parse tree produced by {@link SQLParser#j_init_arr_elem}.
 	 * @param ctx the parse tree
 	 */
-	void enterJ_inir_arr_elem(SQLParser.J_inir_arr_elemContext ctx);
+	void enterJ_init_arr_elem(SQLParser.J_init_arr_elemContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLParser#j_inir_arr_elem}.
+	 * Exit a parse tree produced by {@link SQLParser#j_init_arr_elem}.
 	 * @param ctx the parse tree
 	 */
-	void exitJ_inir_arr_elem(SQLParser.J_inir_arr_elemContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SQLParser#j_expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterJ_expr(SQLParser.J_exprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SQLParser#j_expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitJ_expr(SQLParser.J_exprContext ctx);
+	void exitJ_init_arr_elem(SQLParser.J_init_arr_elemContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SQLParser#j_json_object}.
 	 * @param ctx the parse tree
@@ -188,6 +188,16 @@ public interface SQLListener extends ParseTreeListener {
 	 */
 	void exitJ_json_object(SQLParser.J_json_objectContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link SQLParser#j_json_elem}.
+	 * @param ctx the parse tree
+	 */
+	void enterJ_json_elem(SQLParser.J_json_elemContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SQLParser#j_json_elem}.
+	 * @param ctx the parse tree
+	 */
+	void exitJ_json_elem(SQLParser.J_json_elemContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link SQLParser#j_json_array}.
 	 * @param ctx the parse tree
 	 */
@@ -198,45 +208,15 @@ public interface SQLListener extends ParseTreeListener {
 	 */
 	void exitJ_json_array(SQLParser.J_json_arrayContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SQLParser#j_print}.
+	 * Enter a parse tree produced by {@link SQLParser#j_one_line_cond}.
 	 * @param ctx the parse tree
 	 */
-	void enterJ_print(SQLParser.J_printContext ctx);
+	void enterJ_one_line_cond(SQLParser.J_one_line_condContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link SQLParser#j_print}.
+	 * Exit a parse tree produced by {@link SQLParser#j_one_line_cond}.
 	 * @param ctx the parse tree
 	 */
-	void exitJ_print(SQLParser.J_printContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SQLParser#query_var}.
-	 * @param ctx the parse tree
-	 */
-	void enterQuery_var(SQLParser.Query_varContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SQLParser#query_var}.
-	 * @param ctx the parse tree
-	 */
-	void exitQuery_var(SQLParser.Query_varContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SQLParser#added_instructions}.
-	 * @param ctx the parse tree
-	 */
-	void enterAdded_instructions(SQLParser.Added_instructionsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SQLParser#added_instructions}.
-	 * @param ctx the parse tree
-	 */
-	void exitAdded_instructions(SQLParser.Added_instructionsContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SQLParser#j_oneline_cond}.
-	 * @param ctx the parse tree
-	 */
-	void enterJ_oneline_cond(SQLParser.J_oneline_condContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SQLParser#j_oneline_cond}.
-	 * @param ctx the parse tree
-	 */
-	void exitJ_oneline_cond(SQLParser.J_oneline_condContext ctx);
+	void exitJ_one_line_cond(SQLParser.J_one_line_condContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SQLParser#j_bool_value}.
 	 * @param ctx the parse tree
@@ -257,16 +237,6 @@ public interface SQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitJ_break(SQLParser.J_breakContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SQLParser#j_var_assignment}.
-	 * @param ctx the parse tree
-	 */
-	void enterJ_var_assignment(SQLParser.J_var_assignmentContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SQLParser#j_var_assignment}.
-	 * @param ctx the parse tree
-	 */
-	void exitJ_var_assignment(SQLParser.J_var_assignmentContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SQLParser#j_increment_operator}.
 	 * @param ctx the parse tree
@@ -637,26 +607,6 @@ public interface SQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOrdering_term(SQLParser.Ordering_termContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SQLParser#pragma_value}.
-	 * @param ctx the parse tree
-	 */
-	void enterPragma_value(SQLParser.Pragma_valueContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SQLParser#pragma_value}.
-	 * @param ctx the parse tree
-	 */
-	void exitPragma_value(SQLParser.Pragma_valueContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SQLParser#common_table_expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterCommon_table_expression(SQLParser.Common_table_expressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SQLParser#common_table_expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitCommon_table_expression(SQLParser.Common_table_expressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SQLParser#result_column}.
 	 * @param ctx the parse tree

@@ -27,6 +27,7 @@ public class Main {
 
             Parse p = (Parse) new BaseVisitor().visit(tree);
 
+
             p.accept(new BaseASTVisitor());
 
             System.out.println(p.toString());
