@@ -1,6 +1,7 @@
 package Java.AST.JavaStatements;
 
 import Java.AST.Node;
+import Java.AST.Visitor.ASTVisitor;
 
 public class BoolValue extends JavaStatement {
 
@@ -13,5 +14,9 @@ public class BoolValue extends JavaStatement {
 
     public void setF(Boolean f) {
         F = f;
+    }
+    @Override
+    public void accept(ASTVisitor astVisitor){
+        astVisitor.visit(this);
     }
 }

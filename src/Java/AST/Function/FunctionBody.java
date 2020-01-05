@@ -12,7 +12,11 @@ public class FunctionBody extends JavaStatement {
 
 
     @Override
-    public void accept(ASTVisitor astVisitor){}
+    public void accept(ASTVisitor astVisitor){
+        for (int i = 0; i < javaStatements.size(); i++) {
+            javaStatements.get(i).accept(astVisitor);
+        }
+    }
 
     public void setJavaStatements(List<JavaStatement> javaStatements) {
         this.javaStatements = javaStatements;

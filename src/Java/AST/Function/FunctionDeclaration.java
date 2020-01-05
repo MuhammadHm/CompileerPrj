@@ -12,7 +12,11 @@ public class FunctionDeclaration extends JavaStatement {
 
 
     @Override
-    public void accept(ASTVisitor astVisitor){}
+    public void accept(ASTVisitor astVisitor){
+        astVisitor.visit(this);
+        header.accept(astVisitor);
+        body.accept(astVisitor);
+    }
 
     public void setBody(FunctionBody body) {
         this.body = body;

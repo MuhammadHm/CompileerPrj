@@ -12,7 +12,6 @@ public class IFStmt extends JavaStatement{
 
     @Override
     public void accept(ASTVisitor astVisitor){
-        System.out.println("AST visit if stmt");
         astVisitor.visit(this);
     }
 

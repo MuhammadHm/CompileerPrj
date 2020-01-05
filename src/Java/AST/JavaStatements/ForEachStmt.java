@@ -13,6 +13,9 @@ public class ForEachStmt extends JavaStatement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        counter.accept(astVisitor);
+        group.accept(astVisitor);
+        body.accept(astVisitor);
     }
 
     public void setBody(FunctionBody body) {

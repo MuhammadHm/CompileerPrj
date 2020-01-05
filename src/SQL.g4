@@ -348,7 +348,6 @@ table_constraint_unique
  ;
 
 table_constraint_key
-// : K_KEY name? '(' indexed_column ( ',' indexed_column )* ')' conflict_clause
  : K_KEY name? '(' indexed_column ( ',' indexed_column )* ')'
  ;
 
@@ -401,9 +400,6 @@ select_core
    ( K_GROUP K_BY expr ( ',' expr )* ( K_HAVING expr )? )?
  | K_VALUES '(' expr ( ',' expr )* ')' ( ',' '(' expr ( ',' expr )* ')' )*
  ;
-cte_table_name
- : table_name ( '(' column_name ( ',' column_name )* ')' )?
- ;
 
 signed_number
  : ( ( '+' | '-' )? NUMERIC_LITERAL | '*' )
@@ -424,15 +420,6 @@ unary_operator
  | '+'
  | '~'
  | K_NOT
- ;
-
-error_message
- : STRING_LITERAL
- ;
-
-module_argument // TODO check what exactly is permitted here
- : expr
- | column_def
  ;
 
 column_alias
@@ -573,9 +560,6 @@ keyword
 // TODO check all names below
 
 //[a-zA-Z_0-9\t \-\[\]\=]+
-unknown
- : .+
- ;
 
 name
  : any_name
@@ -594,10 +578,6 @@ source_table_name
  ;
 
 table_name
- : any_name
- ;
-
-table_or_index_name
  : any_name
  ;
 
@@ -621,32 +601,8 @@ index_name
  : any_name
  ;
 
-trigger_name
- : any_name
- ;
-
-view_name
- : any_name
- ;
-
-module_name
- : any_name
- ;
-
-pragma_name
- : any_name
- ;
-
-savepoint_name
- : any_name
- ;
-
 table_alias
  : IDENTIFIER
- ;
-
-transaction_name
- : any_name
  ;
 
 any_name

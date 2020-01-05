@@ -24,5 +24,11 @@ public class FunctionHeader extends JavaStatement {
     }
 
     @Override
-    public void accept(ASTVisitor astVisitor){}
+    public void accept(ASTVisitor astVisitor){
+        astVisitor.visit(this);
+
+        for (int i = 0; i < parameterList.size(); i++) {
+            parameterList.get(i).accept(astVisitor);
+        }
+    }
 }
