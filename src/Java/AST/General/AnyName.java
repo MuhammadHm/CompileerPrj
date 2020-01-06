@@ -13,4 +13,8 @@ public class AnyName extends Node {
     public String getName() {
         return name;
     }
+    @Override
+    public void accept(ASTVisitor astVisitor){
+        astVisitor.visit(this);
+    }
 }

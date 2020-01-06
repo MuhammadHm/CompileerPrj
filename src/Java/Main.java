@@ -26,7 +26,7 @@ public class Main {
             ParseTree tree = parser.parse();
 
             Parse p = (Parse) new BaseVisitor().visit(tree);
-
+            System.out.println("\n\nAbstract Syntax Tree: \n");
 
             p.accept(new BaseASTVisitor());
 

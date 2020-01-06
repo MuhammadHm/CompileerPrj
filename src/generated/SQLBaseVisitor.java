@@ -157,6 +157,13 @@ public class SQLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements SQ
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitJ_print(SQLParser.J_printContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitJ_one_line_cond(SQLParser.J_one_line_condContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -179,6 +186,20 @@ public class SQLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements SQ
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitJ_increment_operator(SQLParser.J_increment_operatorContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitJ_init_values(SQLParser.J_init_valuesContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitJ_json_value(SQLParser.J_json_valueContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -479,13 +500,6 @@ public class SQLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements SQ
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitCte_table_name(SQLParser.Cte_table_nameContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitSigned_number(SQLParser.Signed_numberContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -507,20 +521,6 @@ public class SQLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements SQ
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitError_message(SQLParser.Error_messageContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitModule_argument(SQLParser.Module_argumentContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitColumn_alias(SQLParser.Column_aliasContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -529,13 +529,6 @@ public class SQLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements SQ
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitKeyword(SQLParser.KeywordContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitUnknown(SQLParser.UnknownContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -577,13 +570,6 @@ public class SQLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements SQ
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTable_or_index_name(SQLParser.Table_or_index_nameContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitNew_table_name(SQLParser.New_table_nameContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -619,49 +605,7 @@ public class SQLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements SQ
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTrigger_name(SQLParser.Trigger_nameContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitView_name(SQLParser.View_nameContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitModule_name(SQLParser.Module_nameContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitPragma_name(SQLParser.Pragma_nameContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitSavepoint_name(SQLParser.Savepoint_nameContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitTable_alias(SQLParser.Table_aliasContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitTransaction_name(SQLParser.Transaction_nameContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

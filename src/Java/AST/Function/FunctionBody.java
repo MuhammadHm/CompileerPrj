@@ -13,6 +13,7 @@ public class FunctionBody extends JavaStatement {
 
     @Override
     public void accept(ASTVisitor astVisitor){
+        if(javaStatements!=null)
         for (int i = 0; i < javaStatements.size(); i++) {
             javaStatements.get(i).accept(astVisitor);
         }

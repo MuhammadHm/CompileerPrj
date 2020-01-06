@@ -131,6 +131,12 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitJ_json_array(SQLParser.J_json_arrayContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link SQLParser#j_print}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitJ_print(SQLParser.J_printContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SQLParser#j_one_line_cond}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -154,6 +160,18 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitJ_increment_operator(SQLParser.J_increment_operatorContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SQLParser#j_init_values}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitJ_init_values(SQLParser.J_init_valuesContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SQLParser#j_json_value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitJ_json_value(SQLParser.J_json_valueContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SQLParser#parse}.
 	 * @param ctx the parse tree
@@ -407,12 +425,6 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSelect_core(SQLParser.Select_coreContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SQLParser#cte_table_name}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCte_table_name(SQLParser.Cte_table_nameContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link SQLParser#signed_number}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -431,18 +443,6 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitUnary_operator(SQLParser.Unary_operatorContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SQLParser#error_message}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitError_message(SQLParser.Error_messageContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SQLParser#module_argument}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitModule_argument(SQLParser.Module_argumentContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link SQLParser#column_alias}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -454,12 +454,6 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitKeyword(SQLParser.KeywordContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SQLParser#unknown}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitUnknown(SQLParser.UnknownContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SQLParser#name}.
 	 * @param ctx the parse tree
@@ -491,12 +485,6 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTable_name(SQLParser.Table_nameContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SQLParser#table_or_index_name}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTable_or_index_name(SQLParser.Table_or_index_nameContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link SQLParser#new_table_name}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -527,47 +515,11 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIndex_name(SQLParser.Index_nameContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SQLParser#trigger_name}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTrigger_name(SQLParser.Trigger_nameContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SQLParser#view_name}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitView_name(SQLParser.View_nameContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SQLParser#module_name}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitModule_name(SQLParser.Module_nameContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SQLParser#pragma_name}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPragma_name(SQLParser.Pragma_nameContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SQLParser#savepoint_name}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSavepoint_name(SQLParser.Savepoint_nameContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link SQLParser#table_alias}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitTable_alias(SQLParser.Table_aliasContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SQLParser#transaction_name}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTransaction_name(SQLParser.Transaction_nameContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SQLParser#any_name}.
 	 * @param ctx the parse tree

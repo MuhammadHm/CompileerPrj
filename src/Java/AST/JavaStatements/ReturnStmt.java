@@ -18,6 +18,14 @@ public class ReturnStmt extends JavaStatement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(expression!=null)
+            expression.accept(astVisitor);
+        if(anyName!=null)
+            anyName.accept(astVisitor);
+        if(increment!=null)
+            increment.accept(astVisitor);
+        if(boolValue!=null)
+            boolValue.accept(astVisitor);
     }
     public void setReturnedValue(String st){
        anyName.setName(st);

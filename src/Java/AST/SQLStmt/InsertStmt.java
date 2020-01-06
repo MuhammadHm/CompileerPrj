@@ -28,6 +28,20 @@ public class InsertStmt extends Statement{
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(dataBaseName!=null)
+            dataBaseName.accept(astVisitor);
+        if(tableName!=null)
+            tableName.accept(astVisitor);
+        if(selectStmt!=null)
+            selectStmt.accept(astVisitor);
+        if(columnsNames!=null)
+            for (int i = 0; i < columnsNames.size(); i++) {
+                columnsNames.get(i).accept(astVisitor);
+            }
+        if(values!=null)
+            for (int i = 0; i < values.size(); i++) {
+                values.get(i).accept(astVisitor);
+            }
     }
 
     public void setTableName(AnyName tableName) {

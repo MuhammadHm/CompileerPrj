@@ -24,6 +24,10 @@ public class TableConstraint extends Statement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(anyName!=null)
+            anyName.accept(astVisitor);
+        if(expression!=null)
+            expression.accept(astVisitor);
     }
 
     public void setAnyName(AnyName anyName) {

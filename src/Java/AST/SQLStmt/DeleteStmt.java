@@ -23,5 +23,8 @@ K_DELETE K_FROM qualified_table_name
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        qualifiedTableName.accept(astVisitor);
+        if(expression!=null)
+            expression.accept(astVisitor);
     }
 }

@@ -256,6 +256,18 @@ public class SQLBaseListener implements SQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterJ_print(SQLParser.J_printContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJ_print(SQLParser.J_printContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterJ_one_line_cond(SQLParser.J_one_line_condContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -299,6 +311,30 @@ public class SQLBaseListener implements SQLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitJ_increment_operator(SQLParser.J_increment_operatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterJ_init_values(SQLParser.J_init_valuesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJ_init_values(SQLParser.J_init_valuesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterJ_json_value(SQLParser.J_json_valueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJ_json_value(SQLParser.J_json_valueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -808,18 +844,6 @@ public class SQLBaseListener implements SQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCte_table_name(SQLParser.Cte_table_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCte_table_name(SQLParser.Cte_table_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterSigned_number(SQLParser.Signed_numberContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -856,30 +880,6 @@ public class SQLBaseListener implements SQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterError_message(SQLParser.Error_messageContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitError_message(SQLParser.Error_messageContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterModule_argument(SQLParser.Module_argumentContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitModule_argument(SQLParser.Module_argumentContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterColumn_alias(SQLParser.Column_aliasContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -899,18 +899,6 @@ public class SQLBaseListener implements SQLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitKeyword(SQLParser.KeywordContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterUnknown(SQLParser.UnknownContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitUnknown(SQLParser.UnknownContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -976,18 +964,6 @@ public class SQLBaseListener implements SQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTable_or_index_name(SQLParser.Table_or_index_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTable_or_index_name(SQLParser.Table_or_index_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterNew_table_name(SQLParser.New_table_nameContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1048,66 +1024,6 @@ public class SQLBaseListener implements SQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTrigger_name(SQLParser.Trigger_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTrigger_name(SQLParser.Trigger_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterView_name(SQLParser.View_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitView_name(SQLParser.View_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterModule_name(SQLParser.Module_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitModule_name(SQLParser.Module_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPragma_name(SQLParser.Pragma_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPragma_name(SQLParser.Pragma_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSavepoint_name(SQLParser.Savepoint_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSavepoint_name(SQLParser.Savepoint_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterTable_alias(SQLParser.Table_aliasContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1115,18 +1031,6 @@ public class SQLBaseListener implements SQLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTable_alias(SQLParser.Table_aliasContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterTransaction_name(SQLParser.Transaction_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTransaction_name(SQLParser.Transaction_nameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

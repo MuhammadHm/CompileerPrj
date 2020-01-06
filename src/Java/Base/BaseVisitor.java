@@ -11,6 +11,7 @@ import Java.AST.Parse;
 import Java.AST.SQLStmt.*;
 import generated.SQLBaseVisitor;
 import generated.SQLParser;
+import jdk.nashorn.internal.runtime.regexp.JoniRegExp;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.ArrayList;
@@ -20,7 +21,6 @@ public class BaseVisitor extends SQLBaseVisitor {
 
     //TODO -------------------------- Java Visitors ----------------------
 
-    //TODO define get json props value
     @Override
     public Parse visitParse(SQLParser.ParseContext ctx) {
         System.out.println("visitParse");
@@ -74,8 +74,20 @@ public class BaseVisitor extends SQLBaseVisitor {
 
     @Override
     public HigherOrderFunction visitJ_higher_order_func(SQLParser.J_higher_order_funcContext ctx) {
+        System.out.println("visit higher order func");
         HigherOrderFunction higherOrderFunction = new HigherOrderFunction();
-        //TODO define higher order func
+
+        higherOrderFunction.setBody(visitJ_function_body(ctx.j_function_body()));
+        for (int i = 1; i < ctx.any_name().size(); i++) {
+            Parameter parameter = new Parameter();
+            String s = visitAny_name(ctx.any_name(i)).getName();
+            if(ctx.expr()!=null && ctx.expr(i)!=null)
+                parameter.setValue(visitExpr(ctx.expr(i)));
+            parameter.setName(s);
+
+            higherOrderFunction.addParameter(parameter);
+        }
+
         return higherOrderFunction;
     }
 
@@ -85,10 +97,10 @@ public class BaseVisitor extends SQLBaseVisitor {
 
         IFStmt ifStmt = new IFStmt();
 
-        ifStmt.setName("IF Statement");
         ifStmt.setExpression(visitExpr(ctx.expr()));
         ifStmt.setBody(visitJ_function_body(ctx.j_function_body(0)));
-        ifStmt.setElseStmt(visitJ_function_body(ctx.j_function_body(1)));
+        if(ctx.J_ELSE()!=null)
+            ifStmt.setElseStmt(visitJ_function_body(ctx.j_function_body(1)));
 
         return ifStmt;
     }
@@ -126,7 +138,6 @@ public class BaseVisitor extends SQLBaseVisitor {
     public ReturnStmt visitJ_return(SQLParser.J_returnContext ctx) {
         System.out.println("visit Return Statement");
         ReturnStmt returnStmt = new ReturnStmt();
-        //TODO set returned value type
         if (ctx.any_name() != null)
             returnStmt.setReturnedValue(visitAny_name(ctx.any_name()).getName());
 
@@ -194,8 +205,8 @@ public class BaseVisitor extends SQLBaseVisitor {
     public InitArrayStmt visitJ_init_array(SQLParser.J_init_arrayContext ctx) {
         System.out.println("visit init array stmt");
         InitArrayStmt initArrayStmt = new InitArrayStmt();
-        if (ctx.NUMERIC_LITERAL() != null) {
-            initArrayStmt.setArraySize(Integer.parseInt(ctx.NUMERIC_LITERAL().get(0).getSymbol().getText()));
+        if (ctx.NUMERIC_LITERAL(0) != null) {
+            initArrayStmt.setArraySize(Integer.parseInt(ctx.NUMERIC_LITERAL(0).getSymbol().getText()));
         }
         if (ctx.IDENTIFIER() != null)
             for (int i = 0; i < ctx.IDENTIFIER().size(); i++) {
@@ -208,7 +219,8 @@ public class BaseVisitor extends SQLBaseVisitor {
     public InitVarStmt visitJ_init_var(SQLParser.J_init_varContext ctx) {
         System.out.println("visit init var stmt");
         InitVarStmt initVarStmt = new InitVarStmt();
-
+        if(ctx.any_name()!=null)
+            initVarStmt.setVarName(visitAny_name(ctx.any_name()));
         if (ctx.expr() != null)
             initVarStmt.setExpression(visitExpr(ctx.expr()));
         if (ctx.j_init_array() != null)
@@ -223,6 +235,34 @@ public class BaseVisitor extends SQLBaseVisitor {
             initVarStmt.setOneLineCondition(visitJ_one_line_cond(ctx.j_one_line_cond()));
 
         return initVarStmt;
+    }
+    @Override public InitValues visitJ_init_values(SQLParser.J_init_valuesContext ctx) {
+        System.out.println("visit init values");
+        InitValues initValues=new InitValues();
+        if (ctx.expr() != null)
+            initValues.setExpression(visitExpr(ctx.expr()));
+        if (ctx.j_init_array() != null)
+            initValues.setInitArrayStmt(visitJ_init_array(ctx.j_init_array()));
+        if (ctx.j_json_object() != null)
+            initValues.setJsonObject(visitJ_json_object(ctx.j_json_object()));
+        if (ctx.j_json_array() != null)
+            initValues.setJsonArray(visitJ_json_array(ctx.j_json_array()));
+        if (ctx.j_function_call() != null)
+            initValues.setCallStmt(visitJ_function_call(ctx.j_function_call()));
+        if (ctx.j_one_line_cond() != null)
+            initValues.setOneLineCondition(visitJ_one_line_cond(ctx.j_one_line_cond()));
+
+        return initValues;
+    }
+
+    @Override public JsonValue visitJ_json_value(SQLParser.J_json_valueContext ctx) {
+        System.out.println("visit json values");
+        JsonValue jsonValue=new JsonValue();
+        jsonValue.setInitValues(visitJ_init_values(ctx.j_init_values()));
+        for (int i = 0; i < ctx.any_name().size(); i++) {
+            jsonValue.addPropName(visitAny_name(ctx.any_name(i)));
+        }
+        return jsonValue;
     }
 
     @Override
@@ -325,6 +365,8 @@ public class BaseVisitor extends SQLBaseVisitor {
         for (int i = 1; i < ctx.any_name().size(); i++) {
             Parameter parameter = new Parameter();
             String s = visitAny_name(ctx.any_name(i)).getName();
+            if(ctx.expr()!=null && ctx.expr(i)!=null)
+                parameter.setValue(visitExpr(ctx.expr(i)));
             parameter.setName(s);
             parametersList.add(parameter);
         }
@@ -387,6 +429,8 @@ public class BaseVisitor extends SQLBaseVisitor {
         if (ctx.children.get(0) instanceof SQLParser.J_function_bodyContext) {
             return visitJ_function_body((SQLParser.J_function_bodyContext) ctx.children.get(0));
         }
+        if(ctx.j_json_value()!=null)
+            return  visitJ_json_value(ctx.j_json_value());
 
         return new JavaStatement();
     }
@@ -465,7 +509,6 @@ public class BaseVisitor extends SQLBaseVisitor {
     @Override
     public SelectStmt visitFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx) {
         System.out.println("visit Factored_select_stmt");
-        //TODO manipulate select and factored select
         SelectStmt select = new SelectStmt();
         select.setFromItem(visitTable_or_subquery(ctx.select_core().table_or_subquery(0)));
         select.setName("Select");
@@ -926,32 +969,12 @@ public class BaseVisitor extends SQLBaseVisitor {
     }
 
     @Override
-    public Object visitCte_table_name(SQLParser.Cte_table_nameContext ctx) {
-        return visitChildren(ctx);
-    }
-
-    @Override
     public Object visitSigned_number(SQLParser.Signed_numberContext ctx) {
         return visitChildren(ctx);
     }
 
     @Override
     public Object visitUnary_operator(SQLParser.Unary_operatorContext ctx) {
-        return visitChildren(ctx);
-    }
-
-    @Override
-    public Object visitError_message(SQLParser.Error_messageContext ctx) {
-        return visitChildren(ctx);
-    }
-
-    @Override
-    public Object visitModule_argument(SQLParser.Module_argumentContext ctx) {
-        return visitChildren(ctx);
-    }
-
-    @Override
-    public Object visitUnknown(SQLParser.UnknownContext ctx) {
         return visitChildren(ctx);
     }
 
@@ -971,11 +994,6 @@ public class BaseVisitor extends SQLBaseVisitor {
     }
 
     @Override
-    public Object visitTable_or_index_name(SQLParser.Table_or_index_nameContext ctx) {
-        return visitChildren(ctx);
-    }
-
-    @Override
     public AnyName visitNew_table_name(SQLParser.New_table_nameContext ctx) {
         return visitAny_name(ctx.any_name());
     }
@@ -991,28 +1009,9 @@ public class BaseVisitor extends SQLBaseVisitor {
     }
 
     @Override
-    public AnyName visitTrigger_name(SQLParser.Trigger_nameContext ctx) {
-        return visitAny_name(ctx.any_name());
-    }
-
-    @Override
-    public AnyName visitView_name(SQLParser.View_nameContext ctx) {
-        return visitAny_name(ctx.any_name());
-    }
-
-    @Override
-    public Object visitSavepoint_name(SQLParser.Savepoint_nameContext ctx) {
-        return visitChildren(ctx);
-    }
-
-    @Override
     public Object visitTable_alias(SQLParser.Table_aliasContext ctx) {
         return visitChildren(ctx);
     }
 
-    @Override
-    public Object visitTransaction_name(SQLParser.Transaction_nameContext ctx) {
-        return visitChildren(ctx);
-    }
 
 }

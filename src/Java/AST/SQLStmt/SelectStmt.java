@@ -7,7 +7,7 @@ public class SelectStmt extends Statement {
 //    private Distinct distinct;
 //    private List<SelectItem> selectItems;
 //    private List<Table> intoTables;
-    private String fromItem;
+      private String fromItem;
 
 
 //    private List<Join> joins;

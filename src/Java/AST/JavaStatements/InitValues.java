@@ -4,9 +4,8 @@ import Java.AST.Expression.Expression;
 import Java.AST.General.AnyName;
 import Java.AST.Visitor.ASTVisitor;
 
-public class InitVarStmt extends JavaStatement {
+public class InitValues extends JavaStatement {
 
-    AnyName varName;
     Expression expression;
     InitArrayStmt initArrayStmt;
     JsonObject jsonObject;
@@ -17,8 +16,7 @@ public class InitVarStmt extends JavaStatement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
-        if(varName!=null)
-            varName.accept(astVisitor);
+
         if(expression!=null)
             expression.accept(astVisitor);
         if(initArrayStmt!=null)
@@ -43,10 +41,6 @@ public class InitVarStmt extends JavaStatement {
 
     public void setJsonArray(JsonArray jsonArray) {
         this.jsonArray = jsonArray;
-    }
-
-    public void setVarName(AnyName varName) {
-        this.varName = varName;
     }
 
     public void setInitArrayStmt(InitArrayStmt initArrayStmt) {

@@ -30,6 +30,10 @@ public class ColumnConstraint extends Statement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(constraintName!=null)
+            constraintName.accept(astVisitor);
+        if(expression!=null)
+            expression.accept(astVisitor);
     }
 
     public void setExpression(Expression expression) {

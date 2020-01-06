@@ -17,6 +17,10 @@ public class TypeName extends Statement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(typeName!=null)
+            typeName.accept(astVisitor);
+        if(anyName!=null)
+            anyName.accept(astVisitor);
     }
 
     public void setTypeName(AnyName typeName) {

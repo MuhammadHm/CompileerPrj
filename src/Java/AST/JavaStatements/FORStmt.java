@@ -14,6 +14,14 @@ public class FORStmt extends JavaStatement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(condition!=null)
+        condition.accept(astVisitor);
+        if(increment!=null)
+        increment.accept(astVisitor);
+        if(counterName!=null)
+        counterName.accept(astVisitor);
+        if(functionBody!=null)
+        functionBody.accept(astVisitor);
     }
 
     public void setCounterName(AnyName counterName) {

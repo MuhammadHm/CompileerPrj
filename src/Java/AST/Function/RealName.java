@@ -9,6 +9,7 @@ public class RealName extends Node {
 
     @Override
     public void accept(ASTVisitor astVisitor) {
+        astVisitor.visit(this);
     }
 
     public void setName(String name) {

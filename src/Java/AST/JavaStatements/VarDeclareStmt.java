@@ -17,6 +17,10 @@ public class VarDeclareStmt extends JavaStatement {
     @Override
     public void accept(ASTVisitor astVisitor) {
         astVisitor.visit(this);
+        if(variables!=null)
+            for (int i = 0; i < variables.size(); i++) {
+                variables.get(i).accept(astVisitor);
+            }
 
     }
     public void addVar(InitVarStmt initVarStmt){

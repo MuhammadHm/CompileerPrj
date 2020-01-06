@@ -21,5 +21,7 @@ public class AlterTableAddConstraint extends Statement{
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        anyName.accept(astVisitor);
+        tableConstraint.accept(astVisitor);
     }
 }

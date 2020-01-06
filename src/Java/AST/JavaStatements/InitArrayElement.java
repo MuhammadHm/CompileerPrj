@@ -33,7 +33,11 @@ public class InitArrayElement extends JavaStatement {
 
     @Override
     public void accept(ASTVisitor astVisitor){
-        System.out.println("AST visit if stmt");
         astVisitor.visit(this);
+        if(arrayName!=null)
+        arrayName.accept(astVisitor);
+        if(expression!=null)
+        expression.accept(astVisitor);
+
     }
 }

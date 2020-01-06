@@ -18,6 +18,17 @@ public class UpdateStmt extends Statement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        qualifiedTableName.accept(astVisitor);
+        if(columnNames!=null)
+        for (int i = 0; i < columnNames.size(); i++) {
+            columnNames.get(i).accept(astVisitor);
+        }
+        if(values!=null)
+            for (int i = 0; i < values.size(); i++) {
+                values.get(i).accept(astVisitor);
+            }
+        if(whereExpr!=null)
+            whereExpr.accept(astVisitor);
     }
 
     public void setQualifiedTableName(QualifiedTableName qualifiedTableName) {

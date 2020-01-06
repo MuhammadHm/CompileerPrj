@@ -20,5 +20,9 @@ public class DropTableStmt extends Statement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(dataBaseName!=null)
+            dataBaseName.accept(astVisitor);
+        if(tableName!=null)
+            dataBaseName.accept(astVisitor);
     }
 }

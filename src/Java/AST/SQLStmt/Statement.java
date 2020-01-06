@@ -14,6 +14,8 @@ public class Statement extends Node {
         return name;
     }
     @Override
-    public void accept(ASTVisitor astVisitor){}
+    public void accept(ASTVisitor astVisitor){
+        astVisitor.visit(this);
+    }
 
 }

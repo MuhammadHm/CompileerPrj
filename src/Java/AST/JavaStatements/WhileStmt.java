@@ -14,6 +14,10 @@ public class WhileStmt extends JavaStatement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(expression!=null)
+            expression.accept(astVisitor);
+        increment.accept(astVisitor);
+        body.accept(astVisitor);
     }
 
     public void setBody(FunctionBody body) {

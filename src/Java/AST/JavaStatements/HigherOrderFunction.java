@@ -5,6 +5,7 @@ import Java.AST.Function.Parameter;
 import Java.AST.Node;
 import Java.AST.Visitor.ASTVisitor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HigherOrderFunction extends JavaStatement {
@@ -13,9 +14,11 @@ public class HigherOrderFunction extends JavaStatement {
     FunctionBody body;
 
 
-
-    public void setParameterList(List<Parameter> parameterList) {
-        this.parameterList = parameterList;
+    public HigherOrderFunction(){
+        parameterList=new ArrayList<>();
+    }
+    public void addParameter(Parameter parameter) {
+        this.parameterList.add(parameter);
     }
 
     public void setBody(FunctionBody body) {
@@ -23,5 +26,13 @@ public class HigherOrderFunction extends JavaStatement {
     }
 
     @Override
-    public void accept(ASTVisitor astVisitor){}
+    public void accept(ASTVisitor astVisitor){
+        astVisitor.visit(this);
+        if(parameterList!=null)
+        for (int i = 0; i < parameterList.size(); i++) {
+            parameterList.get(i).accept(astVisitor);
+        }
+        if(body!=null)
+        body.accept(astVisitor);
+    }
 }

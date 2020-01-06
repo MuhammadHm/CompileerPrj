@@ -20,6 +20,18 @@ public class SwitchStmt extends JavaStatement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(expression!=null)
+            expression.accept(astVisitor);
+        if(caseExpressions!=null)
+            for (int i = 0; i <caseExpressions.size() ; i++) {
+                caseExpressions.get(i).accept(astVisitor);
+            }
+        if(caseBodies!=null)
+            for (int i = 0; i < caseBodies.size(); i++) {
+                caseBodies.get(i).accept(astVisitor);
+            }
+        if(defaultStmt!=null)
+            defaultStmt.accept(astVisitor);
     }
 
     public void setExpression(Expression expression) {

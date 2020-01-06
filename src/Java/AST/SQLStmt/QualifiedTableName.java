@@ -14,6 +14,12 @@ public class QualifiedTableName extends Statement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(dataBaseName!=null)
+            dataBaseName.accept(astVisitor);
+        if(tableName!=null)
+            tableName.accept(astVisitor);
+        if(indexName!=null)
+            indexName.accept(astVisitor);
     }
 
     public void setTableName(AnyName tableName) {

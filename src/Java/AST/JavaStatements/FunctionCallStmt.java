@@ -12,6 +12,7 @@ public class FunctionCallStmt extends JavaStatement {
 
     public FunctionCallStmt(){
         params=new ArrayList<>();
+        higherOrderFunctions=new ArrayList<>();
     }
     public void addParam(AnyName anyName){
         params.add(anyName);
@@ -19,6 +20,16 @@ public class FunctionCallStmt extends JavaStatement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(funcName!=null)
+        funcName.accept(astVisitor);
+        if(params!=null)
+        for (int i = 0; i < params.size(); i++) {
+            params.get(i).accept(astVisitor);
+        }
+        if(higherOrderFunctions!=null)
+        for (int i = 0; i < higherOrderFunctions.size(); i++) {
+            higherOrderFunctions.get(i).accept(astVisitor);
+        }
     }
 
     public void setFuncName(AnyName funcName) {

@@ -13,6 +13,12 @@ public class IFStmt extends JavaStatement{
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(expression!=null)
+        expression.accept(astVisitor);
+        if(body!=null)
+        body.accept(astVisitor);
+        if(elseStmt!=null)
+        elseStmt.accept(astVisitor);
     }
 
     public void setExpression(Expression expression) {

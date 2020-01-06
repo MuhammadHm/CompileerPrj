@@ -22,6 +22,19 @@ public class AlterTableStmt extends Statement {
     @Override
     public void accept(ASTVisitor astVisitor) {
         astVisitor.visit(this);
+        if(dataBaseName!=null)
+            dataBaseName.accept(astVisitor);
+        if(sourceTableName!=null)
+            sourceTableName.accept(astVisitor);
+        if(newTableName!=null)
+            newTableName.accept(astVisitor);
+        if(alterTableAdd!=null)
+            alterTableAdd.accept(astVisitor);
+        if(alterTableAddConstraint!=null)
+            alterTableAddConstraint.accept(astVisitor);
+        if(columnDef!=null)
+            columnDef.accept(astVisitor);
+
     }
 
     public void setDataBaseName(AnyName dataBaseName) {

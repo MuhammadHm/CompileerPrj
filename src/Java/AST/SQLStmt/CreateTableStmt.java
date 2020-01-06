@@ -21,6 +21,16 @@ public class CreateTableStmt extends Statement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(dataBaseName!=null)
+            dataBaseName.accept(astVisitor);
+        if(tableName!=null)
+            tableName.accept(astVisitor);
+        if(selectStmt!=null)
+            selectStmt.accept(astVisitor);
+        if(columnDefs!=null)
+            for (int i = 0; i < columnDefs.size(); i++) {
+                columnDefs.get(i).accept(astVisitor);
+            }
     }
 
     public void addColumnDef(ColumnDef columnDef){

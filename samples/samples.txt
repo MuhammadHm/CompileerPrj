@@ -1,7 +1,13 @@
-function f(){
-    if(x > y ){
-        return x;
-    }
+ calc(){
 
-}
+         var j = 0;
+        for (var i = 0 ; i < 22 ; i++){
+            if (i == 3){
 
+            }
+            else{
+                j++;
+            }
+        }
+        return 9;
+        }

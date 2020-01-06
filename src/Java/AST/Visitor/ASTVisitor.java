@@ -49,5 +49,8 @@ public interface ASTVisitor {
     public void visit(TableConstraint tableConstraint);
     public void visit(TypeName typeName);
     public void visit(UpdateStmt updateStmt);
+    public void visit(FactoredSelectStmt factoredSelectStmt);
+    public void visit(InitValues initValues);
+    public void visit(JsonValue jsonValue);
 
 }

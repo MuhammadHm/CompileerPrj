@@ -21,6 +21,8 @@ public class IncrementOperatorStmt extends Statement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(var!=null)
+            var.accept(astVisitor);
     }
 
 

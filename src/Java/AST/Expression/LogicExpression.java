@@ -12,6 +12,10 @@ public class LogicExpression extends Statement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(leftExpression!=null)
+            leftExpression.accept(astVisitor);
+        if(rightExpression!=null)
+            rightExpression.accept(astVisitor);
     }
 
     public void setLeftExpression(Expression leftExpression) {

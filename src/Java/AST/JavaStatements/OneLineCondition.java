@@ -11,6 +11,12 @@ public class OneLineCondition extends JavaStatement {
 
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(expression!=null)
+            expression.accept(astVisitor);
+        if(ifResult!=null)
+            ifResult.accept(astVisitor);
+        if(elseResult!=null)
+            elseResult.accept(astVisitor);
     }
 
     public void setExpression(Expression expression) {

@@ -212,5 +212,20 @@ public class BaseASTVisitor implements ASTVisitor {
         System.out.println("ast update stmt");
     }
 
+    @Override
+    public void visit(FactoredSelectStmt factoredSelectStmt) {
+        System.out.println("ast factored select stmt");
+    }
+
+    @Override
+    public void visit(InitValues initValues) {
+        System.out.println("ast init values");
+    }
+
+    @Override
+    public void visit(JsonValue jsonValue) {
+        System.out.println("ast json value");
+    }
+
 
 }

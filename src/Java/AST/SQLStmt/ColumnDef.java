@@ -15,6 +15,16 @@ public class ColumnDef extends Statement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(columnName!=null)
+            columnName.accept(astVisitor);
+        if(columnConstraints!=null)
+            for (int i = 0; i < columnConstraints.size(); i++) {
+                columnConstraints.get(i).accept(astVisitor);
+            }
+        if(typeNames!=null)
+            for (int i = 0; i < typeNames.size(); i++) {
+                typeNames.get(i).accept(astVisitor);
+            }
     }
 
     public void addColumnConstraint(ColumnConstraint columnConstraint) {

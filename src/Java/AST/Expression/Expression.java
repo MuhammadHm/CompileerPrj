@@ -38,6 +38,14 @@ public class Expression extends Statement {
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
+        if(incrementOperatorStmt!=null)
+            incrementOperatorStmt.accept(astVisitor);
+        if(logicExpression!=null)
+            logicExpression.accept(astVisitor);
+        if(expression!=null)
+            expression.accept(astVisitor);
+        if(selectStmt!=null)
+            selectStmt.accept(astVisitor);
     }
 
     public void setExpression(Expression expression) {
