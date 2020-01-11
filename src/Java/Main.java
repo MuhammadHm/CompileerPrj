@@ -30,8 +30,6 @@ public class Main {
 
             p.accept(new BaseASTVisitor());
 
-            System.out.println(p.toString());
-
         } catch (IOException e) {
             e.printStackTrace();
         }

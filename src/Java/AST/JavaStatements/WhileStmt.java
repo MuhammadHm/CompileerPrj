@@ -16,6 +16,7 @@ public class WhileStmt extends JavaStatement {
         astVisitor.visit(this);
         if(expression!=null)
             expression.accept(astVisitor);
+        if(increment!=null)
         increment.accept(astVisitor);
         body.accept(astVisitor);
     }

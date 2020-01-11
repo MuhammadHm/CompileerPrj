@@ -3,11 +3,13 @@ package Java.AST.Visitor;
 import Java.AST.Function.*;
 import Java.AST.General.AnyName;
 import Java.AST.JavaStatements.*;
+import Java.AST.Node;
 import Java.AST.Parse;
 import Java.AST.SQLStmt.*;
 
 public interface ASTVisitor {
 
+    public void visit(Node node);
     public void visit(Parse p);
     public void visit(FunctionDeclaration funcDec);
     public void visit(Statement stmt);
@@ -49,8 +51,8 @@ public interface ASTVisitor {
     public void visit(TableConstraint tableConstraint);
     public void visit(TypeName typeName);
     public void visit(UpdateStmt updateStmt);
-    public void visit(FactoredSelectStmt factoredSelectStmt);
+    public void visit(SelectCore selectCore);
     public void visit(InitValues initValues);
     public void visit(JsonValue jsonValue);
-
+    public void visit(PrintStmt printStmt);
 }

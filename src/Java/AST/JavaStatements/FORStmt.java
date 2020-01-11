@@ -15,13 +15,13 @@ public class FORStmt extends JavaStatement {
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
         if(condition!=null)
-        condition.accept(astVisitor);
+            condition.accept(astVisitor);
         if(increment!=null)
-        increment.accept(astVisitor);
+            increment.accept(astVisitor);
         if(counterName!=null)
-        counterName.accept(astVisitor);
+            counterName.accept(astVisitor);
         if(functionBody!=null)
-        functionBody.accept(astVisitor);
+            functionBody.accept(astVisitor);
     }
 
     public void setCounterName(AnyName counterName) {

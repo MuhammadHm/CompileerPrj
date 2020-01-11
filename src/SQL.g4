@@ -51,15 +51,16 @@ java_stmt :
    |j_init_var
    |j_function_body
    |j_increment_operator ';'
-   |j_break
+   |j_break ';'
    |j_init_arr_elem ';'
    |j_one_line_cond ';'
    |j_json_value ';'
    |j_print ';'
+   |j_function_body
 //   |expr ';'
 ;
 
-j_function_body: '{' java_stmt* '}';
+j_function_body:  ( '{' java_stmt* '}') ;
 j_if :
  J_IF '(' expr ')' (j_function_body | java_stmt)
  (J_ELSE j_function_body)?
@@ -97,7 +98,7 @@ j_init_array :
   ('[' (NUMERIC_LITERAL)? ']'  ('=' '{' (IDENTIFIER|NUMERIC_LITERAL) (',' (IDENTIFIER|NUMERIC_LITERAL))*'}')?)
  ;
 j_init_var: any_name (('=' expr) | j_init_array | ('=' j_json_object ';') | ('=' j_function_call) | ( '=' j_json_array) | ('=' j_one_line_cond) )?;
-j_init_arr_elem : (any_name '[' NUMERIC_LITERAL ']') (('=' expr) | J_INCREMENT_OPERATOR)?;
+j_init_arr_elem : (any_name '[' NUMERIC_LITERAL|expr ']') (('=' expr) | J_INCREMENT_OPERATOR)?;
 j_json_object:
   '{'
     j_json_elem?
@@ -111,11 +112,11 @@ j_json_elem:
 j_json_array:
  '[' (j_json_elem (',' j_json_elem)*)?']'
  ;
-j_print : J_PRINT '(' ( (any_name |j_init_arr_elem) ('+' (any_name|j_init_arr_elem))*) ')' ';' ;
+j_print : J_PRINT '(' ( (any_name |j_init_arr_elem | j_json_value) ('+' (any_name|j_init_arr_elem))*) ')' ;
 //query_var :  J_VAR real_name '=' select_stmt ';';          //Third Question
-j_one_line_cond: expr '?' java_stmt ':' java_stmt ;
+j_one_line_cond: expr '?' ( java_stmt | expr | j_one_line_cond ) ':' (java_stmt | expr | j_one_line_cond) ;
 j_bool_value : (J_TRUE | J_FALSE);
-j_break: J_BREAK  ';';
+j_break: J_BREAK ;
 j_increment_operator: ((any_name J_INCREMENT_OPERATOR) | (J_INCREMENT_OPERATOR any_name)) ;
 
 j_init_values: (('=' expr) | j_init_array | ('=' j_json_object ';') | ('=' j_function_call) | ( '=' j_json_array) | ('=' j_one_line_cond) )?;
@@ -286,6 +287,7 @@ column_default_value
 */
 expr
  : literal_value
+ | j_bool_value
  | j_increment_operator
  | ( ( database_name '.' )? table_name '.' )? column_name
  | unary_operator expr

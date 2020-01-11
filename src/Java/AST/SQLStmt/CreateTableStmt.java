@@ -18,6 +18,9 @@ public class CreateTableStmt extends Statement {
     ArrayList<ColumnDef> columnDefs;
     SelectStmt selectStmt;
 
+    public CreateTableStmt(){
+        columnDefs=new ArrayList<>();
+    }
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);

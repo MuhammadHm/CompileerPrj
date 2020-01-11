@@ -23,6 +23,6 @@ public class DropTableStmt extends Statement {
         if(dataBaseName!=null)
             dataBaseName.accept(astVisitor);
         if(tableName!=null)
-            dataBaseName.accept(astVisitor);
+            tableName.accept(astVisitor);
     }
 }

@@ -5,7 +5,7 @@ import Java.AST.SQLStmt.SelectStmt;
 import Java.AST.SQLStmt.Statement;
 import Java.AST.Visitor.ASTVisitor;
 
-public class Expression extends Statement {
+public class Expression extends Node {
 //: literal_value
 // | j_increment_operator
 // | ( ( database_name '.' )? table_name '.' )? column_name

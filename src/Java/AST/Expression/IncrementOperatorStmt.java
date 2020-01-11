@@ -2,10 +2,11 @@ package Java.AST.Expression;
 
 import Java.AST.General.AnyName;
 import Java.AST.JavaStatements.JavaStatement;
+import Java.AST.Node;
 import Java.AST.SQLStmt.Statement;
 import Java.AST.Visitor.ASTVisitor;
 
-public class IncrementOperatorStmt extends Statement {
+public class IncrementOperatorStmt extends Node {
 
     AnyName var;
     String IncrementOperator;

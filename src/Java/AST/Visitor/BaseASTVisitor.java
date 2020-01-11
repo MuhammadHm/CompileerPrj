@@ -3,10 +3,15 @@ package Java.AST.Visitor;
 import Java.AST.Function.*;
 import Java.AST.General.AnyName;
 import Java.AST.JavaStatements.*;
+import Java.AST.Node;
 import Java.AST.Parse;
 import Java.AST.SQLStmt.*;
 
 public class BaseASTVisitor implements ASTVisitor {
+
+    @Override
+    public void visit(Node node) {
+    }
 
     @Override
     public void visit(Parse p) {
@@ -22,6 +27,7 @@ public class BaseASTVisitor implements ASTVisitor {
     public void visit(Statement stmt) {
         System.out.println("ast Statement ");
     }
+
     @Override
     public void visit(SelectStmt selectStmt) {
         System.out.println("ast selectStmt");
@@ -213,8 +219,8 @@ public class BaseASTVisitor implements ASTVisitor {
     }
 
     @Override
-    public void visit(FactoredSelectStmt factoredSelectStmt) {
-        System.out.println("ast factored select stmt");
+    public void visit(SelectCore selectCore) {
+        System.out.println("ast select core stmt");
     }
 
     @Override
@@ -225,6 +231,11 @@ public class BaseASTVisitor implements ASTVisitor {
     @Override
     public void visit(JsonValue jsonValue) {
         System.out.println("ast json value");
+    }
+
+    @Override
+    public void visit(PrintStmt printStmt) {
+        System.out.println("ast print stmt");
     }
 
 

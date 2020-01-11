@@ -12,6 +12,12 @@ public class ColumnDef extends Statement {
     AnyName columnName;
     ArrayList<ColumnConstraint> columnConstraints;
     ArrayList<TypeName> typeNames;
+
+    public ColumnDef(){
+        columnConstraints=new ArrayList<>();
+        typeNames=new ArrayList<>();
+    }
+
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);

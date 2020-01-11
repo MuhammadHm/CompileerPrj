@@ -1,9 +1,10 @@
 package Java.AST.Expression;
 
+import Java.AST.Node;
 import Java.AST.SQLStmt.Statement;
 import Java.AST.Visitor.ASTVisitor;
 
-public class LogicExpression extends Statement {
+public class LogicExpression extends Node {
     Expression leftExpression;
     Expression rightExpression;
     String operation;

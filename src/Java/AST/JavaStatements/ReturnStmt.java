@@ -27,7 +27,20 @@ public class ReturnStmt extends JavaStatement {
         if(boolValue!=null)
             boolValue.accept(astVisitor);
     }
-    public void setReturnedValue(String st){
-       anyName.setName(st);
+
+    public void setExpression(Expression expression) {
+        this.expression = expression;
+    }
+
+    public void setAnyName(AnyName anyName) {
+        this.anyName = anyName;
+    }
+
+    public void setIncrement(IncrementOperatorStmt increment) {
+        this.increment = increment;
+    }
+
+    public void setBoolValue(BoolValue boolValue) {
+        this.boolValue = boolValue;
     }
 }

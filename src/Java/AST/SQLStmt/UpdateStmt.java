@@ -15,6 +15,10 @@ public class UpdateStmt extends Statement {
     ArrayList<Expression> values;
     Expression whereExpr;
 
+    public UpdateStmt(){
+        columnNames=new ArrayList<>();
+        values=new ArrayList<>();
+    }
     @Override
     public void accept(ASTVisitor astVisitor){
         astVisitor.visit(this);
