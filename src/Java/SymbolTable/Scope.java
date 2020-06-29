@@ -7,6 +7,7 @@ public class Scope {
     private String id;
     private Scope parent;
     private Map<String, Symbol> symbolMap = new LinkedHashMap<String, Symbol>();    // String for Symbol name
+    private boolean isOpen=false;
 
     public String getId() {
         return id;
@@ -33,5 +34,12 @@ public class Scope {
     }
     public void addSymbol(String name, Symbol symbol) {
         this.symbolMap.put(name,symbol);
+    }
+
+    public void setOpen(boolean open) {
+        isOpen = open;
+    }
+    public boolean isOpen() {
+        return isOpen;
     }
 }

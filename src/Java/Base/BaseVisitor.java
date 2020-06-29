@@ -9,6 +9,8 @@ import Java.AST.JavaStatements.BoolValue;
 import Java.AST.JavaStatements.*;
 import Java.AST.Parse;
 import Java.AST.SQLStmt.*;
+import Java.Main;
+import Java.SymbolTable.Scope;
 import generated.SQLBaseVisitor;
 import generated.SQLParser;
 //import jdk.nashorn.internal.runtime.regexp.JoniRegExp;
@@ -467,10 +469,10 @@ public class BaseVisitor extends SQLBaseVisitor {
         if (ctx.children.get(0) instanceof SQLParser.Sql_stmtContext) {
             System.out.println("sql stmt");
 //            return new JavaStatement();
-            Statement statement=visitSql_stmt((SQLParser.Sql_stmtContext) ctx.children.get(0));
-            JavaStatement javaStatement= new JavaStatement();
+            Statement statement = visitSql_stmt((SQLParser.Sql_stmtContext) ctx.children.get(0));
+            JavaStatement javaStatement = new JavaStatement();
             javaStatement.setName(statement.getName());
-            return javaStatement ;
+            return javaStatement;
         }
         if (ctx.j_json_value() != null)
             return visitJ_json_value(ctx.j_json_value());
@@ -482,8 +484,26 @@ public class BaseVisitor extends SQLBaseVisitor {
 
     @Override
     public FunctionBody visitJ_function_body(SQLParser.J_function_bodyContext ctx) {
-        System.out.println("visit function body");
+//        System.out.println("visit function body");
+        System.out.println("start func body");
         FunctionBody body = new FunctionBody();
+        Scope scope = new Scope();
+        if (Main.symbolTable.getScopes().isEmpty()) {
+            scope.setParent(null);
+            scope.setOpen(true);
+            scope.setId("0");
+        } else {
+            for (int i = Main.symbolTable.getScopes().size() - 1; i >= 0; i--) {
+                if (Main.symbolTable.getScopes().get(i).isOpen()) {
+                    scope.setParent(Main.symbolTable.getScopes().get(i));
+                    scope.setOpen(true);
+                    scope.setId(Integer.toString(Integer.parseInt(Main.symbolTable.getScopes().get(i).getId()) + 1));
+                    break;
+                }
+            }
+        }
+        Main.symbolTable.addScope(scope);
+        //TODO add scopes
 
         List<JavaStatement> javaStatements = new ArrayList<JavaStatement>();
         if (ctx != null)
@@ -491,7 +511,11 @@ public class BaseVisitor extends SQLBaseVisitor {
                 if (ctx.java_stmt().get(i) != null)
                     javaStatements.add(visitJava_stmt(ctx.java_stmt(i)));
             }
+
+        scope.setOpen(false);
         body.setJavaStatements(javaStatements);
+
+        System.out.println("end func body");
 
         return body;
     }

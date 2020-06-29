@@ -1,1 +1,24 @@
-create aggregation_function f(x,y,z,t,[y]);
+f(){
+    if(x){
+        if(y){
+            if(t){
+
+            }
+        }
+    }
+    while(t){
+
+    }
+     while(t){
+        if(x){
+
+        }
+     }
+}
+
+create table t (x int);
+
+t(){
+
+
+}
