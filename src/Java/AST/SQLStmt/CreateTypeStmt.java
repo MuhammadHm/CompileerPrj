@@ -5,14 +5,14 @@ import Java.AST.Visitor.ASTVisitor;
 
 import java.util.ArrayList;
 
-public class CreateTableStmt extends Statement {
+public class CreateTypeStmt extends Statement {
 
     AnyName dataBaseName;
     AnyName tableName;
     ArrayList<ColumnDef> columnDefs;
     SelectStmt selectStmt;
 
-    public CreateTableStmt(){
+    public CreateTypeStmt(){
         columnDefs=new ArrayList<>();
     }
     @Override

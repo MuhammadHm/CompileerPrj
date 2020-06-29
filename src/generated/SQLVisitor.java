@@ -1,4 +1,4 @@
-// Generated from C:/Users/Muhammad HM/IdeaProjects/antlrTest/src\SQL.g4 by ANTLR 4.7.2
+// Generated from C:/Users/MuhammadHm/IdeaProjects/Compiler project/antlrTest/src\SQL.g4 by ANTLR 4.8
 package generated;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -172,6 +172,18 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitJ_json_value(SQLParser.J_json_valueContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SQLParser#create_type_stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCreate_type_stmt(SQLParser.Create_type_stmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SQLParser#create_aggrigation_func}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCreate_aggrigation_func(SQLParser.Create_aggrigation_funcContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SQLParser#parse}.
 	 * @param ctx the parse tree

@@ -27,5 +27,13 @@ public class FunctionDeclaration extends JavaStatement {
     public void setHeader(FunctionHeader header) {
         this.header = header;
     }
+
+    public FunctionBody getBody() {
+        return body;
+    }
+
+    public FunctionHeader getHeader() {
+        return header;
+    }
 }
 

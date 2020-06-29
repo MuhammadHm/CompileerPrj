@@ -6,6 +6,7 @@ import Java.AST.JavaStatements.*;
 import Java.AST.Node;
 import Java.AST.Parse;
 import Java.AST.SQLStmt.*;
+import generated.SQLParser;
 
 public interface ASTVisitor {
 
@@ -44,6 +45,8 @@ public interface ASTVisitor {
     public void visit(ColumnConstraint columnConstraint);
     public void visit(ColumnDef columnDef);
     public void visit(CreateTableStmt createTableStmt);
+    public void visit(CreateTypeStmt createTypeStmt);
+    public void visit(CreateAggFunc createAggFunc);
     public void visit(DeleteStmt deleteStmt);
     public void visit(DropTableStmt dropTableStmt);
     public void visit(InsertStmt insertStmt);
@@ -55,4 +58,5 @@ public interface ASTVisitor {
     public void visit(InitValues initValues);
     public void visit(JsonValue jsonValue);
     public void visit(PrintStmt printStmt);
+
 }

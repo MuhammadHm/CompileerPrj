@@ -7,12 +7,13 @@ import Java.AST.Visitor.ASTVisitor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Parse extends Node{
+public class Parse extends Node {
 
     private List<Statement> sqlStmts = new ArrayList<Statement>();
-    private FunctionDeclaration function = new FunctionDeclaration();
-    
-    public void addQuery(Statement query){
+    private FunctionDeclaration function;
+
+
+    public void addQuery(Statement query) {
         this.sqlStmts.add(query);
     }
 
@@ -32,16 +33,15 @@ public class Parse extends Node{
         return function;
     }
 
-//    @Override
-//    public String toString(){
-//        return "sql stmts = "+ getSqlStmts().get(0).getName();
-//    }
+
     @Override
-    public void accept(ASTVisitor astVisitor){
+    public void accept(ASTVisitor astVisitor) {
         astVisitor.visit(this);
-        for(int i = 0 ; i < this.sqlStmts.size() ; i++){
-            this.sqlStmts.get(i).accept(astVisitor);
-        }
-       function.accept(astVisitor);
+        if (!sqlStmts.isEmpty())
+            for (int i = 0; i < this.sqlStmts.size(); i++) {
+                this.sqlStmts.get(i).accept(astVisitor);
+            }
+        if (function != null)
+            function.accept(astVisitor);
     }
 }

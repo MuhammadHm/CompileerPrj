@@ -54,26 +54,26 @@ public class SelectCore extends Statement {
             System.out.println("ast where stmt");
             where.accept(astVisitor);
         }
-        if (resultColumns != null) {
+        if (!resultColumns.isEmpty()) {
             System.out.println("ast result columns");
             for (int i = 0; i < resultColumns.size(); i++) {
                 resultColumns.get(i).accept(astVisitor);
             }
 
         }
-        if (tableNames != null) {
+        if (!tableNames.isEmpty()) {
             System.out.println("ast from stmt");
             for (int i = 0; i < tableNames.size(); i++) {
                 tableNames.get(i).accept(astVisitor);
             }
         }
-        if (groupByExpr != null) {
+        if (!groupByExpr.isEmpty()) {
             System.out.println("ast group by stmt");
             for (int i = 0; i < groupByExpr.size(); i++) {
                 groupByExpr.get(i).accept(astVisitor);
             }
         }
-        if (values != null){
+        if (!values.isEmpty()){
             System.out.println("ast values");
             for (int i = 0; i < values.size(); i++) {
                 values.get(i).accept(astVisitor);

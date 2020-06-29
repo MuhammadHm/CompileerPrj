@@ -1,6 +1,7 @@
 package Java;
 
 import Java.AST.Parse;
+import Java.AST.Visitor.ASTSymbolTable;
 import Java.AST.Visitor.BaseASTVisitor;
 import Java.Base.BaseVisitor;
 import generated.SQLBaseListener;
@@ -21,7 +22,7 @@ public class Main {
             String source = "samples//samples.txt";
             CharStream cs = fromFileName(source);
             SQLLexer lexer = new SQLLexer(cs);
-            CommonTokenStream token  = new CommonTokenStream(lexer);
+            CommonTokenStream token = new CommonTokenStream(lexer);
             SQLParser parser = new SQLParser(token);
             ParseTree tree = parser.parse();
 
@@ -29,7 +30,7 @@ public class Main {
             System.out.println("\n\nAbstract Syntax Tree: \n");
 
             p.accept(new BaseASTVisitor());
-
+//             p.accept(new ASTSymbolTable());
         } catch (IOException e) {
             e.printStackTrace();
         }

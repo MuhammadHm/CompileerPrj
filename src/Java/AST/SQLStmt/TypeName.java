@@ -8,8 +8,6 @@ import java.util.ArrayList;
 public class TypeName extends Statement {
 
 
-    //  name ( '(' signed_number (any_name)? ')'
-    //         | '(' signed_number (any_name)? ',' signed_number (any_name)? ')' )? ;
     AnyName typeName;
     String signedNum;
     AnyName anyName;

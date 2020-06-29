@@ -1,4 +1,4 @@
-// Generated from C:/Users/Muhammad HM/IdeaProjects/antlrTest/src\SQL.g4 by ANTLR 4.7.2
+// Generated from C:/Users/MuhammadHm/IdeaProjects/Compiler project/antlrTest/src\SQL.g4 by ANTLR 4.8
 package generated;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -277,6 +277,26 @@ public interface SQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitJ_json_value(SQLParser.J_json_valueContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SQLParser#create_type_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterCreate_type_stmt(SQLParser.Create_type_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SQLParser#create_type_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitCreate_type_stmt(SQLParser.Create_type_stmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SQLParser#create_aggrigation_func}.
+	 * @param ctx the parse tree
+	 */
+	void enterCreate_aggrigation_func(SQLParser.Create_aggrigation_funcContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SQLParser#create_aggrigation_func}.
+	 * @param ctx the parse tree
+	 */
+	void exitCreate_aggrigation_func(SQLParser.Create_aggrigation_funcContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SQLParser#parse}.
 	 * @param ctx the parse tree

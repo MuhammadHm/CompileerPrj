@@ -6,8 +6,14 @@ import Java.AST.JavaStatements.*;
 import Java.AST.Node;
 import Java.AST.Parse;
 import Java.AST.SQLStmt.*;
+import Java.SymbolTable.SymbolTable;
 
-public class BaseASTVisitor implements ASTVisitor {
+//TODO Here we will work
+
+public class ASTSymbolTable implements ASTVisitor {
+
+    private SymbolTable symbolTable;
+
 
     @Override
     public void visit(Node node) {
@@ -15,11 +21,15 @@ public class BaseASTVisitor implements ASTVisitor {
 
     @Override
     public void visit(Parse p) {
-        System.out.println("ast parse ");
+        System.out.println("ast parse");
+        symbolTable=new SymbolTable();
+
     }
 
     @Override
     public void visit(FunctionDeclaration funcDec) {
+//        System.out.println("func name: "+funcDec.getHeader().getName());
+
         System.out.println("ast FunctionDeclaration ");
     }
 
@@ -41,6 +51,7 @@ public class BaseASTVisitor implements ASTVisitor {
     @Override
     public void visit(FunctionBody functionBody) {
         System.out.println("ast function Body");
+
     }
 
     @Override
@@ -146,6 +157,7 @@ public class BaseASTVisitor implements ASTVisitor {
     @Override
     public void visit(VarDeclareStmt varDeclareStmt) {
         System.out.println("ast var declare stmt");
+
     }
 
     @Override
@@ -245,7 +257,7 @@ public class BaseASTVisitor implements ASTVisitor {
 
     @Override
     public void visit(CreateAggFunc createAggFunc) {
-        System.out.println("ast create agg func stmt");
+        System.out.println("create agg func stmt");
     }
 
 

@@ -2,6 +2,7 @@ package Java.AST.JavaStatements;
 
 import Java.AST.Expression.Expression;
 import Java.AST.General.AnyName;
+import Java.AST.SQLStmt.SelectStmt;
 import Java.AST.Visitor.ASTVisitor;
 
 public class InitVarStmt extends JavaStatement {
@@ -13,6 +14,7 @@ public class InitVarStmt extends JavaStatement {
     JsonArray jsonArray;
     FunctionCallStmt callStmt;
     OneLineCondition oneLineCondition;
+    SelectStmt selectStmt;
 
     @Override
     public void accept(ASTVisitor astVisitor){
@@ -31,6 +33,8 @@ public class InitVarStmt extends JavaStatement {
             callStmt.accept(astVisitor);
         if(oneLineCondition!=null)
             oneLineCondition.accept(astVisitor);
+        if(selectStmt!=null)
+            selectStmt.accept(astVisitor);
     }
 
     public void setExpression(Expression expression) {
@@ -61,4 +65,7 @@ public class InitVarStmt extends JavaStatement {
         this.oneLineCondition = oneLineCondition;
     }
 
+    public void setSelectStmt(SelectStmt selectStmt) {
+        this.selectStmt = selectStmt;
+    }
 }

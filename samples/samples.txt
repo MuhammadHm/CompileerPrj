@@ -1,9 +1,1 @@
-CREATE TABLE Orders (
-    OrderID int NOT NULL,
-    OrderNumber int NOT NULL,
-    PersonID int,
-    PRIMARY KEY (OrderID),
-    CONSTRAINT UC_Person UNIQUE (OrderID),
-    CONSTRAINT FK_PersonOrder FOREIGN KEY (PersonID)
-    REFERENCES Persons(PersonID) on delete set null
-);
+create aggregation_function f(x,y,z,t,[y]);

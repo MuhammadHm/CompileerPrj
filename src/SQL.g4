@@ -57,6 +57,7 @@ java_stmt :
    |j_json_value ';'
    |j_print ';'
    |j_function_body
+   |sql_stmt (';')*
 //   |expr ';'
 ;
 
@@ -97,7 +98,7 @@ j_switch_case:
 j_init_array :
   ('[' (NUMERIC_LITERAL)? ']'  ('=' '{' (IDENTIFIER|NUMERIC_LITERAL) (',' (IDENTIFIER|NUMERIC_LITERAL))*'}')?)
  ;
-j_init_var: any_name (('=' expr) | j_init_array | ('=' j_json_object ';') | ('=' j_function_call) | ( '=' j_json_array) | ('=' j_one_line_cond) )?;
+j_init_var: any_name (('=' expr) | j_init_array | ('=' j_json_object ) | ('=' j_function_call) | ( '=' j_json_array) | ('=' j_one_line_cond) |('=' factored_select_stmt))?;
 j_init_arr_elem : (any_name '[' NUMERIC_LITERAL|expr ']') (('=' expr) | J_INCREMENT_OPERATOR)?;
 j_json_object:
   '{'
@@ -122,6 +123,20 @@ j_increment_operator: ((any_name J_INCREMENT_OPERATOR) | (J_INCREMENT_OPERATOR a
 j_init_values: (('=' expr) | j_init_array | ('=' j_json_object ';') | ('=' j_function_call) | ( '=' j_json_array) | ('=' j_one_line_cond) )?;
 j_json_value: (any_name ('.' any_name)+)  j_init_values ;
 
+create_type_stmt
+ : K_CREATE  K_TYPE ( K_IF K_NOT K_EXISTS )?
+   ( database_name '.' )? table_name
+   ( '(' column_def ( ',' table_constraint | ',' column_def )* ')'
+   | K_AS select_stmt   )
+ ;
+create_aggrigation_func
+  : K_CREATE K_AGGRIGATION any_name
+   ( '(' any_name ',' any_name ',' any_name',' any_name',' ('[' ( any_name (',' any_name)*  )? ']') ')' ) ';'
+  ;
+  //(any_name type_name? ( ',' any_name type_name? | ',' any_name type_name? )* )?
+//jar_path : [a-zA-Z_] [a-zA-Z_0-9]*;
+  //TODO add agg func to Base visitior and ast
+
 J_FUNCTION : 'function';
 J_VAR : 'var';
 J_RETURN : 'return';
@@ -138,6 +153,8 @@ J_TRUE : 'true';
 J_FALSE : 'false';
 J_BREAK : 'break';
 J_INCREMENT_OPERATOR : ('++' | '--');
+K_TYPE : 'type';
+K_AGGRIGATION : ('AGGREGATION_FUNCTION' | 'aggregation_function');
 
 //TODO end of editing
 
@@ -158,6 +175,8 @@ sql_stmt_list
 sql_stmt:
      ( alter_table_stmt
       | create_table_stmt
+      | create_type_stmt
+      | create_aggrigation_func
       | delete_stmt
       | drop_table_stmt
       | factored_select_stmt

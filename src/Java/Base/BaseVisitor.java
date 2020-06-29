@@ -11,7 +11,7 @@ import Java.AST.Parse;
 import Java.AST.SQLStmt.*;
 import generated.SQLBaseVisitor;
 import generated.SQLParser;
-import jdk.nashorn.internal.runtime.regexp.JoniRegExp;
+//import jdk.nashorn.internal.runtime.regexp.JoniRegExp;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.ArrayList;
@@ -61,9 +61,9 @@ public class BaseVisitor extends SQLBaseVisitor {
 
     @Override
     public AnyName visitAny_name(SQLParser.Any_nameContext ctx) {
-        System.out.println("visit any name");
-        if(ctx.IDENTIFIER().getSymbol().getText()!=null)
-        System.out.println("Any Name: " + ctx.IDENTIFIER().getSymbol().getText());
+//        System.out.println("visit any name");
+        if (ctx.IDENTIFIER().getSymbol().getText() != null)
+            System.out.println("Any Name: " + ctx.IDENTIFIER().getSymbol().getText());
 
         AnyName anyName = new AnyName();
 
@@ -83,8 +83,8 @@ public class BaseVisitor extends SQLBaseVisitor {
         for (int i = 1; i < ctx.any_name().size(); i++) {
             Parameter parameter = new Parameter();
             String s = visitAny_name(ctx.any_name(i)).getName();
-            System.out.println("parameter "+i+" "+s);
-            if(ctx.expr()!=null && ctx.expr(i)!=null)
+            System.out.println("parameter " + i + " " + s);
+            if (ctx.expr() != null && ctx.expr(i) != null)
                 parameter.setValue(visitExpr(ctx.expr(i)));
             parameter.setName(s);
 
@@ -102,7 +102,7 @@ public class BaseVisitor extends SQLBaseVisitor {
 
         ifStmt.setExpression(visitExpr(ctx.expr()));
         ifStmt.setBody(visitJ_function_body(ctx.j_function_body(0)));
-        if(ctx.J_ELSE()!=null)
+        if (ctx.J_ELSE() != null)
             ifStmt.setElseStmt(visitJ_function_body(ctx.j_function_body(1)));
 
         return ifStmt;
@@ -126,17 +126,17 @@ public class BaseVisitor extends SQLBaseVisitor {
         System.out.println("visit Func Call Stmt");
         FunctionCallStmt functionCallStmt = new FunctionCallStmt();
         functionCallStmt.setFuncName(visitAny_name(ctx.any_name(0)));
-        if(ctx.any_name()!=null)
-        for (int i = 1; i < ctx.any_name().size(); i++) {
-            System.out.println("parameters");
-            functionCallStmt.addParam(visitAny_name(ctx.any_name(i)));
-        }
-        if(ctx.j_higher_order_func()!=null)
-        for (int i = 0; i < ctx.j_higher_order_func().size(); i++) {
-            HigherOrderFunction higherOrderFunction;
-            higherOrderFunction = visitJ_higher_order_func(ctx.j_higher_order_func(i));
-            functionCallStmt.addHigherOrderFunc(higherOrderFunction);
-        }
+        if (ctx.any_name() != null)
+            for (int i = 1; i < ctx.any_name().size(); i++) {
+                System.out.println("parameters");
+                functionCallStmt.addParam(visitAny_name(ctx.any_name(i)));
+            }
+        if (ctx.j_higher_order_func() != null)
+            for (int i = 0; i < ctx.j_higher_order_func().size(); i++) {
+                HigherOrderFunction higherOrderFunction;
+                higherOrderFunction = visitJ_higher_order_func(ctx.j_higher_order_func(i));
+                functionCallStmt.addHigherOrderFunc(higherOrderFunction);
+            }
         return functionCallStmt;
     }
 
@@ -146,17 +146,17 @@ public class BaseVisitor extends SQLBaseVisitor {
         ReturnStmt returnStmt = new ReturnStmt();
         if (ctx.any_name() != null) {
             returnStmt.setAnyName(visitAny_name(ctx.any_name()));
-            return  returnStmt;
+            return returnStmt;
         }
-        if(ctx.expr()!=null){
+        if (ctx.expr() != null) {
             returnStmt.setExpression(visitExpr(ctx.expr()));
             return returnStmt;
         }
-        if(ctx.j_bool_value()!=null){
+        if (ctx.j_bool_value() != null) {
             returnStmt.setBoolValue(visitJ_bool_value(ctx.j_bool_value()));
             return returnStmt;
         }
-        if(ctx.j_increment_operator()!=null)
+        if (ctx.j_increment_operator() != null)
             returnStmt.setIncrement(visitJ_increment_operator(ctx.j_increment_operator()));
         return returnStmt;
     }
@@ -164,7 +164,7 @@ public class BaseVisitor extends SQLBaseVisitor {
     @Override
     public PrintStmt visitJ_print(SQLParser.J_printContext ctx) {
         System.out.println("visit print stmt");
-        PrintStmt printStmt=new PrintStmt();
+        PrintStmt printStmt = new PrintStmt();
 
         printStmt.setStmt(visitAny_name(ctx.any_name(0)).getName());
         //System.out.println(printStmt.getStmt());
@@ -247,7 +247,7 @@ public class BaseVisitor extends SQLBaseVisitor {
     public InitVarStmt visitJ_init_var(SQLParser.J_init_varContext ctx) {
         System.out.println("visit init var stmt");
         InitVarStmt initVarStmt = new InitVarStmt();
-        if(ctx.any_name()!=null)
+        if (ctx.any_name() != null)
             initVarStmt.setVarName(visitAny_name(ctx.any_name()));
         if (ctx.expr() != null)
             initVarStmt.setExpression(visitExpr(ctx.expr()));
@@ -261,12 +261,16 @@ public class BaseVisitor extends SQLBaseVisitor {
             initVarStmt.setCallStmt(visitJ_function_call(ctx.j_function_call()));
         if (ctx.j_one_line_cond() != null)
             initVarStmt.setOneLineCondition(visitJ_one_line_cond(ctx.j_one_line_cond()));
+        if (ctx.factored_select_stmt() != null)
+            initVarStmt.setSelectStmt(visitFactored_select_stmt(ctx.factored_select_stmt()));
 
         return initVarStmt;
     }
-    @Override public InitValues visitJ_init_values(SQLParser.J_init_valuesContext ctx) {
+
+    @Override
+    public InitValues visitJ_init_values(SQLParser.J_init_valuesContext ctx) {
         System.out.println("visit init values");
-        InitValues initValues=new InitValues();
+        InitValues initValues = new InitValues();
         if (ctx.expr() != null)
             initValues.setExpression(visitExpr(ctx.expr()));
         if (ctx.j_init_array() != null)
@@ -283,9 +287,10 @@ public class BaseVisitor extends SQLBaseVisitor {
         return initValues;
     }
 
-    @Override public JsonValue visitJ_json_value(SQLParser.J_json_valueContext ctx) {
+    @Override
+    public JsonValue visitJ_json_value(SQLParser.J_json_valueContext ctx) {
         System.out.println("visit json values");
-        JsonValue jsonValue=new JsonValue();
+        JsonValue jsonValue = new JsonValue();
         jsonValue.setInitValues(visitJ_init_values(ctx.j_init_values()));
         for (int i = 0; i < ctx.any_name().size(); i++) {
             jsonValue.addPropName(visitAny_name(ctx.any_name(i)));
@@ -348,8 +353,8 @@ public class BaseVisitor extends SQLBaseVisitor {
     public OneLineCondition visitJ_one_line_cond(SQLParser.J_one_line_condContext ctx) {
         System.out.println("visit one line condition");
         OneLineCondition oneLineCondition = new OneLineCondition();
-        if(ctx.expr(0)!=null)
-        oneLineCondition.setExpression(visitExpr(ctx.expr(0)));
+        if (ctx.expr(0) != null)
+            oneLineCondition.setExpression(visitExpr(ctx.expr(0)));
         if (ctx.java_stmt(0) != null)
             oneLineCondition.setIfResult(visitJava_stmt(ctx.java_stmt(0)));
         if (ctx.java_stmt(1) != null)
@@ -391,12 +396,12 @@ public class BaseVisitor extends SQLBaseVisitor {
 
         FunctionHeader functionHeader = new FunctionHeader();
         functionHeader.setName(visitAny_name(ctx.any_name().get(0)).getName());
-
         ArrayList<Parameter> parametersList = new ArrayList<>();
+
         for (int i = 1; i < ctx.any_name().size(); i++) {
             Parameter parameter = new Parameter();
             String s = visitAny_name(ctx.any_name(i)).getName();
-            if(ctx.expr()!=null && ctx.expr(i)!=null)
+            if (ctx.expr() != null && ctx.expr(i) != null)
                 parameter.setValue(visitExpr(ctx.expr(i)));
             parameter.setName(s);
             parametersList.add(parameter);
@@ -414,7 +419,6 @@ public class BaseVisitor extends SQLBaseVisitor {
     @Override
     public JavaStatement visitJava_stmt(SQLParser.Java_stmtContext ctx) {
         System.out.println("visit JavaStmt");
-
         if (ctx.children.get(0) instanceof SQLParser.J_returnContext) {
             return visitJ_return((SQLParser.J_returnContext) ctx.children.get(0));
         }
@@ -460,9 +464,17 @@ public class BaseVisitor extends SQLBaseVisitor {
         if (ctx.children.get(0) instanceof SQLParser.J_function_bodyContext) {
             return visitJ_function_body((SQLParser.J_function_bodyContext) ctx.children.get(0));
         }
-        if(ctx.j_json_value()!=null)
-            return  visitJ_json_value(ctx.j_json_value());
-        if(ctx.j_print()!=null)
+        if (ctx.children.get(0) instanceof SQLParser.Sql_stmtContext) {
+            System.out.println("sql stmt");
+//            return new JavaStatement();
+            Statement statement=visitSql_stmt((SQLParser.Sql_stmtContext) ctx.children.get(0));
+            JavaStatement javaStatement= new JavaStatement();
+            javaStatement.setName(statement.getName());
+            return javaStatement ;
+        }
+        if (ctx.j_json_value() != null)
+            return visitJ_json_value(ctx.j_json_value());
+        if (ctx.j_print() != null)
             return visitJ_print(ctx.j_print());
 
         return new JavaStatement();
@@ -488,17 +500,59 @@ public class BaseVisitor extends SQLBaseVisitor {
     //TODO ---------------------------- SQL Visitors ----------------------------------
 
     @Override
+    public CreateTypeStmt visitCreate_type_stmt(SQLParser.Create_type_stmtContext ctx) {
+        System.out.println("visit create type stmt");
+        CreateTypeStmt createTypeStmt = new CreateTypeStmt();
+        if (ctx.database_name() != null)
+            createTypeStmt.setDataBaseName(visitAny_name(ctx.database_name().any_name()));
+        if (ctx.table_name() != null)
+            createTypeStmt.setTableName(visitAny_name(ctx.table_name().any_name()));
+        if (ctx.select_stmt() != null)
+            createTypeStmt.setSelectStmt(visitSelect_stmt(ctx.select_stmt()));
+        if (ctx.column_def() != null)
+            for (int i = 0; i < ctx.column_def().size(); i++) {
+                createTypeStmt.addColumnDef(visitColumn_def(ctx.column_def(i)));
+            }
+        return createTypeStmt;
+    }
+
+    @Override
+    public CreateAggFunc visitCreate_aggrigation_func(SQLParser.Create_aggrigation_funcContext ctx) {
+        System.out.println("visit aggregation func");
+        CreateAggFunc createAggFunc = new CreateAggFunc();
+        if (ctx.any_name(0) != null)
+            createAggFunc.setFuncName(visitAny_name(ctx.any_name(0)));
+        if (ctx.any_name(1) != null)
+            createAggFunc.setJarPath(visitAny_name(ctx.any_name(1)));
+        if (ctx.any_name(2) != null)
+            createAggFunc.setClassName(visitAny_name(ctx.any_name(2)));
+        if (ctx.any_name(3) != null)
+            createAggFunc.setMethodName(visitAny_name(ctx.any_name(3)));
+        if (ctx.any_name(4) != null)
+            createAggFunc.setReturnType(visitAny_name(ctx.any_name(4)));
+
+        ArrayList<AnyName> params = new ArrayList<>();
+        for (int i = 5; i < ctx.any_name().size(); i++) {
+            params.add(visitAny_name(ctx.any_name(i)));
+        }
+        createAggFunc.setFuncParameters(params);
+
+        return createAggFunc;
+    }
+
+
+    @Override
     public List<Statement> visitSql_stmt_list(SQLParser.Sql_stmt_listContext ctx) {
 
         System.out.println("visit Sql_stmt_list");
 
-        List<Statement> sqlStmt = new ArrayList<Statement>();
+        List<Statement> sqlStmts = new ArrayList<Statement>();
         if (ctx != null)
             for (int i = 0; i < ctx.sql_stmt().size(); i++) {
-                sqlStmt.add(visitSql_stmt(ctx.sql_stmt(i)));
+                sqlStmts.add(visitSql_stmt(ctx.sql_stmt(i)));
             }
 
-        return sqlStmt;
+        return sqlStmts;
     }
 
     @Override
@@ -511,6 +565,12 @@ public class BaseVisitor extends SQLBaseVisitor {
         }
         if (ctx.create_table_stmt() != null) {
             return visitCreate_table_stmt(ctx.create_table_stmt());
+        }
+        if (ctx.create_type_stmt() != null) {
+            return visitCreate_type_stmt(ctx.create_type_stmt());
+        }
+        if (ctx.create_aggrigation_func() != null) {
+            return visitCreate_aggrigation_func(ctx.create_aggrigation_func());
         }
         if (ctx.delete_stmt() != null) {
             return visitDelete_stmt(ctx.delete_stmt());
@@ -543,10 +603,9 @@ public class BaseVisitor extends SQLBaseVisitor {
     public SelectStmt visitFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx) {
         System.out.println("visit Factored_select_stmt");
         SelectStmt select = new SelectStmt();
-        if(ctx.select_core()!=null)
-        select.setSelectCore(visitSelect_core(ctx.select_core()));
-        if(ctx.ordering_term()!=null){
-            System.out.println("visit Ordering Term");
+        if (ctx.select_core() != null)
+            select.setSelectCore(visitSelect_core(ctx.select_core()));
+        if (ctx.ordering_term() != null) {
             for (int i = 0; i < ctx.ordering_term().size(); i++) {
                 select.addOrderingTerm(visitExpr(ctx.ordering_term(i).expr()));
             }
@@ -591,7 +650,7 @@ public class BaseVisitor extends SQLBaseVisitor {
         DropTableStmt dropTableStmt = new DropTableStmt();
         if (ctx.database_name() != null)
             dropTableStmt.setDataBaseName(visitAny_name(ctx.database_name().any_name()));
-        if(ctx.table_name().any_name()!=null)
+        if (ctx.table_name().any_name() != null)
             dropTableStmt.setTableName(visitAny_name(ctx.table_name().any_name()));
         return dropTableStmt;
     }
@@ -730,7 +789,7 @@ public class BaseVisitor extends SQLBaseVisitor {
                 System.out.println("Logical Expression");
                 LogicExpression logicExpression = new LogicExpression();
                 logicExpression.setLeftExpression(visitExpr(ctx.expr(i)));
-                if(ctx.expr(i+1)!=null)
+                if (ctx.expr(i + 1) != null)
                     logicExpression.setRightExpression(visitExpr(ctx.expr(i + 1)));
                 break;
             }
@@ -839,8 +898,8 @@ public class BaseVisitor extends SQLBaseVisitor {
         typeName.setTypeName(visitAny_name(ctx.name().any_name()));
         if (ctx.any_name(0) != null)
             typeName.setAnyName(visitAny_name(ctx.any_name(0)));
-        if(ctx.signed_number(0)!=null)
-        typeName.setSignedNum(ctx.signed_number(0).NUMERIC_LITERAL().getSymbol().getText());
+        if (ctx.signed_number(0) != null)
+            typeName.setSignedNum(ctx.signed_number(0).NUMERIC_LITERAL().getSymbol().getText());
 
         return typeName;
     }
@@ -1019,38 +1078,37 @@ public class BaseVisitor extends SQLBaseVisitor {
         //   ( K_GROUP K_BY expr ( ',' expr )* ( K_HAVING expr )? )?
         // | K_VALUES '(' expr ( ',' expr )* ')' ( ',' '(' expr ( ',' expr )* ')' )*
         // ;
-        SelectCore selectCore=new SelectCore();
-        if(ctx.result_column()!=null){
+        SelectCore selectCore = new SelectCore();
+        if (ctx.result_column() != null) {
             System.out.println("visit result column");
             for (int i = 0; i < ctx.result_column().size(); i++) {
-             //   if(ctx.result_column(i)!=null)
-             //   selectCore.addResultCol(visitAny_name(ctx.result_column(i).table_name().any_name()));
+                //   if(ctx.result_column(i)!=null)
+                //   selectCore.addResultCol(visitAny_name(ctx.result_column(i).table_name().any_name()));
             }
 
         }
-        if(ctx.table_or_subquery()!=null) {
-            if(ctx.K_FROM()!=null)
+        if (ctx.table_or_subquery() != null) {
+            if (ctx.K_FROM() != null)
                 System.out.println("visit From stmt");
-                System.out.println("visit table or sub query");
+
             for (int i = 0; i < ctx.table_or_subquery().size(); i++) {
                 selectCore.addTableName(visitAny_name(ctx.table_or_subquery(i).table_name().any_name()));
             }
         }
-        if(ctx.K_WHERE()!=null)
-        {
+        if (ctx.K_WHERE() != null) {
             System.out.println("visit where stmt");
             selectCore.setWhere(visitExpr(ctx.expr(0)));
         }
-        if(ctx.K_GROUP()!=null){
+        if (ctx.K_GROUP() != null) {
 
             System.out.println("visit group by stmt");
             for (int i = 1; i < ctx.expr().size(); i++) {
                 selectCore.addGroupByExpr(visitExpr(ctx.expr(i)));
             }
         }
-        if(ctx.K_VALUES()!=null && ctx.expr(0)!=null){
-                System.out.println("visit values");
-            for (int i = 1; i < ctx.expr().size() ; i++) {
+        if (ctx.K_VALUES() != null && ctx.expr(0) != null) {
+            System.out.println("visit values");
+            for (int i = 1; i < ctx.expr().size(); i++) {
                 selectCore.addValue(visitExpr(ctx.expr(i)));
             }
 
