@@ -1,11 +1,29 @@
 f(){
-    var x = 123;
     if(x){
-        var t=true;
-        while(x){
-            var x = y;
+        if(y){
+            if(t){
+                var test=5;
+            }
+            var mhd="hello";
+            create type t(soso number, toto boolean, koko string);
         }
     }
-    var y = "hello";
-    create type myType (t number, x string, z boolean, y student);
+    var ahd=true;
+
+    while(t){
+        x(){
+            var vivo=student;
+        }
+    }
+     while(t){
+        if(x){
+
+        }
+     }
 }
+create aggregation_function fofo(a,b,c,d,[haha,mama]);
+
+t(){
+    create table toto(aa number , bb xx, lolo  xx);
+}
+v(){}

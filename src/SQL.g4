@@ -202,7 +202,7 @@ alter_table_add
  ;
 
 create_table_stmt
- : K_CREATE  K_TYPE ( K_IF K_NOT K_EXISTS )?
+ : K_CREATE K_TABLE ( K_IF K_NOT K_EXISTS )?
    table_name
    ( '(' column_def (',' column_def )* ')' )
  ;

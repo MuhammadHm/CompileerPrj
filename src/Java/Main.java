@@ -36,10 +36,10 @@ public class Main {
             p.accept(new BaseASTVisitor());
 //             p.accept(new ASTSymbolTable());
 
-            System.out.println();
-            for (int i = 0; i < symbolTable.getScopes().size(); i++) {
-                System.out.println(symbolTable.getScopes().get(i).getId()+"\n");
-            }
+//            System.out.println();
+//            for (int i = 0; i < symbolTable.getScopes().size(); i++) {
+//                System.out.println(symbolTable.getScopes().get(i).getId()+"\n");
+//            }
         } catch (IOException e) {
             e.printStackTrace();
         }

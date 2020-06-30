@@ -2,14 +2,13 @@ package Java.SymbolTable;
 
 import java.util.ArrayList;
 
-class AggregationFunction extends Type{
-    protected String AggregationFunctionName;
-    protected String JarPath;
-    protected String ClassName;
-    protected String MethodName;
-    protected String returnType;
-
-    private ArrayList<Object> params = new ArrayList<Object>();
+public class AggregationFunction extends Type {
+    private String AggregationFunctionName;
+    private String JarPath;
+    private String ClassName;
+    private String MethodName;
+    private String returnType;
+    private ArrayList<String> params = new ArrayList<String>();
 
 
     public String getAggregationFunctionName() {
@@ -52,11 +51,11 @@ class AggregationFunction extends Type{
         this.returnType = returnType;
     }
 
-    public ArrayList<Object> getParams() {
+    public ArrayList<String> getParams() {
         return params;
     }
 
-    public void setParams(ArrayList<Object> params) {
+    public void setParams(ArrayList<String> params) {
         this.params = params;
     }
 

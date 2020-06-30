@@ -10,6 +10,7 @@ import Java.AST.JavaStatements.*;
 import Java.AST.Parse;
 import Java.AST.SQLStmt.*;
 import Java.Main;
+import Java.SymbolTable.AggregationFunction;
 import Java.SymbolTable.Scope;
 import Java.SymbolTable.Type;
 import Utils.ScopeManager;
@@ -564,8 +565,8 @@ public class BaseVisitor extends SQLBaseVisitor {
             for (int i = 0; i < ctx.column_def().size(); i++) {
                 String varType = visitAny_name(ctx.column_def(i).type_name(0).name().any_name()).getName();
                 String varName = visitAny_name(ctx.column_def(i).column_name().any_name()).getName();
-                System.out.println("varName "+ varName);
-                System.out.println("varName "+ varType);
+                System.out.println("varName " + varName);
+                System.out.println("varName " + varType);
                 columns.put(varName, TypeManager.guessType(varType));
             }
             type.setColumns(columns);
@@ -574,12 +575,12 @@ public class BaseVisitor extends SQLBaseVisitor {
         Main.symbolTable.addType(type);
 
         CreateTypeStmt createTypeStmt = new CreateTypeStmt();
-        if (ctx.table_name() != null)
-            createTypeStmt.setTableName(visitAny_name(ctx.table_name().any_name()));
-        if (ctx.column_def() != null)
-            for (int i = 0; i < ctx.column_def().size(); i++) {
-                createTypeStmt.addColumnDef(visitColumn_def(ctx.column_def(i)));
-            }
+//        if (ctx.table_name() != null)
+//            createTypeStmt.setTableName(visitAny_name(ctx.table_name().any_name()));
+//        if (ctx.column_def() != null)
+//            for (int i = 0; i < ctx.column_def().size(); i++) {
+//                createTypeStmt.addColumnDef(visitColumn_def(ctx.column_def(i)));
+//            }
         return createTypeStmt;
 
     }
@@ -587,24 +588,45 @@ public class BaseVisitor extends SQLBaseVisitor {
     @Override
     public CreateAggFunc visitCreate_aggrigation_func(SQLParser.Create_aggrigation_funcContext ctx) {
         System.out.println("visit aggregation func");
-        CreateAggFunc createAggFunc = new CreateAggFunc();
+
+        AggregationFunction aggregationFunction = new AggregationFunction();
         if (ctx.any_name(0) != null)
-            createAggFunc.setFuncName(visitAny_name(ctx.any_name(0)));
+            aggregationFunction.setAggregationFunctionName(visitAny_name(ctx.any_name(0)).getName());
         if (ctx.any_name(1) != null)
-            createAggFunc.setJarPath(visitAny_name(ctx.any_name(1)));
+            aggregationFunction.setJarPath(visitAny_name(ctx.any_name(1)).getName());
         if (ctx.any_name(2) != null)
-            createAggFunc.setClassName(visitAny_name(ctx.any_name(2)));
+            aggregationFunction.setClassName(visitAny_name(ctx.any_name(2)).getName());
         if (ctx.any_name(3) != null)
-            createAggFunc.setMethodName(visitAny_name(ctx.any_name(3)));
+            aggregationFunction.setMethodName(visitAny_name(ctx.any_name(3)).getName());
         if (ctx.any_name(4) != null)
-            createAggFunc.setReturnType(visitAny_name(ctx.any_name(4)));
+            aggregationFunction.setReturnType(visitAny_name(ctx.any_name(4)).getName());
 
-        ArrayList<AnyName> params = new ArrayList<>();
+        ArrayList<String> funcParams = new ArrayList<>();
         for (int i = 5; i < ctx.any_name().size(); i++) {
-            params.add(visitAny_name(ctx.any_name(i)));
+            if (ctx.any_name(i) != null)
+                funcParams.add(visitAny_name(ctx.any_name(i)).getName());
         }
-        createAggFunc.setFuncParameters(params);
+        aggregationFunction.setParams(funcParams);
 
+        Main.symbolTable.addAggregationFunction(aggregationFunction);
+
+        CreateAggFunc createAggFunc = new CreateAggFunc();
+//        if (ctx.any_name(0) != null)
+//            createAggFunc.setFuncName(visitAny_name(ctx.any_name(0)));
+//        if (ctx.any_name(1) != null)
+//            createAggFunc.setJarPath(visitAny_name(ctx.any_name(1)));
+//        if (ctx.any_name(2) != null)
+//            createAggFunc.setClassName(visitAny_name(ctx.any_name(2)));
+//        if (ctx.any_name(3) != null)
+//            createAggFunc.setMethodName(visitAny_name(ctx.any_name(3)));
+//        if (ctx.any_name(4) != null)
+//            createAggFunc.setReturnType(visitAny_name(ctx.any_name(4)));
+//
+//        ArrayList<AnyName> params = new ArrayList<>();
+//        for (int i = 5; i < ctx.any_name().size(); i++) {
+//            params.add(visitAny_name(ctx.any_name(i)));
+//        }
+//        createAggFunc.setFuncParameters(params);
         return createAggFunc;
     }
 
@@ -696,26 +718,22 @@ public class BaseVisitor extends SQLBaseVisitor {
             for (int i = 0; i < ctx.column_def().size(); i++) {
                 String varType = visitAny_name(ctx.column_def(i).type_name(0).name().any_name()).getName();
                 String varName = visitAny_name(ctx.column_def(i).column_name().any_name()).getName();
-                System.out.println("varName "+ varName);
-                System.out.println("varName "+ varType);
                 columns.put(varName, TypeManager.guessType(varType));
             }
             type.setColumns(columns);
         }
-
         Main.symbolTable.addType(type);
-
 
 //        if (ctx.database_name() != null)
 //            createTableStmt.setDataBaseName(visitAny_name(ctx.database_name().any_name()));
-        if (ctx.table_name() != null)
-            createTableStmt.setTableName(visitAny_name(ctx.table_name().any_name()));
+//        if (ctx.table_name() != null)
+//            createTableStmt.setTableName(visitAny_name(ctx.table_name().any_name()));
 //        if (ctx.select_stmt() != null)
 //            createTableStmt.setSelectStmt(visitSelect_stmt(ctx.select_stmt()));
-        if (ctx.column_def() != null)
-            for (int i = 0; i < ctx.column_def().size(); i++) {
-                createTableStmt.addColumnDef(visitColumn_def(ctx.column_def(i)));
-            }
+//        if (ctx.column_def() != null)
+//            for (int i = 0; i < ctx.column_def().size(); i++) {
+//                createTableStmt.addColumnDef(visitColumn_def(ctx.column_def(i)));
+//            }
         return createTableStmt;
     }
 

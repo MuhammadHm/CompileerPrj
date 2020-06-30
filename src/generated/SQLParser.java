@@ -4373,7 +4373,7 @@ public class SQLParser extends Parser {
 
 	public static class Create_table_stmtContext extends ParserRuleContext {
 		public TerminalNode K_CREATE() { return getToken(SQLParser.K_CREATE, 0); }
-		public TerminalNode K_TYPE() { return getToken(SQLParser.K_TYPE, 0); }
+		public TerminalNode K_TABLE() { return getToken(SQLParser.K_TABLE, 0); }
 		public Table_nameContext table_name() {
 			return getRuleContext(Table_nameContext.class,0);
 		}
@@ -4421,7 +4421,7 @@ public class SQLParser extends Parser {
 			setState(680);
 			match(K_CREATE);
 			setState(681);
-			match(K_TYPE);
+			match(K_TABLE);
 			setState(685);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,58,_ctx) ) {
@@ -10329,7 +10329,7 @@ public class SQLParser extends Parser {
 		"\2\2\u02a0\u029a\3\2\2\2\u02a0\u029b\3\2\2\2\u02a1G\3\2\2\2\u02a2\u02a3"+
 		"\7\67\2\2\u02a3\u02a4\7M\2\2\u02a4\u02a5\5\u00b2Z\2\u02a5\u02a6\5v<\2"+
 		"\u02a6I\3\2\2\2\u02a7\u02a8\7\67\2\2\u02a8\u02a9\5v<\2\u02a9K\3\2\2\2"+
-		"\u02aa\u02ab\7N\2\2\u02ab\u02af\7\33\2\2\u02ac\u02ad\7m\2\2\u02ad\u02ae"+
+		"\u02aa\u02ab\7N\2\2\u02ab\u02af\7\u00a1\2\2\u02ac\u02ad\7m\2\2\u02ad\u02ae"+
 		"\7\u0084\2\2\u02ae\u02b0\7c\2\2\u02af\u02ac\3\2\2\2\u02af\u02b0\3\2\2"+
 		"\2\u02b0\u02b1\3\2\2\2\u02b1\u02b2\5\u00a4S\2\u02b2\u02b3\7\37\2\2\u02b3"+
 		"\u02b8\5\\/\2\u02b4\u02b5\7!\2\2\u02b5\u02b7\5\\/\2\u02b6\u02b4\3\2\2"+
