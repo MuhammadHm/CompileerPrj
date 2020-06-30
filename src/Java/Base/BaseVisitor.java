@@ -11,13 +11,19 @@ import Java.AST.Parse;
 import Java.AST.SQLStmt.*;
 import Java.Main;
 import Java.SymbolTable.Scope;
+import Java.SymbolTable.Type;
+import Utils.ScopeManager;
+import Utils.SymbolManager;
+import Utils.TypeManager;
 import generated.SQLBaseVisitor;
 import generated.SQLParser;
 //import jdk.nashorn.internal.runtime.regexp.JoniRegExp;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BaseVisitor extends SQLBaseVisitor {
 
@@ -32,9 +38,13 @@ public class BaseVisitor extends SQLBaseVisitor {
             List<Statement> sqlStmts = visitSql_stmt_list(ctx.sql_stmt_list(0));
             p.setSqlStmts(sqlStmts);
         }
-        if (ctx.java_function(0) != null) {
-            FunctionDeclaration javaFunction = visitJava_function(ctx.java_function(0));
-            p.setFunction(javaFunction);
+        if (!ctx.java_function().isEmpty()) {
+            ArrayList<FunctionDeclaration> functionDeclarations = new ArrayList<>();
+            for (int i = 0; i < ctx.java_function().size(); i++) {
+                FunctionDeclaration javaFunction = visitJava_function(ctx.java_function(i));
+                functionDeclarations.add(javaFunction);
+            }
+            p.setFunction(functionDeclarations);
         }
 
         p.setLine(ctx.getStart().getLine()); //get line number
@@ -114,7 +124,7 @@ public class BaseVisitor extends SQLBaseVisitor {
     public VarDeclareStmt visitJ_var(SQLParser.J_varContext ctx) {
         System.out.println("visit var declare stmt");
         VarDeclareStmt varDeclareStmt = new VarDeclareStmt();
-        varDeclareStmt.setName("Var Declare Stmt");
+
 
         for (int i = 0; i < ctx.j_init_var().size(); i++) {
             varDeclareStmt.addVar(visitJ_init_var(ctx.j_init_var(i)));
@@ -249,22 +259,57 @@ public class BaseVisitor extends SQLBaseVisitor {
     public InitVarStmt visitJ_init_var(SQLParser.J_init_varContext ctx) {
         System.out.println("visit init var stmt");
         InitVarStmt initVarStmt = new InitVarStmt();
-        if (ctx.any_name() != null)
-            initVarStmt.setVarName(visitAny_name(ctx.any_name()));
-        if (ctx.expr() != null)
+        String varName = "";
+
+        if (ctx.any_name(0) != null) {
+            //var name
+            initVarStmt.setVarName(visitAny_name(ctx.any_name(0)));
+            varName = initVarStmt.getVarName().getName();
+        }
+        if (ctx.j_string() != null) {
+            System.out.println("visit string");
+            initVarStmt.setString(visitAny_name(ctx.j_string().any_name()));
+            SymbolManager.createSymbol(varName, Type.STRING_CONST, false);
+        }
+        if (ctx.any_name(1) != null) {
+            System.out.println("visit new type");
+            initVarStmt.setNewType(visitAny_name(ctx.any_name(1)));
+            SymbolManager.createSymbol(varName, initVarStmt.getNewType().getName(), false);
+        }
+
+
+        if (ctx.expr() != null) {
             initVarStmt.setExpression(visitExpr(ctx.expr()));
-        if (ctx.j_init_array() != null)
-            initVarStmt.setInitArrayStmt(visitJ_init_array(ctx.j_init_array()));
-        if (ctx.j_json_object() != null)
-            initVarStmt.setJsonObject(visitJ_json_object(ctx.j_json_object()));
-        if (ctx.j_json_array() != null)
-            initVarStmt.setJsonArray(visitJ_json_array(ctx.j_json_array()));
-        if (ctx.j_function_call() != null)
-            initVarStmt.setCallStmt(visitJ_function_call(ctx.j_function_call()));
-        if (ctx.j_one_line_cond() != null)
-            initVarStmt.setOneLineCondition(visitJ_one_line_cond(ctx.j_one_line_cond()));
+            if (ctx.expr().literal_value() != null) {
+                System.out.println("visit literal value");
+                String n = ctx.expr().literal_value().NUMERIC_LITERAL().getSymbol().getText();
+                initVarStmt.setNumber(Integer.parseInt(n));
+                SymbolManager.createSymbol(varName, Type.NUMBER_CONST, false);
+            }
+            if (ctx.expr().j_bool_value() != null) {
+                System.out.println("visit bool value");
+                if (ctx.expr().j_bool_value().J_FALSE() != null) {
+                    initVarStmt.setBoolValue(false);
+                    SymbolManager.createSymbol(varName, Type.BOOLEAN_CONST, false);
+                }
+                if (ctx.expr().j_bool_value().J_TRUE() != null) {
+                    initVarStmt.setBoolValue(true);
+                    SymbolManager.createSymbol(varName, Type.BOOLEAN_CONST, false);
+                }
+            }
+        }
         if (ctx.factored_select_stmt() != null)
             initVarStmt.setSelectStmt(visitFactored_select_stmt(ctx.factored_select_stmt()));
+//        if (ctx.j_init_array() != null)
+//            initVarStmt.setInitArrayStmt(visitJ_init_array(ctx.j_init_array()));
+//        if (ctx.j_json_object() != null)
+//            initVarStmt.setJsonObject(visitJ_json_object(ctx.j_json_object()));
+//        if (ctx.j_json_array() != null)
+//            initVarStmt.setJsonArray(visitJ_json_array(ctx.j_json_array()));
+//        if (ctx.j_function_call() != null)
+//            initVarStmt.setCallStmt(visitJ_function_call(ctx.j_function_call()));
+//        if (ctx.j_one_line_cond() != null)
+//            initVarStmt.setOneLineCondition(visitJ_one_line_cond(ctx.j_one_line_cond()));
 
         return initVarStmt;
     }
@@ -487,24 +532,7 @@ public class BaseVisitor extends SQLBaseVisitor {
 //        System.out.println("visit function body");
         System.out.println("start func body");
         FunctionBody body = new FunctionBody();
-        Scope scope = new Scope();
-        if (Main.symbolTable.getScopes().isEmpty()) {
-            scope.setParent(null);
-            scope.setOpen(true);
-            scope.setId("0");
-        } else {
-            for (int i = Main.symbolTable.getScopes().size() - 1; i >= 0; i--) {
-                if (Main.symbolTable.getScopes().get(i).isOpen()) {
-                    scope.setParent(Main.symbolTable.getScopes().get(i));
-                    scope.setOpen(true);
-                    scope.setId(Integer.toString(Integer.parseInt(Main.symbolTable.getScopes().get(i).getId()) + 1));
-                    break;
-                }
-            }
-        }
-        Main.symbolTable.addScope(scope);
-        //TODO add scopes
-
+        ScopeManager.createOpenedScope();
         List<JavaStatement> javaStatements = new ArrayList<JavaStatement>();
         if (ctx != null)
             for (int i = 0; i < ctx.java_stmt().size(); i++) {
@@ -512,7 +540,7 @@ public class BaseVisitor extends SQLBaseVisitor {
                     javaStatements.add(visitJava_stmt(ctx.java_stmt(i)));
             }
 
-        scope.setOpen(false);
+        ScopeManager.closeLastOpened();
         body.setJavaStatements(javaStatements);
 
         System.out.println("end func body");
@@ -526,18 +554,34 @@ public class BaseVisitor extends SQLBaseVisitor {
     @Override
     public CreateTypeStmt visitCreate_type_stmt(SQLParser.Create_type_stmtContext ctx) {
         System.out.println("visit create type stmt");
+        Type type = new Type();
+        if (ctx.table_name() != null)
+            type.setName(visitAny_name(ctx.table_name().any_name()).getName());
+
+        if (!ctx.column_def().isEmpty()) {
+            Map<String, Type> columns = new HashMap<String, Type>();
+
+            for (int i = 0; i < ctx.column_def().size(); i++) {
+                String varType = visitAny_name(ctx.column_def(i).type_name(0).name().any_name()).getName();
+                String varName = visitAny_name(ctx.column_def(i).column_name().any_name()).getName();
+                System.out.println("varName "+ varName);
+                System.out.println("varName "+ varType);
+                columns.put(varName, TypeManager.guessType(varType));
+            }
+            type.setColumns(columns);
+        }
+
+        Main.symbolTable.addType(type);
+
         CreateTypeStmt createTypeStmt = new CreateTypeStmt();
-        if (ctx.database_name() != null)
-            createTypeStmt.setDataBaseName(visitAny_name(ctx.database_name().any_name()));
         if (ctx.table_name() != null)
             createTypeStmt.setTableName(visitAny_name(ctx.table_name().any_name()));
-        if (ctx.select_stmt() != null)
-            createTypeStmt.setSelectStmt(visitSelect_stmt(ctx.select_stmt()));
         if (ctx.column_def() != null)
             for (int i = 0; i < ctx.column_def().size(); i++) {
                 createTypeStmt.addColumnDef(visitColumn_def(ctx.column_def(i)));
             }
         return createTypeStmt;
+
     }
 
     @Override
@@ -642,12 +686,32 @@ public class BaseVisitor extends SQLBaseVisitor {
     public CreateTableStmt visitCreate_table_stmt(SQLParser.Create_table_stmtContext ctx) {
         System.out.println("visit create table stmt");
         CreateTableStmt createTableStmt = new CreateTableStmt();
-        if (ctx.database_name() != null)
-            createTableStmt.setDataBaseName(visitAny_name(ctx.database_name().any_name()));
+        Type type = new Type();
+        if (ctx.table_name() != null)
+            type.setName(visitAny_name(ctx.table_name().any_name()).getName());
+
+        if (!ctx.column_def().isEmpty()) {
+            Map<String, Type> columns = new HashMap<String, Type>();
+
+            for (int i = 0; i < ctx.column_def().size(); i++) {
+                String varType = visitAny_name(ctx.column_def(i).type_name(0).name().any_name()).getName();
+                String varName = visitAny_name(ctx.column_def(i).column_name().any_name()).getName();
+                System.out.println("varName "+ varName);
+                System.out.println("varName "+ varType);
+                columns.put(varName, TypeManager.guessType(varType));
+            }
+            type.setColumns(columns);
+        }
+
+        Main.symbolTable.addType(type);
+
+
+//        if (ctx.database_name() != null)
+//            createTableStmt.setDataBaseName(visitAny_name(ctx.database_name().any_name()));
         if (ctx.table_name() != null)
             createTableStmt.setTableName(visitAny_name(ctx.table_name().any_name()));
-        if (ctx.select_stmt() != null)
-            createTableStmt.setSelectStmt(visitSelect_stmt(ctx.select_stmt()));
+//        if (ctx.select_stmt() != null)
+//            createTableStmt.setSelectStmt(visitSelect_stmt(ctx.select_stmt()));
         if (ctx.column_def() != null)
             for (int i = 0; i < ctx.column_def().size(); i++) {
                 createTableStmt.addColumnDef(visitColumn_def(ctx.column_def(i)));

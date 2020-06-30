@@ -107,6 +107,12 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitJ_init_var(SQLParser.J_init_varContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link SQLParser#j_string}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitJ_string(SQLParser.J_stringContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SQLParser#j_init_arr_elem}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

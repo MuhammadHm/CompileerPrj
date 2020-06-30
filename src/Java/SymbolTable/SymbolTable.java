@@ -33,4 +33,8 @@ public class SymbolTable {
     public void addType(Type type) {
         this.declaredTypes.add(type);
     }
+    public void addAggregationFunction(AggregationFunction aggregationFunction){
+        this.declaredAggregationFunction.add(aggregationFunction);
+    }
+
 }

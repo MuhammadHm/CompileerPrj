@@ -20,7 +20,6 @@ public class Main {
 
     public static SymbolTable symbolTable;
 
-
     public static void main(String[] args) {
         symbolTable=new SymbolTable();
         try {
@@ -36,6 +35,7 @@ public class Main {
 
             p.accept(new BaseASTVisitor());
 //             p.accept(new ASTSymbolTable());
+
             System.out.println();
             for (int i = 0; i < symbolTable.getScopes().size(); i++) {
                 System.out.println(symbolTable.getScopes().get(i).getId()+"\n");

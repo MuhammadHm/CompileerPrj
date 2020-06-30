@@ -10,7 +10,7 @@ import java.util.List;
 public class Parse extends Node {
 
     private List<Statement> sqlStmts = new ArrayList<Statement>();
-    private FunctionDeclaration function;
+    private ArrayList<FunctionDeclaration> function=new ArrayList<>();
 
 
     public void addQuery(Statement query) {
@@ -21,7 +21,7 @@ public class Parse extends Node {
         this.sqlStmts = sqlStmts;
     }
 
-    public void setFunction(FunctionDeclaration function) {
+    public void setFunction(ArrayList<FunctionDeclaration> function) {
         this.function = function;
     }
 
@@ -29,7 +29,7 @@ public class Parse extends Node {
         return sqlStmts;
     }
 
-    public FunctionDeclaration getFunctions() {
+    public ArrayList<FunctionDeclaration> getFunctions() {
         return function;
     }
 
@@ -41,7 +41,9 @@ public class Parse extends Node {
             for (int i = 0; i < this.sqlStmts.size(); i++) {
                 this.sqlStmts.get(i).accept(astVisitor);
             }
-        if (function != null)
-            function.accept(astVisitor);
+        if (!function.isEmpty())
+            for (int i = 0; i < this.function.size(); i++) {
+                this.function.get(i).accept(astVisitor);
+            }
     }
 }

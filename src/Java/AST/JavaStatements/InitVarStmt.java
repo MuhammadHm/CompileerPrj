@@ -9,31 +9,39 @@ public class InitVarStmt extends JavaStatement {
 
     AnyName varName;
     Expression expression;
+    SelectStmt selectStmt;
+    AnyName newType;
+    AnyName string;
+    boolean boolValue;
+    Integer number;
+
+
+    //Trash
     InitArrayStmt initArrayStmt;
     JsonObject jsonObject;
     JsonArray jsonArray;
     FunctionCallStmt callStmt;
     OneLineCondition oneLineCondition;
-    SelectStmt selectStmt;
+
 
     @Override
-    public void accept(ASTVisitor astVisitor){
+    public void accept(ASTVisitor astVisitor) {
         astVisitor.visit(this);
-        if(varName!=null)
+        if (varName != null)
             varName.accept(astVisitor);
-        if(expression!=null)
+        if (expression != null)
             expression.accept(astVisitor);
-        if(initArrayStmt!=null)
+        if (initArrayStmt != null)
             initArrayStmt.accept(astVisitor);
-        if(jsonArray!=null)
+        if (jsonArray != null)
             jsonArray.accept(astVisitor);
-        if(jsonObject!=null)
+        if (jsonObject != null)
             jsonObject.accept(astVisitor);
-        if(callStmt!=null)
+        if (callStmt != null)
             callStmt.accept(astVisitor);
-        if(oneLineCondition!=null)
+        if (oneLineCondition != null)
             oneLineCondition.accept(astVisitor);
-        if(selectStmt!=null)
+        if (selectStmt != null)
             selectStmt.accept(astVisitor);
     }
 
@@ -67,5 +75,41 @@ public class InitVarStmt extends JavaStatement {
 
     public void setSelectStmt(SelectStmt selectStmt) {
         this.selectStmt = selectStmt;
+    }
+
+    public void setBoolValue(boolean boolValue) {
+        this.boolValue = boolValue;
+    }
+
+    public void setNewType(AnyName newType) {
+        this.newType = newType;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public void setString(AnyName string) {
+        this.string = string;
+    }
+
+    public Expression getExpression() {
+        return expression;
+    }
+
+    public AnyName getVarName() {
+        return varName;
+    }
+
+    public AnyName getNewType() {
+        return newType;
+    }
+
+    public AnyName getString() {
+        return string;
+    }
+
+    public Integer getNumber() {
+        return number;
     }
 }
