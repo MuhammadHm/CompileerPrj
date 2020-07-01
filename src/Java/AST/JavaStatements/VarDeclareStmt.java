@@ -26,4 +26,8 @@ public class VarDeclareStmt extends JavaStatement {
     public void addVar(InitVarStmt initVarStmt){
         variables.add(initVarStmt);
     }
+
+    public void setVariables(ArrayList<InitVarStmt> variables) {
+        this.variables = variables;
+    }
 }

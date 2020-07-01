@@ -1,5 +1,4 @@
 // Generated from C:/Users/Ahmad/IdeaProjects/antlrTest/src\SQL.g4 by ANTLR 4.7.2
-package generated;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;

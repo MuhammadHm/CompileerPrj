@@ -1,5 +1,4 @@
 // Generated from C:/Users/Ahmad/IdeaProjects/antlrTest/src\SQL.g4 by ANTLR 4.7.2
-package generated;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -220,6 +219,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitReal_name(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitReal_name(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Real_nameContext real_name() throws RecognitionException {
@@ -311,6 +315,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJava_function(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJava_function(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -448,6 +457,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_higher_order_func(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_higher_order_func(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -606,6 +620,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJava_stmt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJava_stmt(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -819,6 +838,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_function_body(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_function_body(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final J_function_bodyContext j_function_body() throws RecognitionException {
@@ -889,6 +913,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_if(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_if(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -972,6 +1001,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_var(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_var(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final J_varContext j_var() throws RecognitionException {
@@ -1047,6 +1081,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_function_call(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_function_call(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1417,6 +1456,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_return(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_return(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final J_returnContext j_return() throws RecognitionException {
@@ -1498,6 +1542,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_while(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_while(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final J_whileContext j_while() throws RecognitionException {
@@ -1552,6 +1601,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_do_while(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_do_while(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1622,6 +1676,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_for(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_for(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1696,6 +1755,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_for_each(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_for_each(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final J_for_eachContext j_for_each() throws RecognitionException {
@@ -1765,6 +1829,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_switch_case(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_switch_case(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1867,6 +1936,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_init_array(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_init_array(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1983,6 +2057,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_init_var(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_init_var(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final J_init_varContext j_init_var() throws RecognitionException {
@@ -2066,6 +2145,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_assign(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_assign(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final J_assignContext j_assign() throws RecognitionException {
@@ -2104,6 +2188,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_string(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_string(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2165,6 +2254,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_init_arr_elem(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_init_arr_elem(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2258,6 +2352,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_json_object(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_json_object(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final J_json_objectContext j_json_object() throws RecognitionException {
@@ -2334,6 +2433,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_json_elem(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_json_elem(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2716,6 +2820,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_json_array(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_json_array(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final J_json_arrayContext j_json_array() throws RecognitionException {
@@ -2802,6 +2911,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_print(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_print(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2916,6 +3030,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_one_line_cond(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_one_line_cond(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final J_one_line_condContext j_one_line_cond() throws RecognitionException {
@@ -3002,6 +3121,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_bool_value(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_bool_value(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final J_bool_valueContext j_bool_value() throws RecognitionException {
@@ -3048,6 +3172,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_break(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_break(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final J_breakContext j_break() throws RecognitionException {
@@ -3087,6 +3216,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_increment_operator(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_increment_operator(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3296,6 +3430,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_init_values(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_init_values(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final J_init_valuesContext j_init_values() throws RecognitionException {
@@ -3405,6 +3544,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJ_json_value(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJ_json_value(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final J_json_valueContext j_json_value() throws RecognitionException {
@@ -3481,6 +3625,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitCreate_type_stmt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitCreate_type_stmt(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3575,6 +3724,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitCreate_aggrigation_func(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitCreate_aggrigation_func(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3692,6 +3846,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitParse(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitParse(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ParseContext parse() throws RecognitionException {
@@ -3763,6 +3922,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitError(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitError(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ErrorContext error() throws RecognitionException {
@@ -3811,6 +3975,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitSql_stmt_list(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitSql_stmt_list(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3937,6 +4106,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitSql_stmt(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitSql_stmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Sql_stmtContext sql_stmt() throws RecognitionException {
@@ -4054,6 +4228,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitAlter_table_stmt(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitAlter_table_stmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Alter_table_stmtContext alter_table_stmt() throws RecognitionException {
@@ -4158,6 +4337,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitAlter_table_add_constraint(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitAlter_table_add_constraint(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Alter_table_add_constraintContext alter_table_add_constraint() throws RecognitionException {
@@ -4203,6 +4387,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitAlter_table_add(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitAlter_table_add(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4261,6 +4450,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitCreate_table_stmt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitCreate_table_stmt(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4350,6 +4544,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitDelete_stmt(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitDelete_stmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Delete_stmtContext delete_stmt() throws RecognitionException {
@@ -4412,6 +4611,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitDrop_table_stmt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitDrop_table_stmt(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4499,6 +4703,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitFactored_select_stmt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitFactored_select_stmt(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4639,6 +4848,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitInsert_stmt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitInsert_stmt(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4828,6 +5042,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitSelect_stmt(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitSelect_stmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Select_stmtContext select_stmt() throws RecognitionException {
@@ -4968,6 +5187,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitSelect_or_values(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitSelect_or_values(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5237,6 +5461,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitUpdate_stmt(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitUpdate_stmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Update_stmtContext update_stmt() throws RecognitionException {
@@ -5331,6 +5560,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitColumn_def(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitColumn_def(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Column_defContext column_def() throws RecognitionException {
@@ -5413,6 +5647,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitType_name(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitType_name(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5539,6 +5778,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitColumn_constraint(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitColumn_constraint(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Column_constraintContext column_constraint() throws RecognitionException {
@@ -5653,6 +5897,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitColumn_constraint_primary_key(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitColumn_constraint_primary_key(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Column_constraint_primary_keyContext column_constraint_primary_key() throws RecognitionException {
@@ -5723,6 +5972,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitColumn_constraint_foreign_key(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitColumn_constraint_foreign_key(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Column_constraint_foreign_keyContext column_constraint_foreign_key() throws RecognitionException {
@@ -5760,6 +6014,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitColumn_constraint_not_null(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitColumn_constraint_not_null(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5799,6 +6058,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitColumn_constraint_null(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitColumn_constraint_null(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5851,6 +6115,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitColumn_default(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitColumn_default(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5963,6 +6232,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitColumn_default_value(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitColumn_default_value(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -6085,6 +6359,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitExpr(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -6797,6 +7076,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitForeign_key_clause(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitForeign_key_clause(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Foreign_key_clauseContext foreign_key_clause() throws RecognitionException {
@@ -7016,6 +7300,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitFk_target_column_name(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitFk_target_column_name(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Fk_target_column_nameContext fk_target_column_name() throws RecognitionException {
@@ -7060,6 +7349,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitIndexed_column(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitIndexed_column(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7149,6 +7443,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitTable_constraint(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitTable_constraint(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7253,6 +7552,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitTable_constraint_primary_key(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitTable_constraint_primary_key(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Table_constraint_primary_keyContext table_constraint_primary_key() throws RecognitionException {
@@ -7330,6 +7634,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitTable_constraint_foreign_key(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitTable_constraint_foreign_key(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7410,6 +7719,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitTable_constraint_unique(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitTable_constraint_unique(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7506,6 +7820,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitTable_constraint_key(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitTable_constraint_key(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Table_constraint_keyContext table_constraint_key() throws RecognitionException {
@@ -7578,6 +7897,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitFk_origin_column_name(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitFk_origin_column_name(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Fk_origin_column_nameContext fk_origin_column_name() throws RecognitionException {
@@ -7626,6 +7950,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitQualified_table_name(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitQualified_table_name(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7702,6 +8031,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitOrdering_term(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitOrdering_term(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Ordering_termContext ordering_term() throws RecognitionException {
@@ -7768,6 +8102,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitResult_column(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitResult_column(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7884,6 +8223,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitTable_or_subquery(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitTable_or_subquery(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -8092,6 +8436,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJoin_clause(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJoin_clause(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Join_clauseContext join_clause() throws RecognitionException {
@@ -8153,6 +8502,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJoin_operator(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJoin_operator(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -8242,6 +8596,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitJoin_constraint(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitJoin_constraint(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Join_constraintContext join_constraint() throws RecognitionException {
@@ -8329,6 +8688,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitSelect_core(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitSelect_core(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -8585,6 +8949,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitSigned_number(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitSigned_number(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Signed_numberContext signed_number() throws RecognitionException {
@@ -8665,6 +9034,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitLiteral_value(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitLiteral_value(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Literal_valueContext literal_value() throws RecognitionException {
@@ -8714,6 +9088,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitUnary_operator(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitUnary_operator(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Unary_operatorContext unary_operator() throws RecognitionException {
@@ -8760,6 +9139,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitColumn_alias(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitColumn_alias(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -8932,6 +9316,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitKeyword(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitKeyword(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final KeywordContext keyword() throws RecognitionException {
@@ -8980,6 +9369,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitName(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitName(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final NameContext name() throws RecognitionException {
@@ -9018,6 +9412,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitFunction_name(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitFunction_name(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -9058,6 +9457,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitDatabase_name(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitDatabase_name(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Database_nameContext database_name() throws RecognitionException {
@@ -9096,6 +9500,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitSource_table_name(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitSource_table_name(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -9136,6 +9545,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitTable_name(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitTable_name(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Table_nameContext table_name() throws RecognitionException {
@@ -9174,6 +9588,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitNew_table_name(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitNew_table_name(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -9214,6 +9633,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitColumn_name(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitColumn_name(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Column_nameContext column_name() throws RecognitionException {
@@ -9252,6 +9676,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitCollation_name(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitCollation_name(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -9292,6 +9721,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitForeign_table(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitForeign_table(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Foreign_tableContext foreign_table() throws RecognitionException {
@@ -9331,6 +9765,11 @@ public class SQLParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitIndex_name(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitIndex_name(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Index_nameContext index_name() throws RecognitionException {
@@ -9367,6 +9806,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitTable_alias(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitTable_alias(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -9413,6 +9857,11 @@ public class SQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof SQLListener ) ((SQLListener)listener).exitAny_name(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SQLVisitor ) return ((SQLVisitor<? extends T>)visitor).visitAny_name(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 

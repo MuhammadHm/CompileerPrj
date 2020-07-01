@@ -123,15 +123,128 @@ public class BaseVisitor extends SQLBaseVisitor {
 
     @Override
     public VarDeclareStmt visitJ_var(SQLParser.J_varContext ctx) {
-        System.out.println("visit var declare stmt");
-        VarDeclareStmt varDeclareStmt = new VarDeclareStmt();
-
-
+        System.out.println("visit var stmt");
+        ArrayList<InitVarStmt> varStmts = new ArrayList<>();
         for (int i = 0; i < ctx.j_init_var().size(); i++) {
-            varDeclareStmt.addVar(visitJ_init_var(ctx.j_init_var(i)));
+
+            InitVarStmt initVarStmt = new InitVarStmt();
+            String varName = "";
+
+            if (ctx.j_init_var(i).any_name(0) != null) {
+                //var name
+                initVarStmt.setVarName(visitAny_name(ctx.j_init_var(i).any_name(0)));
+                varName = initVarStmt.getVarName().getName();
+            }
+            if (ctx.j_init_var(i).j_string() != null) {
+                System.out.println("visit string");
+                initVarStmt.setString(visitAny_name(ctx.j_init_var(i).j_string().any_name()));
+                SymbolManager.createSymbol(varName, Type.STRING_CONST, false);
+            }
+            if (ctx.j_init_var(i).any_name(1) != null) {
+                System.out.println("visit new type");
+                initVarStmt.setNewType(visitAny_name(ctx.j_init_var(i).any_name(1)));
+                SymbolManager.createSymbol(varName, initVarStmt.getNewType().getName(), false);
+            }
+
+
+            if (ctx.j_init_var(i).expr() != null) {
+                initVarStmt.setExpression(visitExpr(ctx.j_init_var(i).expr()));
+                if (ctx.j_init_var(i).expr().literal_value() != null) {
+                    System.out.println("visit literal value");
+                    String n = ctx.j_init_var(i).expr().literal_value().NUMERIC_LITERAL().getSymbol().getText();
+                    initVarStmt.setNumber(Integer.parseInt(n));
+                    SymbolManager.createSymbol(varName, Type.NUMBER_CONST, false);
+                }
+                if (ctx.j_init_var(i).expr().j_bool_value() != null) {
+                    System.out.println("visit bool value");
+                    if (ctx.j_init_var(i).expr().j_bool_value().J_FALSE() != null) {
+                        initVarStmt.setBoolValue(false);
+                        SymbolManager.createSymbol(varName, Type.BOOLEAN_CONST, false);
+                    }
+                    if (ctx.j_init_var(i).expr().j_bool_value().J_TRUE() != null) {
+                        initVarStmt.setBoolValue(true);
+                        SymbolManager.createSymbol(varName, Type.BOOLEAN_CONST, false);
+                    }
+                }
+            }
+            if (ctx.j_init_var(i).factored_select_stmt() != null)
+                initVarStmt.setSelectStmt(visitFactored_select_stmt(ctx.j_init_var(i).factored_select_stmt()));
+
+            varStmts.add(initVarStmt);
         }
 
+//        if (ctx.j_init_array() != null)
+//            initVarStmt.setInitArrayStmt(visitJ_init_array(ctx.j_init_array()));
+//        if (ctx.j_json_object() != null)
+//            initVarStmt.setJsonObject(visitJ_json_object(ctx.j_json_object()));
+//        if (ctx.j_json_array() != null)
+//            initVarStmt.setJsonArray(visitJ_json_array(ctx.j_json_array()));
+//        if (ctx.j_function_call() != null)
+//            initVarStmt.setCallStmt(visitJ_function_call(ctx.j_function_call()));
+//        if (ctx.j_one_line_cond() != null)
+//            initVarStmt.setOneLineCondition(visitJ_one_line_cond(ctx.j_one_line_cond()));
+        VarDeclareStmt varDeclareStmt = new VarDeclareStmt();
+        varDeclareStmt.setVariables(varStmts);
         return varDeclareStmt;
+    }
+
+    @Override
+    public InitVarStmt visitJ_init_var(SQLParser.J_init_varContext ctx) {
+        System.out.println("visit init var stmt");
+        InitVarStmt initVarStmt = new InitVarStmt();
+        String varName = "";
+
+        if (ctx.any_name(0) != null) {
+            //var name
+            initVarStmt.setVarName(visitAny_name(ctx.any_name(0)));
+            varName = initVarStmt.getVarName().getName();
+        }
+        if (ctx.j_string() != null) {
+            System.out.println("visit string");
+            initVarStmt.setString(visitAny_name(ctx.j_string().any_name()));
+            SymbolManager.createSymbol(varName, Type.STRING_CONST, false);
+        }
+        if (ctx.any_name(1) != null) {
+            System.out.println("visit new type");
+            initVarStmt.setNewType(visitAny_name(ctx.any_name(1)));
+            SymbolManager.createSymbol(varName, initVarStmt.getNewType().getName(), false);
+        }
+
+
+        if (ctx.expr() != null) {
+            initVarStmt.setExpression(visitExpr(ctx.expr()));
+            if (ctx.expr().literal_value() != null) {
+                System.out.println("visit literal value");
+                String n = ctx.expr().literal_value().NUMERIC_LITERAL().getSymbol().getText();
+                initVarStmt.setNumber(Integer.parseInt(n));
+                SymbolManager.createSymbol(varName, Type.NUMBER_CONST, false);
+            }
+            if (ctx.expr().j_bool_value() != null) {
+                System.out.println("visit bool value");
+                if (ctx.expr().j_bool_value().J_FALSE() != null) {
+                    initVarStmt.setBoolValue(false);
+                    SymbolManager.createSymbol(varName, Type.BOOLEAN_CONST, false);
+                }
+                if (ctx.expr().j_bool_value().J_TRUE() != null) {
+                    initVarStmt.setBoolValue(true);
+                    SymbolManager.createSymbol(varName, Type.BOOLEAN_CONST, false);
+                }
+            }
+        }
+        if (ctx.factored_select_stmt() != null)
+            initVarStmt.setSelectStmt(visitFactored_select_stmt(ctx.factored_select_stmt()));
+//        if (ctx.j_init_array() != null)
+//            initVarStmt.setInitArrayStmt(visitJ_init_array(ctx.j_init_array()));
+//        if (ctx.j_json_object() != null)
+//            initVarStmt.setJsonObject(visitJ_json_object(ctx.j_json_object()));
+//        if (ctx.j_json_array() != null)
+//            initVarStmt.setJsonArray(visitJ_json_array(ctx.j_json_array()));
+//        if (ctx.j_function_call() != null)
+//            initVarStmt.setCallStmt(visitJ_function_call(ctx.j_function_call()));
+//        if (ctx.j_one_line_cond() != null)
+//            initVarStmt.setOneLineCondition(visitJ_one_line_cond(ctx.j_one_line_cond()));
+
+        return initVarStmt;
     }
 
     @Override
@@ -256,64 +369,7 @@ public class BaseVisitor extends SQLBaseVisitor {
         return initArrayStmt;
     }
 
-    @Override
-    public InitVarStmt visitJ_init_var(SQLParser.J_init_varContext ctx) {
-        System.out.println("visit init var stmt");
-        InitVarStmt initVarStmt = new InitVarStmt();
-        String varName = "";
 
-        if (ctx.any_name(0) != null) {
-            //var name
-            initVarStmt.setVarName(visitAny_name(ctx.any_name(0)));
-            varName = initVarStmt.getVarName().getName();
-        }
-        if (ctx.j_string() != null) {
-            System.out.println("visit string");
-            initVarStmt.setString(visitAny_name(ctx.j_string().any_name()));
-            SymbolManager.createSymbol(varName, Type.STRING_CONST, false);
-        }
-        if (ctx.any_name(1) != null) {
-            System.out.println("visit new type");
-            initVarStmt.setNewType(visitAny_name(ctx.any_name(1)));
-            SymbolManager.createSymbol(varName, initVarStmt.getNewType().getName(), false);
-        }
-
-
-        if (ctx.expr() != null) {
-            initVarStmt.setExpression(visitExpr(ctx.expr()));
-            if (ctx.expr().literal_value() != null) {
-                System.out.println("visit literal value");
-                String n = ctx.expr().literal_value().NUMERIC_LITERAL().getSymbol().getText();
-                initVarStmt.setNumber(Integer.parseInt(n));
-                SymbolManager.createSymbol(varName, Type.NUMBER_CONST, false);
-            }
-            if (ctx.expr().j_bool_value() != null) {
-                System.out.println("visit bool value");
-                if (ctx.expr().j_bool_value().J_FALSE() != null) {
-                    initVarStmt.setBoolValue(false);
-                    SymbolManager.createSymbol(varName, Type.BOOLEAN_CONST, false);
-                }
-                if (ctx.expr().j_bool_value().J_TRUE() != null) {
-                    initVarStmt.setBoolValue(true);
-                    SymbolManager.createSymbol(varName, Type.BOOLEAN_CONST, false);
-                }
-            }
-        }
-        if (ctx.factored_select_stmt() != null)
-            initVarStmt.setSelectStmt(visitFactored_select_stmt(ctx.factored_select_stmt()));
-//        if (ctx.j_init_array() != null)
-//            initVarStmt.setInitArrayStmt(visitJ_init_array(ctx.j_init_array()));
-//        if (ctx.j_json_object() != null)
-//            initVarStmt.setJsonObject(visitJ_json_object(ctx.j_json_object()));
-//        if (ctx.j_json_array() != null)
-//            initVarStmt.setJsonArray(visitJ_json_array(ctx.j_json_array()));
-//        if (ctx.j_function_call() != null)
-//            initVarStmt.setCallStmt(visitJ_function_call(ctx.j_function_call()));
-//        if (ctx.j_one_line_cond() != null)
-//            initVarStmt.setOneLineCondition(visitJ_one_line_cond(ctx.j_one_line_cond()));
-
-        return initVarStmt;
-    }
 
     @Override
     public InitValues visitJ_init_values(SQLParser.J_init_valuesContext ctx) {
