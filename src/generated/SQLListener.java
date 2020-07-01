@@ -168,6 +168,16 @@ public interface SQLListener extends ParseTreeListener {
 	 */
 	void exitJ_init_var(SQLParser.J_init_varContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link SQLParser#j_assign}.
+	 * @param ctx the parse tree
+	 */
+	void enterJ_assign(SQLParser.J_assignContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SQLParser#j_assign}.
+	 * @param ctx the parse tree
+	 */
+	void exitJ_assign(SQLParser.J_assignContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link SQLParser#j_string}.
 	 * @param ctx the parse tree
 	 */
