@@ -1,7 +1,14 @@
-f(var x,var y){
 
-            if(){
+rr(){
+var mm="gdf";
+f(){
+mm=6;
 
-            }
+x=5;
+y="fsdf";
 
+var t=qwe;
+var i=6;
+var i=88;
+}
 }
