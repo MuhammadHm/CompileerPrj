@@ -33,13 +33,13 @@ grammar SQL;
 //TODO Start Editing
 
 real_name: IDENTIFIER | STRING_LITERAL | '(' real_name ')' ;
-java_function : J_FUNCTION? any_name '('  ((J_VAR any_name ('=' expr)?) ( ',' (J_VAR any_name ('=' expr)?) )*)? ')'
+java_function : J_FUNCTION? any_name '('  (j_var ( ',' j_var )*)? ')'
    j_function_body ;
 j_higher_order_func : J_FUNCTION '('  (( any_name ('=' expr)?) ( ',' ( any_name ('=' expr)?) )*)? ')'
     j_function_body ;
 java_stmt :
     j_if
-   |j_var
+   |j_var ';'
    |j_while
    |j_return
    |j_for
@@ -66,7 +66,7 @@ j_if :
  J_IF '(' expr ')' (j_function_body | java_stmt)
  (J_ELSE j_function_body)?
 ;
-j_var: J_VAR  j_init_var (',' j_init_var)* ';' ;
+j_var: J_VAR  j_init_var (',' j_init_var)* ;
 j_function_call :
     any_name '(' (any_name | j_higher_order_func)? (',' (any_name |j_higher_order_func))* ')' ';'
 ;

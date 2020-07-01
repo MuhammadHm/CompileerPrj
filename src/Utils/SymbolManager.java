@@ -6,13 +6,14 @@ import Java.SymbolTable.Type;
 
 public class SymbolManager {
 
-    public static void createSymbol(String name, String type, boolean isParam) {
+    public static void createSymbol(String name, String type, boolean isParam,boolean isDeclaration) {
 
         Symbol symbol = new Symbol();
 
         symbol.setIsParam(isParam);
         symbol.setName(name);
         symbol.setType(TypeManager.guessType(type));
+        symbol.setDeclaration(isDeclaration);
 
         Scope scope = ScopeManager.getLastOpened();
         symbol.setScope(scope);

@@ -39,4 +39,13 @@ public class Symbol {
     public void setIsParam(boolean param) {
         isParam = param;
     }
+
+    public void setDeclaration(boolean declaration) {
+        isDeclaration = declaration;
+    }
+
+    public boolean isDeclaration() {
+        return isDeclaration;
+    }
+
 }

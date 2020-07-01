@@ -19,6 +19,7 @@ public class ScopeManager {
     }
 
     public static void createOpenedScope(){
+        System.out.println("create scope");
         Scope scope = new Scope();
         if (scopes.isEmpty()) {
             scope.setParent(null);

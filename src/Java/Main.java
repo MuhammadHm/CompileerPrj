@@ -11,9 +11,7 @@ import generated.SQLParser;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-
 import java.io.IOException;
-
 import static org.antlr.v4.runtime.CharStreams.fromFileName;
 
 public class Main {

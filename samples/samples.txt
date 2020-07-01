@@ -1,30 +1,7 @@
-f(){
-    if(x){
-        if(y){
-            if(t){
-                var test=5;
+f(var x,var y){
+
+            if(){
+
             }
-            var mhd;
-            create type t(soso number, toto boolean, koko string);
-            mhd = "hellofdsfd";
-        }
-    }
-    var ahd=true;
 
-    while(t){
-        x(){
-            var vivo=student;
-        }
-    }
-     while(t){
-        if(x){
-
-        }
-     }
 }
-create aggregation_function fofo(a,b,c,d,[haha,mama]);
-
-t(){
-    create table toto(aa number , bb xx, lolo  xx);
-}
-v(){}
