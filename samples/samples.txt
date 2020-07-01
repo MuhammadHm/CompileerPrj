@@ -4,8 +4,9 @@ f(){
             if(t){
                 var test=5;
             }
-            var mhd="hello";
+            var mhd;
             create type t(soso number, toto boolean, koko string);
+            mhd = "hellofdsfd";
         }
     }
     var ahd=true;

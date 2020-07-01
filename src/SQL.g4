@@ -48,7 +48,7 @@ java_stmt :
    |j_do_while
    |j_for_each
    |j_function_call
-   |j_init_var
+   |j_assign ';'
    |j_function_body
    |j_increment_operator ';'
    |j_break ';'
@@ -100,6 +100,7 @@ j_init_array :
  ;
 //j_init_var: any_name (('=' expr) | j_init_array | ('=' j_json_object ) | ('=' j_function_call) | ( '=' j_json_array) | ('=' j_one_line_cond) |('=' factored_select_stmt))?;
 j_init_var: any_name (( '=' j_string ) | ( '=' any_name) | ('=' factored_select_stmt) | ('=' expr) )?;
+j_assign : j_init_var;
 j_string : '"' any_name?  '"';
 j_init_arr_elem : (any_name '[' NUMERIC_LITERAL|expr ']') (('=' expr) | J_INCREMENT_OPERATOR)?;
 j_json_object:

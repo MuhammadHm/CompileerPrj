@@ -6,7 +6,7 @@ public class Symbol {
     private Type type;
     private Scope scope;
     private boolean isParam;
-
+    private boolean isDeclaration;
 
     public String getName() {
         return name;
