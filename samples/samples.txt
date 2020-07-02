@@ -1,7 +1,12 @@
-f(var x,var y){
+f( var x, var y){
 
-            if(){
 
-            }
 
 }
+t(var t,var c){
+    c(var a, var b){
+
+    }
+
+}
+
