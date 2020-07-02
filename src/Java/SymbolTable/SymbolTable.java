@@ -9,6 +9,13 @@ public class SymbolTable {
     private ArrayList<Type> declaredTypes = new ArrayList<Type>();
     private ArrayList<AggregationFunction> declaredAggregationFunction = new ArrayList<AggregationFunction>();
 
+    public SymbolTable() {
+        Scope scope = new Scope();
+        scope.setId("0");
+        scope.setOpen(true);
+        scope.setParent(null);
+        scopes.add(scope);
+    }
 
     public ArrayList<Scope> getScopes() {
         return scopes;
@@ -33,7 +40,8 @@ public class SymbolTable {
     public void addType(Type type) {
         this.declaredTypes.add(type);
     }
-    public void addAggregationFunction(AggregationFunction aggregationFunction){
+
+    public void addAggregationFunction(AggregationFunction aggregationFunction) {
         this.declaredAggregationFunction.add(aggregationFunction);
     }
 

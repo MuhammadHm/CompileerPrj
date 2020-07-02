@@ -1,12 +1,8 @@
-f( var x, var y){
+f(){
 
-
-
-}
-t(var t,var c){
-    c(var a, var b){
-
-    }
+    var m;
 
 }
+
+
 
