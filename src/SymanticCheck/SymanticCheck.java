@@ -78,5 +78,21 @@ public class SymanticCheck {
     }
 
 
+    private static void CheckUsingUnassignedVariable()
+    {
+        for (int i = 0; i < Main.symbolTable.getScopes().size(); i++) {
+            ArrayList<String> scopsumbolkeys=new ArrayList<>();
+            scopsumbolkeys=HelperClass.GetScopeSymbolKeys(Main.symbolTable.getScopes().get(i));
+            for (int j = 0; j < scopsumbolkeys.size(); j++) {
+                if (HelperClass.CheckUnAssignedVariableBefore(Main.symbolTable.getScopes().get(i),scopsumbolkeys.get(j)))
+                {
+                    ErrorList.add(new SymanticCheckOutput(ErrorsName.UsingUnassignedVariable,scopsumbolkeys.get(j),OutputType.Warning,"0"));
+                }
+            }
+        }
+    }
+
+
+
 
 }

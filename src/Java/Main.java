@@ -4,6 +4,7 @@ import Java.AST.Parse;
 import Java.AST.Visitor.ASTSymbolTable;
 import Java.AST.Visitor.BaseASTVisitor;
 import Java.Base.BaseVisitor;
+import Java.SymbolTable.Scope;
 import Java.SymbolTable.SymbolTable;
 import SymanticCheck.SymanticCheck;
 import generated.SQLBaseListener;
@@ -31,12 +32,15 @@ public class Main {
             CommonTokenStream token = new CommonTokenStream(lexer);
             SQLParser parser = new SQLParser(token);
             ParseTree tree = parser.parse();
-
+String c;
+c="";
             Parse p = (Parse) new BaseVisitor().visit(tree);
             System.out.println("\n\nAbstract Syntax Tree: \n");
 
             p.accept(new BaseASTVisitor());
             ArrayList<SymanticCheckOutput> ErrorList=new ArrayList<SymanticCheckOutput>();
+            ArrayList<Scope> scopes=new ArrayList<>();
+            scopes=HelperClass.getChildes(Main.symbolTable.getScopes().get(2));
             ErrorList= SymanticCheck.Check();
             System.out.println(ErrorList.size());
 //             p.accept(new ASTSymbolTable());
