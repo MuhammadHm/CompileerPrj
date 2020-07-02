@@ -5,6 +5,7 @@ import Java.AST.Visitor.ASTSymbolTable;
 import Java.AST.Visitor.BaseASTVisitor;
 import Java.Base.BaseVisitor;
 import Java.SymbolTable.SymbolTable;
+import SymanticCheck.SymanticCheck;
 import generated.SQLBaseListener;
 import generated.SQLLexer;
 import generated.SQLParser;
@@ -12,6 +13,9 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import java.io.IOException;
+import java.util.ArrayList;
+import SymanticCheck.*;
+
 import static org.antlr.v4.runtime.CharStreams.fromFileName;
 
 public class Main {
@@ -32,6 +36,9 @@ public class Main {
             System.out.println("\n\nAbstract Syntax Tree: \n");
 
             p.accept(new BaseASTVisitor());
+            ArrayList<SymanticCheckOutput> ErrorList=new ArrayList<SymanticCheckOutput>();
+            ErrorList= SymanticCheck.Check();
+            System.out.println(ErrorList.size());
 //             p.accept(new ASTSymbolTable());
 
 //            System.out.println();

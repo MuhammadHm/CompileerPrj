@@ -1,8 +1,13 @@
+rr(){
+var mm="gdf";
 f(){
+mm=6;
 
-    var m;
+x=5;
+y="fsdf";
 
+var t=qwe;
+var i=6;
+var i=88;
 }
-
-
-
+}
