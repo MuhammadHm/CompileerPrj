@@ -11,9 +11,11 @@ public class SymanticCheck {
     public static ArrayList<SymanticCheckOutput> Check()
     {
         CheckUsingUndeclaredVariable();
-        CheckUsingUnExistedColumnOfTypeORTable();
+        CheckUsingOfUndeclaredType();
         CheckMultipleDeclarationsVariable();
         CheckAssigningAnotherTypeForDeclaredVariable();
+        CheckUsingUnassignedVariable();
+        CallingUndeclaredMethod();
         return  ErrorList;
     }
 
@@ -21,9 +23,9 @@ public class SymanticCheck {
     {
         for (int i = 0; i < Main.symbolTable.getScopes().size(); i++) {
             ArrayList<String> scopsumbolkeys=new ArrayList<>();
-            scopsumbolkeys=HelperClass.GetScopeSymbolKeys(Main.symbolTable.getScopes().get(i));
+            scopsumbolkeys=HelperClass.GetVariableKeys(Main.symbolTable.getScopes().get(i));
             for (int j = 0; j < scopsumbolkeys.size(); j++) {
-                if (HelperClass.CheckNumberOfDeclaredVariableBefore(Main.symbolTable.getScopes().get(i),scopsumbolkeys.get(j))==0)
+                if (HelperClass.CheckNumberOfDeclaredBefore(Main.symbolTable.getScopes().get(i),scopsumbolkeys.get(j))==0)
                 {
                     ErrorList.add(new SymanticCheckOutput(ErrorsName.UsingUndeclaredVariable,scopsumbolkeys.get(j),OutputType.Error,"0"));
                 }
@@ -31,17 +33,34 @@ public class SymanticCheck {
         }
     }
 
-
-
-    private static void CheckUsingUnExistedColumnOfTypeORTable()
+    private static void CallingUndeclaredMethod()
     {
         for (int i = 0; i < Main.symbolTable.getScopes().size(); i++) {
             ArrayList<String> scopsumbolkeys=new ArrayList<>();
-            scopsumbolkeys=HelperClass.GetScopeSymbolKeys(Main.symbolTable.getScopes().get(i));
+            scopsumbolkeys=HelperClass.GetFunctionKeys(Main.symbolTable.getScopes().get(i));
+            for (int j = 0; j < scopsumbolkeys.size(); j++) {
+                if (HelperClass.CheckNumberOfDeclaredBefore(Main.symbolTable.getScopes().get(i),scopsumbolkeys.get(j))==0)
+                {
+                    ErrorList.add(new SymanticCheckOutput(ErrorsName.CallingUndeclaredMethod,scopsumbolkeys.get(j),OutputType.Error,"0"));
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+    private static void CheckUsingOfUndeclaredType()
+    {
+        for (int i = 0; i < Main.symbolTable.getScopes().size(); i++) {
+            ArrayList<String> scopsumbolkeys=new ArrayList<>();
+            scopsumbolkeys=HelperClass.GetVariableKeys(Main.symbolTable.getScopes().get(i));
             for (int j = 0; j < scopsumbolkeys.size(); j++) {
                 if (!HelperClass.CheckIfDeclaredTypeBefore(Main.symbolTable.getScopes().get(i),scopsumbolkeys.get(j)))
                 {
-                    ErrorList.add(new SymanticCheckOutput(ErrorsName.UsingUnExistedColumnOfTypeORTable,scopsumbolkeys.get(j),OutputType.Error,"0"));
+                    ErrorList.add(new SymanticCheckOutput(ErrorsName.UsingOfUndeclaredType,scopsumbolkeys.get(j),OutputType.Error,"0"));
                 }
             }
         }
@@ -52,9 +71,9 @@ public class SymanticCheck {
     {
         for (int i = 0; i < Main.symbolTable.getScopes().size(); i++) {
             ArrayList<String> scopsumbolkeys=new ArrayList<>();
-            scopsumbolkeys=HelperClass.GetScopeSymbolKeys(Main.symbolTable.getScopes().get(i));
+            scopsumbolkeys=HelperClass.GetVariableKeys(Main.symbolTable.getScopes().get(i));
             for (int j = 0; j < scopsumbolkeys.size(); j++) {
-                if (HelperClass.CheckNumberOfDeclaredVariableBefore(Main.symbolTable.getScopes().get(i),scopsumbolkeys.get(j))>1)
+                if (HelperClass.CheckNumberOfDeclaredBefore(Main.symbolTable.getScopes().get(i),scopsumbolkeys.get(j))>1)
                 {
                     ErrorList.add(new SymanticCheckOutput(ErrorsName.MultipleDeclarationsVariable,scopsumbolkeys.get(j),OutputType.Error,"0"));
                 }
@@ -67,7 +86,7 @@ public class SymanticCheck {
     {
         for (int i = 0; i < Main.symbolTable.getScopes().size(); i++) {
             ArrayList<String> scopsumbolkeys=new ArrayList<>();
-            scopsumbolkeys=HelperClass.GetScopeSymbolKeys(Main.symbolTable.getScopes().get(i));
+            scopsumbolkeys=HelperClass.GetVariableKeys(Main.symbolTable.getScopes().get(i));
             for (int j = 0; j < scopsumbolkeys.size(); j++) {
                 if (!HelperClass.CheckDeferentAssignVariable(Main.symbolTable.getScopes().get(i),scopsumbolkeys.get(j)))
                 {
@@ -82,7 +101,7 @@ public class SymanticCheck {
     {
         for (int i = 0; i < Main.symbolTable.getScopes().size(); i++) {
             ArrayList<String> scopsumbolkeys=new ArrayList<>();
-            scopsumbolkeys=HelperClass.GetScopeSymbolKeys(Main.symbolTable.getScopes().get(i));
+            scopsumbolkeys=HelperClass.GetVariableKeys(Main.symbolTable.getScopes().get(i));
             for (int j = 0; j < scopsumbolkeys.size(); j++) {
                 if (HelperClass.CheckUnAssignedVariableBefore(Main.symbolTable.getScopes().get(i),scopsumbolkeys.get(j)))
                 {

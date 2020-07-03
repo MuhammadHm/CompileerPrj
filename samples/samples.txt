@@ -1,5 +1,24 @@
-s1()
-{
-    var m;
+rr(){
+    var i=4;
 
+    var sum;
+
+    var t=true;
+
+    var x=type1;
+
+    var xx=type2;
+
+    if(true){
+        t="fsdd";
+
+        y=535;
+
+        var i=6;
+        }
+        mx();
+        mx2();
 }
+mx(){}
+ Create Table type1(Id number, Capacity number);
+

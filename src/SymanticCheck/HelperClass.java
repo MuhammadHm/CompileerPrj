@@ -9,25 +9,47 @@ import java.util.List;
 import java.util.Set;
 
 public class HelperClass {
-    public static ArrayList<String> GetScopeSymbolKeys(Scope scope)
+
+    public static ArrayList<String> GetVariableKeys(Scope scope)
     {
-        ArrayList<String> keys=new ArrayList<>();
-        keys.addAll(scope.getSymbolMap().keySet());
-        return  keys;
+        ArrayList<String> Allkeys=new ArrayList<>();
+        ArrayList<String> VarKeys=new ArrayList<>();
+        Allkeys.addAll(scope.getSymbolMap().keySet());
+
+        for (int i = 0; i < Allkeys.size(); i++) {
+            if (scope.getSymbolMap().get(Allkeys.get(i)).get(0).getType().getName()!=Type.FUNCTION_CONST) {
+              VarKeys.add(Allkeys.get(i));
+            }
+        }
+        return  VarKeys;
     }
-    public static int CheckNumberOfDeclaredVariableBefore(Scope scope, String key)
+
+    public static ArrayList<String> GetFunctionKeys(Scope scope)
     {
-        int nuberofdeclaredvariable=0;
+        ArrayList<String> Allkeys=new ArrayList<>();
+        ArrayList<String> FuncKeys=new ArrayList<>();
+        Allkeys.addAll(scope.getSymbolMap().keySet());
+
+        for (int i = 0; i < Allkeys.size(); i++) {
+            if (scope.getSymbolMap().get(Allkeys.get(i)).get(0).getType().getName()==Type.FUNCTION_CONST) {
+                FuncKeys.add(Allkeys.get(i));
+            }
+        }
+        return  FuncKeys;
+    }
+    public static int CheckNumberOfDeclaredBefore(Scope scope, String key)
+    {
+        int nuberofdeclared=0;
         while (scope!=null) {
             if (scope.getSymbolMap().get(key)!=null) {
                 for (int i = 0; i < scope.getSymbolMap().get(key).size() ; i++) {
                     if (scope.getSymbolMap().get(key).get(i).isDeclaration())
-                        nuberofdeclaredvariable++;
+                        nuberofdeclared++;
                 }
             }
             scope=scope.getParent();
         }
-        return nuberofdeclaredvariable;
+        return nuberofdeclared;
     }
     public static boolean CheckIfDeclaredTypeBefore(Scope scope, String key)
     {
@@ -65,9 +87,9 @@ public class HelperClass {
             if(Childes.get(i).getSymbolMap().get(key)!=null) {
                 for (int j = 0; j <Childes.get(i).getSymbolMap().get(key).size(); j++)
                 {
-                    if (type=="")
+                    if (type==""&&Childes.get(i).getSymbolMap().get(key).get(j).getType().getName()!=null)
                         type=Childes.get(i).getSymbolMap().get(key).get(j).getType().getName();
-                    if (type!=Childes.get(i).getSymbolMap().get(key).get(j).getType().getName())
+                    if (type!=Childes.get(i).getSymbolMap().get(key).get(j).getType().getName()&&Childes.get(i).getSymbolMap().get(key).get(j).getType().getName()!=null)
                         return  false;
                 }
             }
@@ -90,18 +112,24 @@ public class HelperClass {
     }
     public  static boolean TypeIsInSymbolTable(Type type)
     {
-        switch (type.getName())
-        {
-            case Type.BOOLEAN_CONST:return true;
-            case Type.NUMBER_CONST:return true;
-            case Type.STRING_CONST:return true;
-            case Type.FUNCTION_CONST:return true;
-            default:
-                for (int i = 0; i < Main.symbolTable.getDeclaredTypes().size(); i++) {
-                    if (Main.symbolTable.getDeclaredTypes().get(i).getName()==type.getName())
-                        return true;
-                }
+        if (type.getName()==null)
+            return true;
+
+        if (type.getName()==Type.BOOLEAN_CONST)
+            return true;
+        if (type.getName()==Type.NUMBER_CONST)
+            return true;
+        if (type.getName()==Type.STRING_CONST)
+            return true;
+        if (type.getName()==Type.FUNCTION_CONST)
+            return true;
+
+        for (int i = 0; i < Main.symbolTable.getDeclaredTypes().size(); i++) {
+            if (Main.symbolTable.getDeclaredTypes().get(i).getName().equals(type.getName())) {
+                return true;
+            }
         }
+
         return false;
     }
 

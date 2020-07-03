@@ -21,5 +21,17 @@ public class SymbolManager {
             scope.addSymbol(name, symbol);
 
     }
+    public static void createSymbolWithScope(String name, String type, Scope scope,boolean isParam,boolean isDeclaration) {
+
+        Symbol symbol = new Symbol();
+
+        symbol.setIsParam(isParam);
+        symbol.setName(name);
+        symbol.setType(TypeManager.guessType(type));
+        symbol.setDeclaration(isDeclaration);
+        symbol.setScope(scope);
+        if (scope != null)
+            scope.addSymbol(name, symbol);
+    }
 
 }

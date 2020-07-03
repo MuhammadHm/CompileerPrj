@@ -68,7 +68,7 @@ j_if :
 ;
 j_var: J_VAR  j_init_var (',' j_init_var)* ;
 j_function_call :
-    any_name '(' (any_name | j_higher_order_func)? (',' (any_name |j_higher_order_func))* ')' ';'
+    any_name '(' (any_name )? (',' (any_name ))* ')' ';'
 ;
 j_return : J_RETURN (any_name | j_increment_operator | j_bool_value |j_one_line_cond | expr)? ';';
 j_while:
@@ -99,7 +99,7 @@ j_init_array :
   ('[' (NUMERIC_LITERAL)? ']'  ('=' '{' (IDENTIFIER|NUMERIC_LITERAL) (',' (IDENTIFIER|NUMERIC_LITERAL))*'}')?)
  ;
 //j_init_var: any_name (('=' expr) | j_init_array | ('=' j_json_object ) | ('=' j_function_call) | ( '=' j_json_array) | ('=' j_one_line_cond) |('=' factored_select_stmt))?;
-j_init_var: any_name (( '=' j_string ) | ( '=' any_name) | ('=' factored_select_stmt) | ('=' expr) )?;
+j_init_var: any_name (( '=' j_string ) | ( '=' any_name) | ('=' factored_select_stmt) | ('=' j_function_call) | ('=' expr)  )?;
 j_assign : j_init_var;
 j_string : '"' any_name?  '"';
 j_init_arr_elem : (any_name '[' NUMERIC_LITERAL|expr ']') (('=' expr) | J_INCREMENT_OPERATOR)?;

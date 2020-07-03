@@ -39,8 +39,6 @@ c="";
 
             p.accept(new BaseASTVisitor());
             ArrayList<SymanticCheckOutput> ErrorList=new ArrayList<SymanticCheckOutput>();
-            ArrayList<Scope> scopes=new ArrayList<>();
-            scopes=HelperClass.getChildes(Main.symbolTable.getScopes().get(2));
             ErrorList= SymanticCheck.Check();
             System.out.println(ErrorList.size());
 //             p.accept(new ASTSymbolTable());
