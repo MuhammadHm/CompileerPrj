@@ -125,7 +125,6 @@ j_increment_operator: ((any_name J_INCREMENT_OPERATOR) | (J_INCREMENT_OPERATOR a
 
 j_init_values: (('=' expr) | j_init_array | ('=' j_json_object ';') | ('=' j_function_call) | ( '=' j_json_array) | ('=' j_one_line_cond) )?;
 j_json_value: (any_name ('.' any_name)+)  j_init_values ;
-
 create_type_stmt
  : K_CREATE  K_TYPE ( K_IF K_NOT K_EXISTS )?
    table_name
@@ -158,11 +157,15 @@ J_INCREMENT_OPERATOR : ('++' | '--');
 K_TYPE : 'type';
 K_AGGRIGATION : ('AGGREGATION_FUNCTION' | 'aggregation_function');
 
+
+
+
 //TODO end of editing
 
 parse
  : ( sql_stmt_list | java_function |  error )* EOF
  ;
+
 
 error
  : UNEXPECTED_CHAR
@@ -798,7 +801,6 @@ IDENTIFIER
  //| '[' ~']'* ']'          //TODO Edit: IDENTIFIER
  | [a-zA-Z_] [a-zA-Z_0-9]* // TODO check: needs more chars in set
  ;
-
 
 NUMERIC_LITERAL
  : DIGIT+ ( '.' DIGIT* )? ( E [-+]? DIGIT+ )?

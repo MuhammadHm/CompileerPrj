@@ -1,13 +1,10 @@
-rr(){
-var mm="gdf";
-f(){
-mm=6;
+t(var c,var t){
+    var x = select * from toto;
+    create table t (n number , t string , x hoho);
 
-x=5;
-y="fsdf";
 
-var t=qwe;
-var i=6;
-var i=88;
 }
+
+c(){
+ f();
 }

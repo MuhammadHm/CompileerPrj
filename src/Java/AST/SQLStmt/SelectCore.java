@@ -81,4 +81,7 @@ public class SelectCore extends Statement {
         }
     }
 
+    public ArrayList<AnyName> getTableNames() {
+        return tableNames;
+    }
 }

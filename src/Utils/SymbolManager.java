@@ -6,7 +6,7 @@ import Java.SymbolTable.Type;
 
 public class SymbolManager {
 
-    public static void createSymbol(String name, String type, boolean isParam,boolean isDeclaration) {
+    public static void createSymbol(String name, String type, boolean isParam,boolean isDeclaration,int lineNum) {
 
         Symbol symbol = new Symbol();
 
@@ -14,6 +14,7 @@ public class SymbolManager {
         symbol.setName(name);
         symbol.setType(TypeManager.guessType(type));
         symbol.setDeclaration(isDeclaration);
+        symbol.setLineNum(lineNum);
 
         Scope scope = ScopeManager.getLastOpened();
         symbol.setScope(scope);
@@ -21,7 +22,8 @@ public class SymbolManager {
             scope.addSymbol(name, symbol);
 
     }
-    public static void createSymbolWithScope(String name, String type, Scope scope,boolean isParam,boolean isDeclaration) {
+    // Only used in (visit_Java_function)
+    public static void createSymbolWithScope(String name, String type, Scope scope,boolean isParam,boolean isDeclaration,int lineNum) {
 
         Symbol symbol = new Symbol();
 
@@ -29,6 +31,7 @@ public class SymbolManager {
         symbol.setName(name);
         symbol.setType(TypeManager.guessType(type));
         symbol.setDeclaration(isDeclaration);
+        symbol.setLineNum(lineNum);
         symbol.setScope(scope);
         if (scope != null)
             scope.addSymbol(name, symbol);

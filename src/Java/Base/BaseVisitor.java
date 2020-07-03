@@ -27,8 +27,8 @@ import java.util.Map;
 
 public class BaseVisitor extends SQLBaseVisitor {
 
-//    ArrayList<FuncParameter> params = new ArrayList<>();
-    Scope scope=null;
+    //    ArrayList<FuncParameter> params = new ArrayList<>();
+    Scope scope = null;
     //TODO -------------------------- Java Visitors ----------------------
 
     @Override
@@ -129,6 +129,7 @@ public class BaseVisitor extends SQLBaseVisitor {
         if (ctx.j_init_var() != null) {
             for (int i = 0; i < ctx.j_init_var().size(); i++) {
                 InitVarStmt initVarStmt = new InitVarStmt();
+                int lineNum = ctx.start.getLine();
                 String varName = "";
 
                 if (ctx.j_init_var(i).any_name(0) != null) {
@@ -139,34 +140,37 @@ public class BaseVisitor extends SQLBaseVisitor {
                 if (ctx.j_init_var(i).j_string() != null) {
                     System.out.println("visit string");
                     initVarStmt.setString(visitAny_name(ctx.j_init_var(i).j_string().any_name()));
-                    SymbolManager.createSymbol(varName, Type.STRING_CONST, false, true);
+                    SymbolManager.createSymbol(varName, Type.STRING_CONST, false, true,lineNum);
                 } else if (ctx.j_init_var(i).any_name(1) != null) {
                     System.out.println("visit new type");
                     initVarStmt.setNewType(visitAny_name(ctx.j_init_var(i).any_name(1)));
-                    SymbolManager.createSymbol(varName, initVarStmt.getNewType().getName(), false, true);
+                    SymbolManager.createSymbol(varName, initVarStmt.getNewType().getName(), false, true,lineNum);
                 } else if (ctx.j_init_var(i).expr() != null) {
                     initVarStmt.setExpression(visitExpr(ctx.j_init_var(i).expr()));
                     if (ctx.j_init_var(i).expr().literal_value() != null) {
                         System.out.println("visit literal value");
                         String n = ctx.j_init_var(i).expr().literal_value().NUMERIC_LITERAL().getSymbol().getText();
                         initVarStmt.setNumber(Integer.parseInt(n));
-                        SymbolManager.createSymbol(varName, Type.NUMBER_CONST, false, true);
+                        SymbolManager.createSymbol(varName, Type.NUMBER_CONST, false, true,lineNum);
                     }
                     if (ctx.j_init_var(i).expr().j_bool_value() != null) {
                         System.out.println("visit bool value");
                         if (ctx.j_init_var(i).expr().j_bool_value().J_FALSE() != null) {
                             initVarStmt.setBoolValue(false);
-                            SymbolManager.createSymbol(varName, Type.BOOLEAN_CONST, false, true);
+                            SymbolManager.createSymbol(varName, Type.BOOLEAN_CONST, false, true,lineNum);
                         }
                         if (ctx.j_init_var(i).expr().j_bool_value().J_TRUE() != null) {
                             initVarStmt.setBoolValue(true);
-                            SymbolManager.createSymbol(varName, Type.BOOLEAN_CONST, false, true);
+                            SymbolManager.createSymbol(varName, Type.BOOLEAN_CONST, false, true,lineNum);
                         }
                     }
-                } else if (ctx.j_init_var(i).factored_select_stmt() != null)
+                } else if (ctx.j_init_var(i).factored_select_stmt() != null) {
                     initVarStmt.setSelectStmt(visitFactored_select_stmt(ctx.j_init_var(i).factored_select_stmt()));
-                else
-                    SymbolManager.createSymbol(varName, null, false, true);
+                    String tableType = visitAny_name(ctx.j_init_var(i).factored_select_stmt().select_core().table_or_subquery().get(0).table_name().any_name()).getName();
+                    //System.out.println("table type "+ tableType);
+                    SymbolManager.createSymbol(varName, tableType, false, false,lineNum);
+                } else
+                    SymbolManager.createSymbol(varName, null, false, true,lineNum);
 
                 varStmts.add(initVarStmt);
             }
@@ -191,7 +195,9 @@ public class BaseVisitor extends SQLBaseVisitor {
         System.out.println("visit Func Call Stmt");
         FunctionCallStmt functionCallStmt = new FunctionCallStmt();
         functionCallStmt.setFuncName(visitAny_name(ctx.any_name(0)));
-        SymbolManager.createSymbol(visitAny_name(ctx.any_name(0)).getName(),Type.FUNCTION_CONST,false,false);
+        System.out.println("func Line : " + ctx.getStart().getLine());
+
+        SymbolManager.createSymbol(visitAny_name(ctx.any_name(0)).getName(), Type.FUNCTION_CONST, false, false,ctx.getStart().getLine());
         if (ctx.any_name() != null)
             for (int i = 1; i < ctx.any_name().size(); i++) {
                 System.out.println("parameters");
@@ -307,6 +313,7 @@ public class BaseVisitor extends SQLBaseVisitor {
     public InitVarStmt visitJ_assign(SQLParser.J_assignContext ctx) {
         System.out.println("visit assign stmt");
         InitVarStmt initVarStmt = new InitVarStmt();
+        int lineNum= ctx.getStart().getLine();
         String varName = "";
 
         if (ctx.j_init_var().any_name(0) != null) {
@@ -317,37 +324,41 @@ public class BaseVisitor extends SQLBaseVisitor {
         if (ctx.j_init_var().j_string() != null) {
             System.out.println("visit string");
             initVarStmt.setString(visitAny_name(ctx.j_init_var().j_string().any_name()));
-            SymbolManager.createSymbol(varName, Type.STRING_CONST, false, false);
+            SymbolManager.createSymbol(varName, Type.STRING_CONST, false, false,lineNum);
         }
-        if (ctx.j_init_var().any_name(1) != null) {
+        else if (ctx.j_init_var().any_name(1) != null) {
             System.out.println("visit new type");
             initVarStmt.setNewType(visitAny_name(ctx.j_init_var().any_name(1)));
-            SymbolManager.createSymbol(varName, initVarStmt.getNewType().getName(), false, false);
+            SymbolManager.createSymbol(varName, initVarStmt.getNewType().getName(), false, false,lineNum);
         }
-
-
-        if (ctx.j_init_var().expr() != null) {
+        else if (ctx.j_init_var().expr() != null) {
             initVarStmt.setExpression(visitExpr(ctx.j_init_var().expr()));
             if (ctx.j_init_var().expr().literal_value() != null) {
                 System.out.println("visit literal value");
                 String n = ctx.j_init_var().expr().literal_value().NUMERIC_LITERAL().getSymbol().getText();
                 initVarStmt.setNumber(Integer.parseInt(n));
-                SymbolManager.createSymbol(varName, Type.NUMBER_CONST, false, false);
+                SymbolManager.createSymbol(varName, Type.NUMBER_CONST, false, false,lineNum);
             }
             if (ctx.j_init_var().expr().j_bool_value() != null) {
                 System.out.println("visit bool value");
                 if (ctx.j_init_var().expr().j_bool_value().J_FALSE() != null) {
                     initVarStmt.setBoolValue(false);
-                    SymbolManager.createSymbol(varName, Type.BOOLEAN_CONST, false, false);
+                    SymbolManager.createSymbol(varName, Type.BOOLEAN_CONST, false, false,lineNum);
                 }
                 if (ctx.j_init_var().expr().j_bool_value().J_TRUE() != null) {
                     initVarStmt.setBoolValue(true);
-                    SymbolManager.createSymbol(varName, Type.BOOLEAN_CONST, false, false);
+                    SymbolManager.createSymbol(varName, Type.BOOLEAN_CONST, false, false,lineNum);
                 }
             }
         }
-        if (ctx.j_init_var().factored_select_stmt() != null)
+        else if (ctx.j_init_var().factored_select_stmt() != null) {
             initVarStmt.setSelectStmt(visitFactored_select_stmt(ctx.j_init_var().factored_select_stmt()));
+            String tableType = visitAny_name(ctx.j_init_var().factored_select_stmt().select_core().table_or_subquery().get(0).table_name().any_name()).getName();
+            //System.out.println("table type "+ tableType);
+            SymbolManager.createSymbol(varName, tableType, false, false,lineNum);
+
+        }
+
         return initVarStmt;
     }
 
@@ -496,12 +507,12 @@ public class BaseVisitor extends SQLBaseVisitor {
         System.out.println("visit Java_function");
 
         FunctionDeclaration functionDeclaration = new FunctionDeclaration();
-        SymbolManager.createSymbol(visitAny_name(ctx.any_name()).getName(), Type.FUNCTION_CONST, false, true);
+        SymbolManager.createSymbol(visitAny_name(ctx.any_name()).getName(), Type.FUNCTION_CONST, false, true,ctx.getStart().getLine());
 
-        Scope funcScope = ScopeManager.getScopeById("0");
+//        String toto = ScopeManager.getLastOpened().getId();
 
         FunctionBody body = visitJ_function_body(ctx.j_function_body());
-
+        //System.out.println("func scope : " + scope.getId());
 
         FunctionHeader functionHeader = new FunctionHeader();
         functionHeader.setName(visitAny_name(ctx.any_name()).getName());
@@ -512,7 +523,8 @@ public class BaseVisitor extends SQLBaseVisitor {
             String varName = "";
 
             InitVarStmt initVarStmt = new InitVarStmt();
-           // FuncParameter parameter = new FuncParameter();
+            int lineNum=ctx.getStart().getLine();
+            // FuncParameter parameter = new FuncParameter();
 
             if (ctx.j_var(i).j_init_var(0).any_name(0) != null) {
                 //var name
@@ -524,46 +536,42 @@ public class BaseVisitor extends SQLBaseVisitor {
                 initVarStmt.setString(visitAny_name(ctx.j_var(i).j_init_var(0).j_string().any_name()));
 
                 //parameter.setParam(varName, Type.STRING_CONST, true, true);
-                SymbolManager.createSymbolWithScope(varName, Type.STRING_CONST , funcScope, true, true);
-            }
-            else if (ctx.j_var(i).j_init_var(0).any_name(1) != null) {
+                SymbolManager.createSymbolWithScope(varName, Type.STRING_CONST, scope, true, true,lineNum);
+            } else if (ctx.j_var(i).j_init_var(0).any_name(1) != null) {
                 System.out.println("visit new type");
                 initVarStmt.setNewType(visitAny_name(ctx.j_var(i).j_init_var(0).any_name(1)));
-                SymbolManager.createSymbolWithScope(varName, initVarStmt.getNewType().getName(),funcScope, true, true);
-            }
-            else if (ctx.j_var(i).j_init_var(0).expr() != null) {
+                SymbolManager.createSymbolWithScope(varName, initVarStmt.getNewType().getName(), scope, true, true,lineNum);
+            } else if (ctx.j_var(i).j_init_var(0).expr() != null) {
                 initVarStmt.setExpression(visitExpr(ctx.j_var(i).j_init_var(0).expr()));
                 if (ctx.j_var(i).j_init_var(0).expr().literal_value() != null) {
                     System.out.println("visit literal value");
                     String n = ctx.j_var(i).j_init_var(0).expr().literal_value().NUMERIC_LITERAL().getSymbol().getText();
                     initVarStmt.setNumber(Integer.parseInt(n));
 
-                   // parameter.setParam(varName, Type.NUMBER_CONST, true, true);
-                    SymbolManager.createSymbolWithScope(varName, Type.NUMBER_CONST,funcScope, true, true);
+                    // parameter.setParam(varName, Type.NUMBER_CONST, true, true);
+                    SymbolManager.createSymbolWithScope(varName, Type.NUMBER_CONST, scope, true, true,lineNum);
                 }
                 if (ctx.j_var(i).j_init_var(0).expr().j_bool_value() != null) {
                     System.out.println("visit bool value");
                     if (ctx.j_var(i).j_init_var(0).expr().j_bool_value().J_FALSE() != null) {
                         initVarStmt.setBoolValue(false);
 
-                      //  parameter.setParam(varName, Type.BOOLEAN_CONST, true, true);
-                        SymbolManager.createSymbolWithScope(varName, Type.BOOLEAN_CONST, funcScope,true, true);
+                        //  parameter.setParam(varName, Type.BOOLEAN_CONST, true, true);
+                        SymbolManager.createSymbolWithScope(varName, Type.BOOLEAN_CONST, scope, true, true,lineNum);
                     }
                     if (ctx.j_var(i).j_init_var(0).expr().j_bool_value().J_TRUE() != null) {
                         initVarStmt.setBoolValue(true);
 
-                      //  parameter.setParam(varName, Type.BOOLEAN_CONST, true, true);
-                        SymbolManager.createSymbolWithScope(varName, Type.BOOLEAN_CONST,funcScope, true, true);
+                        //  parameter.setParam(varName, Type.BOOLEAN_CONST, true, true);
+                        SymbolManager.createSymbolWithScope(varName, Type.BOOLEAN_CONST, scope, true, true,lineNum);
                     }
                 }
-            }
-            else if (ctx.j_var(i).j_init_var(0).factored_select_stmt() != null) {
+            } else if (ctx.j_var(i).j_init_var(0).factored_select_stmt() != null) {
                 initVarStmt.setSelectStmt(visitFactored_select_stmt(ctx.j_var(i).j_init_var(0).factored_select_stmt()));
-            }
-            else {
-                System.out.println("dont have intilaization");
+            } else {
+//                System.out.println("dont have intilaization");
                 //parameter.setParam(varName, null, true, true);
-                SymbolManager.createSymbolWithScope(varName, null,funcScope, true, true);
+                SymbolManager.createSymbolWithScope(varName, null, scope, true, true,lineNum);
             }
         }
 //        ArrayList<Parameter> parametersList = new ArrayList<>();
@@ -576,7 +584,7 @@ public class BaseVisitor extends SQLBaseVisitor {
 //            parametersList.add(parameter);
 //        }
 //        functionHeader.setParameterList(parametersList);
-
+        scope = null;
         functionDeclaration.setHeader(functionHeader);
         functionDeclaration.setBody(body);
 
@@ -649,14 +657,13 @@ public class BaseVisitor extends SQLBaseVisitor {
 
     @Override
     public FunctionBody visitJ_function_body(SQLParser.J_function_bodyContext ctx) {
-//        System.out.println("visit function body");
-        System.out.println("start func body");
+        System.out.println("visit function body");
+//        System.out.println("start func body");
         FunctionBody body = new FunctionBody();
         ScopeManager.createOpenedScope();
 
-        if(scope==null){
-            scope=ScopeManager.getLastOpened();
-
+        if (scope == null) {
+            scope = ScopeManager.getLastOpened();
         }
 
         List<JavaStatement> javaStatements = new ArrayList<JavaStatement>();
@@ -669,7 +676,7 @@ public class BaseVisitor extends SQLBaseVisitor {
         ScopeManager.closeLastOpened();
         body.setJavaStatements(javaStatements);
 
-        System.out.println("end func body");
+//        System.out.println("end func body");
 
         return body;
     }
@@ -681,20 +688,19 @@ public class BaseVisitor extends SQLBaseVisitor {
     public CreateTypeStmt visitCreate_type_stmt(SQLParser.Create_type_stmtContext ctx) {
         System.out.println("visit create type stmt");
         Type type = new Type();
+        type.setLineNum(ctx.getStart().getLine());
         if (ctx.table_name() != null)
             type.setName(visitAny_name(ctx.table_name().any_name()).getName());
-
         if (!ctx.column_def().isEmpty()) {
-            Map<String, Type> columns = new HashMap<String, Type>();
-
+//            Map<String, Type> columns = new HashMap<String, Type>();
             for (int i = 0; i < ctx.column_def().size(); i++) {
                 String varType = visitAny_name(ctx.column_def(i).type_name(0).name().any_name()).getName();
                 String varName = visitAny_name(ctx.column_def(i).column_name().any_name()).getName();
-                System.out.println("varName " + varName);
-                System.out.println("varName " + varType);
-                columns.put(varName, TypeManager.guessType(varType));
+
+                type.addColumn(varName, TypeManager.guessType(varType));
+//                columns.put(varName, TypeManager.guessType(varType));
             }
-            type.setColumns(columns);
+//            type.setColumns(columns);
         }
 
         Main.symbolTable.addType(type);
@@ -834,18 +840,20 @@ public class BaseVisitor extends SQLBaseVisitor {
         System.out.println("visit create table stmt");
         CreateTableStmt createTableStmt = new CreateTableStmt();
         Type type = new Type();
+        type.setLineNum(ctx.getStart().getLine());
         if (ctx.table_name() != null)
             type.setName(visitAny_name(ctx.table_name().any_name()).getName());
 
         if (!ctx.column_def().isEmpty()) {
-            Map<String, Type> columns = new HashMap<String, Type>();
+//            Map<String, Type> columns = new HashMap<String, Type>();
 
             for (int i = 0; i < ctx.column_def().size(); i++) {
                 String varType = visitAny_name(ctx.column_def(i).type_name(0).name().any_name()).getName();
                 String varName = visitAny_name(ctx.column_def(i).column_name().any_name()).getName();
-                columns.put(varName, TypeManager.guessType(varType));
+                type.addColumn(varName, TypeManager.guessType(varType));
+//                columns.put(varName, TypeManager.guessType(varType));
             }
-            type.setColumns(columns);
+//            type.setColumns(columns);
         }
         Main.symbolTable.addType(type);
 
