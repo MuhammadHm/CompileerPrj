@@ -34,5 +34,7 @@ public class SelectStmt extends Statement {
         this.selectCore = selectCore;
     }
 
-
+    public SelectCore getSelectCore() {
+        return selectCore;
+    }
 }

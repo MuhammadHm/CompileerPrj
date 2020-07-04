@@ -18,7 +18,8 @@ rr(){
         }
         mx();
         mx2();
+                Create Table type1(Id number, Capacity number);
+                 Create Table type3(Id number, Capacity number,Id number);
+                 Create Table Customar(Id number, address Address);
 }
 mx(){}
- Create Table type1(Id number, Capacity number);
-

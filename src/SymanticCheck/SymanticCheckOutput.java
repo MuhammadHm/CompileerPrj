@@ -13,4 +13,5 @@ public class SymanticCheckOutput {
         this.OutputType=OutputType;
         this.ErrorLineNumber=ErrorLineNumber;
     }
+
 }

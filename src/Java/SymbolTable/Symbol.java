@@ -7,6 +7,7 @@ public class Symbol {
     private Scope scope;
     private boolean isParam;
     private boolean isDeclaration;
+    int lineNum;
 
     public String getName() {
         return name;
@@ -46,6 +47,14 @@ public class Symbol {
 
     public boolean isDeclaration() {
         return isDeclaration;
+    }
+
+    public void setLineNum(int lineNum) {
+        this.lineNum = lineNum;
+    }
+
+    public int getLineNum() {
+        return lineNum;
     }
 
 }

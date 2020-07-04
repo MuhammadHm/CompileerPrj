@@ -1,4 +1,4 @@
-// Generated from C:/Users/Majed Tello/Desktop/compiler/antlrTest/src\SQL.g4 by ANTLR 4.8
+// Generated from C:/Users/MuhammadHm/IdeaProjects/Compiler project/antlrTest/src\SQL.g4 by ANTLR 4.8
 package generated;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 

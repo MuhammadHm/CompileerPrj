@@ -112,4 +112,8 @@ public class InitVarStmt extends JavaStatement {
     public Integer getNumber() {
         return number;
     }
+
+    public SelectStmt getSelectStmt() {
+        return selectStmt;
+    }
 }

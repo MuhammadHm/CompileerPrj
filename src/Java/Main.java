@@ -38,9 +38,10 @@ c="";
             System.out.println("\n\nAbstract Syntax Tree: \n");
 
             p.accept(new BaseASTVisitor());
-            ArrayList<SymanticCheckOutput> ErrorList=new ArrayList<SymanticCheckOutput>();
-            ErrorList= SymanticCheck.Check();
-            System.out.println(ErrorList.size());
+//             ArrayList<SymanticCheckOutput> ErrorList=new ArrayList<SymanticCheckOutput>();
+//             ErrorList= SymanticCheck.Check();
+//             System.out.println(ErrorList.size());
+            SymanticCheck.PrintErrorList();
 //             p.accept(new ASTSymbolTable());
 
 //            System.out.println();

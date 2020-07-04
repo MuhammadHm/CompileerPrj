@@ -1,12 +1,14 @@
 package Java.SymbolTable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Type {
 
     private String name;
-    private Map<String, Type> columns = new HashMap<String, Type>();
+    private Map<String, ArrayList<Type>> columns = new HashMap<String, ArrayList<Type>>();
+    int lineNum;
 
     public final static String NUMBER_CONST = "number";
     public final static String STRING_CONST = "string";
@@ -21,11 +23,30 @@ public class Type {
         this.name = name;
     }
 
-    public Map<String, Type> getColumns() {
+    public Map<String, ArrayList<Type>> getColumns() {
         return columns;
     }
 
-    public void setColumns(Map<String, Type> columns) {
+    public void setColumns(Map<String, ArrayList<Type>> columns) {
         this.columns = columns;
+    }
+
+    public void addColumn(String name, Type type) {
+        if (this.columns.get(name) == null) {
+            ArrayList<Type> types = new ArrayList<>();
+            types.add(type);
+            this.columns.put(name, types);
+        } else {
+            this.columns.get(name).add(type);
+        }
+
+    }
+
+    public void setLineNum(int lineNum) {
+        this.lineNum = lineNum;
+    }
+
+    public int getLineNum() {
+        return lineNum;
     }
 }

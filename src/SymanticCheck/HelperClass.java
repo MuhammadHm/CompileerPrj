@@ -37,6 +37,14 @@ public class HelperClass {
         }
         return  FuncKeys;
     }
+
+    public static ArrayList<String> GetColumnKeys(Type type)
+    {
+        ArrayList<String> ColKeys=new ArrayList<>();
+        ColKeys.addAll(type.getColumns().keySet());
+
+        return  ColKeys;
+    }
     public static int CheckNumberOfDeclaredBefore(Scope scope, String key)
     {
         int nuberofdeclared=0;
@@ -95,20 +103,6 @@ public class HelperClass {
             }
         }
         return true;
-
-//        while (scope!=null) {
-//            var aaaa=scope.getSymbolMap().get(key);
-//            if (aaaa!=null) {
-//                for (int i = 0; i < scope.getSymbolMap().get(key).size() ; i++) {
-//                       if (type=="")
-//                           type=scope.getSymbolMap().get(key).get(i).getType().getName();
-//                       if (type!=scope.getSymbolMap().get(key).get(i).getType().getName())
-//                           return  false;
-//                }
-//            }
-//            scope=scope.getParent();
-//        }
-//        return true;
     }
     public  static boolean TypeIsInSymbolTable(Type type)
     {
