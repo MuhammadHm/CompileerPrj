@@ -35,6 +35,7 @@ public class SymbolManager {
         symbol.setScope(scope);
         if (scope != null)
             scope.addSymbol(name, symbol);
+
     }
 
 }

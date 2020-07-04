@@ -80,11 +80,11 @@ j_do_while:
   J_WHILE '(' expr ')' ';'
 ;
 j_for :
-    J_FOR '('J_VAR any_name '=' NUMERIC_LITERAL ';' expr ';' (expr) ')'
+    J_FOR '('   j_var ';' expr ';' (expr) ')'
     j_function_body
 ;
 j_for_each :
-    J_FOR '('J_VAR any_name ':' any_name ')'
+    J_FOR '('   j_var ':' any_name ')'
     j_function_body
 ;
 j_switch_case:
@@ -393,8 +393,8 @@ ordering_term
  ;
 
 result_column
- : '*'
- | table_name '.' '*'
+ : STAR
+ | table_name '.' STAR
  | expr ( K_AS? column_alias )?
  ;
 
