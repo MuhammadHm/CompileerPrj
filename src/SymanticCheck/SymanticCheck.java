@@ -1,6 +1,7 @@
 package SymanticCheck;
 
 import Java.Main;
+import Java.SymbolTable.Type;
 
 import java.util.ArrayList;
 
@@ -87,12 +88,26 @@ public class SymanticCheck {
         }
 
         for (int i = 0; i < Main.symbolTable.getUsedTypes().size(); i++) {
-            if (!HelperClass.CheckUsedTypeInDeclaredTypes(Main.symbolTable.getUsedTypes().get(i))) {
-                ErrorList.add(new SymanticCheckOutput(ErrorsName.UsingOfUndeclaredType,colkeys.get(j),OutputType.Error,Integer.toString( Main.symbolTable.getDeclaredTypes().get(i).getLineNum())));
+            if (!HelperClass.TypeIsInSymbolTable(Main.symbolTable.getUsedTypes().get(i))) {
+                ErrorList.add(new SymanticCheckOutput(ErrorsName.UsingOfUndeclaredType,Main.symbolTable.getUsedTypes().get(i).getName(),OutputType.Error,Integer.toString(Main.symbolTable.getUsedTypes().get(i).getLineNum())));
             }
             else {
                 CheckUsingUnExistedColumnOfTypeORTable(Main.symbolTable.getUsedTypes().get(i));
             }
+            }
+        }
+        private static void CheckUsingUnExistedColumnOfTypeORTable(Type type)
+        {
+            for (int i = 0; i <Main.symbolTable.getDeclaredTypes().size() ; i++) {
+                ArrayList<String> ColsKeys=new ArrayList<>();
+                ColsKeys=HelperClass.GetColumnKeys(type);
+                if (Main.symbolTable.getDeclaredTypes().get(i).getName().equals(type.getName())) {
+                    for (int j = 0; j <ColsKeys.size() ; j++) {
+                        if (Main.symbolTable.getDeclaredTypes().get(i).getColumns().get(ColsKeys.get(j))==null)
+                            ErrorList.add(new SymanticCheckOutput(ErrorsName.UsingUnExistedColumnOfTypeORTable,Main.symbolTable.getUsedTypes().get(i).getName(),OutputType.Error,Integer.toString(Main.symbolTable.getUsedTypes().get(i).getLineNum())));
+
+                    }
+                }
             }
         }
     

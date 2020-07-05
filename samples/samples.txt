@@ -1,25 +1,5 @@
-rr(){
-    var i=4;
-
-    var sum;
-
-    var t=true;
-
-    var x=type1;
-
-    var xx=type2;
-
-    if(true){
-        t="fsdd";
-
-        y=535;
-
-        var i=6;
-        }
-        mx();
-        mx2();
-                Create Table type1(Id number, Capacity number);
-                 Create Table type3(Id number, Capacity number,Id number);
-                 Create Table Customar(Id number, address Address);
+f(){
+m();
 }
-mx(){}
+m(){}
+create table users(id number,name string,id boolean);

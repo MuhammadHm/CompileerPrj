@@ -40,8 +40,9 @@ c="";
             p.accept(new BaseASTVisitor());
 //             ArrayList<SymanticCheckOutput> ErrorList=new ArrayList<SymanticCheckOutput>();
 //             ErrorList= SymanticCheck.Check();
-//             System.out.println(ErrorList.size());
+//
             SymanticCheck.PrintErrorList();
+            System.out.println();
 //             p.accept(new ASTSymbolTable());
 
 //            System.out.println();
