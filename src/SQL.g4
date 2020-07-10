@@ -178,16 +178,25 @@ sql_stmt_list
  : ';'* sql_stmt ( ';'+ sql_stmt )* ';'* ;
 
 sql_stmt:
-     ( alter_table_stmt
-      | create_table_stmt
+     (
+       create_table_stmt
       | create_type_stmt
       | create_aggrigation_func
-      | delete_stmt
-      | drop_table_stmt
       | factored_select_stmt
-      | insert_stmt
-      | update_stmt
       );
+
+
+//sql_stmt:
+//     ( alter_table_stmt
+//      | create_table_stmt
+//      | create_type_stmt
+//      | create_aggrigation_func
+//      | delete_stmt
+//      | drop_table_stmt
+//      | factored_select_stmt
+//      | insert_stmt
+//      | update_stmt
+//      );
 
 alter_table_stmt
  : K_ALTER K_TABLE  ( database_name '.' )? source_table_name
@@ -253,7 +262,7 @@ update_stmt
    K_SET column_name '=' expr ( ',' column_name '=' expr )* ( K_WHERE expr )?
  ;
 column_def
- : column_name ( column_constraint | type_name )*
+ : column_name ( type_name )*
  ;
 
 type_name

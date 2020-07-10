@@ -32,23 +32,12 @@ public class Main {
             CommonTokenStream token = new CommonTokenStream(lexer);
             SQLParser parser = new SQLParser(token);
             ParseTree tree = parser.parse();
-String c;
-c="";
             Parse p = (Parse) new BaseVisitor().visit(tree);
-            System.out.println("\n\nAbstract Syntax Tree: \n");
 
-            p.accept(new BaseASTVisitor());
-//             ArrayList<SymanticCheckOutput> ErrorList=new ArrayList<SymanticCheckOutput>();
-//             ErrorList= SymanticCheck.Check();
-//
-            SymanticCheck.PrintErrorList();
-            System.out.println();
-//             p.accept(new ASTSymbolTable());
+//            System.out.println("\n\nAbstract Syntax Tree: \n");
+//            p.accept(new BaseASTVisitor());
+//            SymanticCheck.PrintErrorList();
 
-//            System.out.println();
-//            for (int i = 0; i < symbolTable.getScopes().size(); i++) {
-//                System.out.println(symbolTable.getScopes().get(i).getId()+"\n");
-//            }
         } catch (IOException e) {
             e.printStackTrace();
         }

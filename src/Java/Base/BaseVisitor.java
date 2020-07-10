@@ -843,21 +843,21 @@ public class BaseVisitor extends SQLBaseVisitor {
         if (ctx.create_aggrigation_func() != null) {
             return visitCreate_aggrigation_func(ctx.create_aggrigation_func());
         }
-        if (ctx.delete_stmt() != null) {
-            return visitDelete_stmt(ctx.delete_stmt());
-        }
-        if (ctx.drop_table_stmt() != null) {
-            return visitDrop_table_stmt(ctx.drop_table_stmt());
-        }
-        if (ctx.insert_stmt() != null) {
-            return visitInsert_stmt(ctx.insert_stmt());
-        }
-        if (ctx.update_stmt() != null) {
-            return visitUpdate_stmt(ctx.update_stmt());
-        }
-        if (ctx.alter_table_stmt() != null) {
-            return visitAlter_table_stmt(ctx.alter_table_stmt());
-        }
+//        if (ctx.delete_stmt() != null) {
+//            return visitDelete_stmt(ctx.delete_stmt());
+//        }
+//        if (ctx.drop_table_stmt() != null) {
+//            return visitDrop_table_stmt(ctx.drop_table_stmt());
+//        }
+//        if (ctx.insert_stmt() != null) {
+//            return visitInsert_stmt(ctx.insert_stmt());
+//        }
+//        if (ctx.update_stmt() != null) {
+//            return visitUpdate_stmt(ctx.update_stmt());
+//        }
+//        if (ctx.alter_table_stmt() != null) {
+//            return visitAlter_table_stmt(ctx.alter_table_stmt());
+//        }
 
         return s;
     }
@@ -1181,10 +1181,10 @@ public class BaseVisitor extends SQLBaseVisitor {
         System.out.println("visit column def");
         ColumnDef columnDef = new ColumnDef();
         // : column_name ( column_constraint | type_name )*
-        if (ctx.column_constraint() != null)
-            for (int i = 0; i < ctx.column_constraint().size(); i++) {
-                columnDef.addColumnConstraint(visitColumn_constraint(ctx.column_constraint(i)));
-            }
+//        if (ctx.column_constraint() != null)
+//            for (int i = 0; i < ctx.column_constraint().size(); i++) {
+//                columnDef.addColumnConstraint(visitColumn_constraint(ctx.column_constraint(i)));
+//            }
         if (ctx.type_name() != null)
             for (int i = 0; i < ctx.type_name().size(); i++) {
                 columnDef.addTypeName(visitType_name(ctx.type_name(i)));
