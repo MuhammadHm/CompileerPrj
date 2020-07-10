@@ -227,7 +227,35 @@ public class SQLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements SQ
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitCreate_table_stmt(SQLParser.Create_table_stmtContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitCreate_aggrigation_func(SQLParser.Create_aggrigation_funcContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitSelect_core(SQLParser.Select_coreContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitValue_in_quote(SQLParser.Value_in_quoteContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -283,13 +311,6 @@ public class SQLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements SQ
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitCreate_table_stmt(SQLParser.Create_table_stmtContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitDelete_stmt(SQLParser.Delete_stmtContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -298,13 +319,6 @@ public class SQLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements SQ
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitDrop_table_stmt(SQLParser.Drop_table_stmtContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -515,13 +529,6 @@ public class SQLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements SQ
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitJoin_constraint(SQLParser.Join_constraintContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitSelect_core(SQLParser.Select_coreContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

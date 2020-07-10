@@ -18,12 +18,8 @@ import Utils.SymbolManager;
 import Utils.TypeManager;
 import generated.SQLBaseVisitor;
 import generated.SQLParser;
-//import jdk.nashorn.internal.runtime.regexp.JoniRegExp;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BaseVisitor extends SQLBaseVisitor {
 
@@ -232,9 +228,7 @@ public class BaseVisitor extends SQLBaseVisitor {
     public PrintStmt visitJ_print(SQLParser.J_printContext ctx) {
         System.out.println("visit print stmt");
         PrintStmt printStmt = new PrintStmt();
-
-        printStmt.setStmt(visitAny_name(ctx.any_name(0)).getName());
-        //System.out.println(printStmt.getStmt());
+        printStmt.setVarName(visitAny_name(ctx.any_name()).getName());
         return printStmt;
     }
 
@@ -767,23 +761,63 @@ public class BaseVisitor extends SQLBaseVisitor {
     }
 
     @Override
+    public CreateTableStmt visitCreate_table_stmt(SQLParser.Create_table_stmtContext ctx) {
+        System.out.println("visit create table stmt");
+
+        //Path must be without spaces
+//        System.out.println("type: "+ ctx.value_in_quote(0).getText());
+//        System.out.println("path: "+ ctx.value_in_quote(1).getText());
+        CreateTableStmt createTableStmt = new CreateTableStmt();
+
+        Type type = new Type();
+        type.setLineNum(ctx.getStart().getLine());
+        if (ctx.table_name() != null)
+            type.setName(visitAny_name(ctx.table_name().any_name()).getName());
+
+        if (!ctx.column_def().isEmpty()) {
+//            Map<String, Type> columns = new HashMap<String, Type>();
+
+            for (int i = 0; i < ctx.column_def().size(); i++) {
+                String varType = visitAny_name(ctx.column_def(i).type_name(0).name().any_name()).getName();
+                String varName = visitAny_name(ctx.column_def(i).column_name().any_name()).getName();
+                type.addColumn(varName, TypeManager.guessType(varType));
+//                columns.put(varName, TypeManager.guessType(varType));
+            }
+//            type.setColumns(columns);
+        }
+        Main.symbolTable.addType(type);
+
+//        if (ctx.database_name() != null)
+//            createTableStmt.setDataBaseName(visitAny_name(ctx.database_name().any_name()));
+//        if (ctx.table_name() != null)
+//            createTableStmt.setTableName(visitAny_name(ctx.table_name().any_name()));
+//        if (ctx.select_stmt() != null)
+//            createTableStmt.setSelectStmt(visitSelect_stmt(ctx.select_stmt()));
+//        if (ctx.column_def() != null)
+//            for (int i = 0; i < ctx.column_def().size(); i++) {
+//                createTableStmt.addColumnDef(visitColumn_def(ctx.column_def(i)));
+//            }
+        return createTableStmt;
+    }
+
+    @Override
     public CreateAggFunc visitCreate_aggrigation_func(SQLParser.Create_aggrigation_funcContext ctx) {
         System.out.println("visit aggregation func");
 
         AggregationFunction aggregationFunction = new AggregationFunction();
         if (ctx.any_name(0) != null)
             aggregationFunction.setAggregationFunctionName(visitAny_name(ctx.any_name(0)).getName());
+        if (ctx.value_in_quote() != null)
+            aggregationFunction.setJarPath(ctx.value_in_quote().getText());
         if (ctx.any_name(1) != null)
-            aggregationFunction.setJarPath(visitAny_name(ctx.any_name(1)).getName());
+            aggregationFunction.setClassName(visitAny_name(ctx.any_name(1)).getName());
         if (ctx.any_name(2) != null)
-            aggregationFunction.setClassName(visitAny_name(ctx.any_name(2)).getName());
+            aggregationFunction.setMethodName(visitAny_name(ctx.any_name(2)).getName());
         if (ctx.any_name(3) != null)
-            aggregationFunction.setMethodName(visitAny_name(ctx.any_name(3)).getName());
-        if (ctx.any_name(4) != null)
-            aggregationFunction.setReturnType(visitAny_name(ctx.any_name(4)).getName());
+            aggregationFunction.setReturnType(visitAny_name(ctx.any_name(3)).getName());
 
         ArrayList<String> funcParams = new ArrayList<>();
-        for (int i = 5; i < ctx.any_name().size(); i++) {
+        for (int i = 4; i < ctx.any_name().size(); i++) {
             if (ctx.any_name(i) != null)
                 funcParams.add(visitAny_name(ctx.any_name(i)).getName());
         }
@@ -811,13 +845,45 @@ public class BaseVisitor extends SQLBaseVisitor {
         return createAggFunc;
     }
 
+    @Override
+    public SelectStmt visitFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx) {
+        System.out.println("visit Factored_select_stmt");
+        SelectStmt select = new SelectStmt();
+
+
+        if (ctx.select_core() != null) {
+            select.setSelectCore(visitSelect_core(ctx.select_core()));
+            Type type = new Type();
+            type.setLineNum(ctx.getStart().getLine());
+            String table = visitAny_name(ctx.select_core().table_or_subquery().get(0).table_name().any_name()).getName();
+            type.setName(table);
+
+            if (ctx.select_core().result_column(0).STAR() == null) {
+                for (int i = 0; i < ctx.select_core().result_column().size(); i++) {
+
+                    String colName = visitAny_name(ctx.select_core().result_column(i).expr().column_name().any_name()).getName();
+                    System.out.println("col Name "+colName);
+                    type.addColumn(colName, TypeManager.guessType(null));
+                }
+            } else {
+                type.addColumn("*", TypeManager.guessType(null));
+            }
+            Main.symbolTable.addUsedType(type);
+        }
+        if (ctx.ordering_term() != null) {
+            for (int i = 0; i < ctx.ordering_term().size(); i++) {
+                select.addOrderingTerm(visitExpr(ctx.ordering_term(i).expr()));
+            }
+        }
+        select.setName("Select");
+        return select;
+    }
 
     @Override
     public List<Statement> visitSql_stmt_list(SQLParser.Sql_stmt_listContext ctx) {
-
         System.out.println("visit Sql_stmt_list");
-
         List<Statement> sqlStmts = new ArrayList<Statement>();
+
         if (ctx != null)
             for (int i = 0; i < ctx.sql_stmt().size(); i++) {
                 sqlStmts.add(visitSql_stmt(ctx.sql_stmt(i)));
@@ -868,75 +934,6 @@ public class BaseVisitor extends SQLBaseVisitor {
         SelectStmt selectStmt = new SelectStmt();
 
         return selectStmt;
-    }
-
-    @Override
-    public SelectStmt visitFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx) {
-        System.out.println("visit Factored_select_stmt");
-        SelectStmt select = new SelectStmt();
-
-
-        if (ctx.select_core() != null) {
-            select.setSelectCore(visitSelect_core(ctx.select_core()));
-            Type type = new Type();
-            type.setLineNum(ctx.getStart().getLine());
-            String table = visitAny_name(ctx.select_core().table_or_subquery().get(0).table_name().any_name()).getName();
-            type.setName(table);
-
-            if (ctx.select_core().result_column(0).STAR() == null) {
-                for (int i = 0; i < ctx.select_core().result_column().size(); i++) {
-
-                    String colName = visitAny_name(ctx.select_core().result_column(i).expr().column_name().any_name()).getName();
-                    System.out.println("col Name "+colName);
-                    type.addColumn(colName, TypeManager.guessType(null));
-                }
-            } else {
-                type.addColumn("*", TypeManager.guessType(null));
-            }
-            Main.symbolTable.addUsedType(type);
-        }
-        if (ctx.ordering_term() != null) {
-            for (int i = 0; i < ctx.ordering_term().size(); i++) {
-                select.addOrderingTerm(visitExpr(ctx.ordering_term(i).expr()));
-            }
-        }
-        select.setName("Select");
-        return select;
-    }
-
-    @Override
-    public CreateTableStmt visitCreate_table_stmt(SQLParser.Create_table_stmtContext ctx) {
-        System.out.println("visit create table stmt");
-        CreateTableStmt createTableStmt = new CreateTableStmt();
-        Type type = new Type();
-        type.setLineNum(ctx.getStart().getLine());
-        if (ctx.table_name() != null)
-            type.setName(visitAny_name(ctx.table_name().any_name()).getName());
-
-        if (!ctx.column_def().isEmpty()) {
-//            Map<String, Type> columns = new HashMap<String, Type>();
-
-            for (int i = 0; i < ctx.column_def().size(); i++) {
-                String varType = visitAny_name(ctx.column_def(i).type_name(0).name().any_name()).getName();
-                String varName = visitAny_name(ctx.column_def(i).column_name().any_name()).getName();
-                type.addColumn(varName, TypeManager.guessType(varType));
-//                columns.put(varName, TypeManager.guessType(varType));
-            }
-//            type.setColumns(columns);
-        }
-        Main.symbolTable.addType(type);
-
-//        if (ctx.database_name() != null)
-//            createTableStmt.setDataBaseName(visitAny_name(ctx.database_name().any_name()));
-//        if (ctx.table_name() != null)
-//            createTableStmt.setTableName(visitAny_name(ctx.table_name().any_name()));
-//        if (ctx.select_stmt() != null)
-//            createTableStmt.setSelectStmt(visitSelect_stmt(ctx.select_stmt()));
-//        if (ctx.column_def() != null)
-//            for (int i = 0; i < ctx.column_def().size(); i++) {
-//                createTableStmt.addColumnDef(visitColumn_def(ctx.column_def(i)));
-//            }
-        return createTableStmt;
     }
 
     @Override

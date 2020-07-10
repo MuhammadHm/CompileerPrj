@@ -116,7 +116,7 @@ j_json_elem:
 j_json_array:
  '[' (j_json_elem (',' j_json_elem)*)?']'
  ;
-j_print : J_PRINT '(' ( (any_name |j_init_arr_elem | j_json_value) ('+' (any_name|j_init_arr_elem))*) ')' ;
+j_print : J_PRINT '(' any_name ')' ;
 //query_var :  J_VAR real_name '=' select_stmt ';';          //Third Question
 j_one_line_cond: expr '?' ( java_stmt | expr | j_one_line_cond ) ':' (java_stmt | expr | j_one_line_cond) ;
 j_bool_value : (J_TRUE | J_FALSE);
@@ -125,18 +125,40 @@ j_increment_operator: ((any_name J_INCREMENT_OPERATOR) | (J_INCREMENT_OPERATOR a
 
 j_init_values: (('=' expr) | j_init_array | ('=' j_json_object ';') | ('=' j_function_call) | ( '=' j_json_array) | ('=' j_one_line_cond) )?;
 j_json_value: (any_name ('.' any_name)+)  j_init_values ;
+
+// SQL Rules
 create_type_stmt
  : K_CREATE  K_TYPE ( K_IF K_NOT K_EXISTS )?
    table_name
    ( '(' column_def (',' column_def )* ')' )
  ;
+create_table_stmt
+ : K_CREATE K_TABLE ( K_IF K_NOT K_EXISTS )?
+   table_name
+   ( '(' column_def (',' column_def )* ')' )
+   K_TYPE '=' QUOTE value_in_quote QUOTE ','
+   K_PATH '=' QUOTE value_in_quote QUOTE
+ ;
 create_aggrigation_func
-  : K_CREATE K_AGGRIGATION any_name
-   ( '(' any_name ',' any_name ',' any_name',' any_name',' ('[' ( any_name (',' any_name)*  )? ']') ')' ) ';'
+   : K_CREATE K_AGGRIGATION any_name
+    ( '(' QUOTE value_in_quote QUOTE ',' any_name ',' any_name',' any_name',' ('[' ( any_name (',' any_name)*  )? ']') ')' )
+   ;
+factored_select_stmt
+ :   select_core
+   ( K_ORDER K_BY ordering_term ( ',' ordering_term )* )?
+   ( K_LIMIT expr ( ( K_OFFSET | ',' ) expr )? )?
+ ;
+select_core
+  : K_SELECT ( K_DISTINCT | K_ALL )? result_column ( ',' result_column )*
+    ( K_FROM ( table_or_subquery ( ',' table_or_subquery )* | join_clause ) )?
+    ( K_WHERE expr )?
+    ( K_GROUP K_BY expr ( ',' expr )* ( K_HAVING expr )? )?
+  | K_VALUES '(' expr ( ',' expr )* ')' ( ',' '(' expr ( ',' expr )* ')' )*
   ;
-  //(any_name type_name? ( ',' any_name type_name? | ',' any_name type_name? )* )?
-//jar_path : [a-zA-Z_] [a-zA-Z_0-9]*;
-  //TODO add agg func to Base visitior and ast
+
+
+value_in_quote : ( ~'*' ~'"' | ('*'+ ~'"') )* '*'* ~'"'*;
+
 
 J_FUNCTION : 'function';
 J_VAR : 'var';
@@ -156,14 +178,14 @@ J_BREAK : 'break';
 J_INCREMENT_OPERATOR : ('++' | '--');
 K_TYPE : 'type';
 K_AGGRIGATION : ('AGGREGATION_FUNCTION' | 'aggregation_function');
-
+K_PATH : 'path';
 
 
 
 //TODO end of editing
 
 parse
- : ( sql_stmt_list | java_function |  error )* EOF
+ : ( sql_stmt_list |  java_function |  error )* EOF
  ;
 
 
@@ -214,12 +236,6 @@ alter_table_add
  : K_ADD table_constraint
  ;
 
-create_table_stmt
- : K_CREATE K_TABLE ( K_IF K_NOT K_EXISTS )?
-   table_name
-   ( '(' column_def (',' column_def )* ')' )
- ;
-
 delete_stmt
  :  K_DELETE K_FROM qualified_table_name
    ( K_WHERE expr )?
@@ -227,12 +243,6 @@ delete_stmt
 
 drop_table_stmt
  : K_DROP K_TABLE ( K_IF K_EXISTS )? ( database_name '.' )? table_name ;
-
-factored_select_stmt
- :   select_core
-   ( K_ORDER K_BY ordering_term ( ',' ordering_term )* )?
-   ( K_LIMIT expr ( ( K_OFFSET | ',' ) expr )? )?
- ;
 
 insert_stmt
  :   K_INSERT  K_INTO
@@ -428,14 +438,6 @@ join_operator
 
 join_constraint
     : ( K_ON expr)?
- ;
-
-select_core
- : K_SELECT ( K_DISTINCT | K_ALL )? result_column ( ',' result_column )*
-   ( K_FROM ( table_or_subquery ( ',' table_or_subquery )* | join_clause ) )?
-   ( K_WHERE expr )?
-   ( K_GROUP K_BY expr ( ',' expr )* ( K_HAVING expr )? )?
- | K_VALUES '(' expr ( ',' expr )* ')' ( ',' '(' expr ( ',' expr )* ')' )*
  ;
 
 signed_number
@@ -673,6 +675,7 @@ GT_EQ : '>=';
 EQ : '==';
 NOT_EQ1 : '!=';
 NOT_EQ2 : '<>';
+QUOTE : '"';
 
 // http://www.sqlite.org/lang_keywords.html
 K_ABORT : A B O R T;

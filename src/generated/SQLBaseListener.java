@@ -376,6 +376,18 @@ public class SQLBaseListener implements SQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCreate_table_stmt(SQLParser.Create_table_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCreate_table_stmt(SQLParser.Create_table_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCreate_aggrigation_func(SQLParser.Create_aggrigation_funcContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -383,6 +395,42 @@ public class SQLBaseListener implements SQLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCreate_aggrigation_func(SQLParser.Create_aggrigation_funcContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSelect_core(SQLParser.Select_coreContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSelect_core(SQLParser.Select_coreContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterValue_in_quote(SQLParser.Value_in_quoteContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitValue_in_quote(SQLParser.Value_in_quoteContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -472,18 +520,6 @@ public class SQLBaseListener implements SQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCreate_table_stmt(SQLParser.Create_table_stmtContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCreate_table_stmt(SQLParser.Create_table_stmtContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterDelete_stmt(SQLParser.Delete_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -503,18 +539,6 @@ public class SQLBaseListener implements SQLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDrop_table_stmt(SQLParser.Drop_table_stmtContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -875,18 +899,6 @@ public class SQLBaseListener implements SQLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitJoin_constraint(SQLParser.Join_constraintContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSelect_core(SQLParser.Select_coreContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSelect_core(SQLParser.Select_coreContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

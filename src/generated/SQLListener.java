@@ -308,6 +308,16 @@ public interface SQLListener extends ParseTreeListener {
 	 */
 	void exitCreate_type_stmt(SQLParser.Create_type_stmtContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link SQLParser#create_table_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterCreate_table_stmt(SQLParser.Create_table_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SQLParser#create_table_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitCreate_table_stmt(SQLParser.Create_table_stmtContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link SQLParser#create_aggrigation_func}.
 	 * @param ctx the parse tree
 	 */
@@ -317,6 +327,36 @@ public interface SQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCreate_aggrigation_func(SQLParser.Create_aggrigation_funcContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SQLParser#factored_select_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SQLParser#factored_select_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SQLParser#select_core}.
+	 * @param ctx the parse tree
+	 */
+	void enterSelect_core(SQLParser.Select_coreContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SQLParser#select_core}.
+	 * @param ctx the parse tree
+	 */
+	void exitSelect_core(SQLParser.Select_coreContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SQLParser#value_in_quote}.
+	 * @param ctx the parse tree
+	 */
+	void enterValue_in_quote(SQLParser.Value_in_quoteContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SQLParser#value_in_quote}.
+	 * @param ctx the parse tree
+	 */
+	void exitValue_in_quote(SQLParser.Value_in_quoteContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SQLParser#parse}.
 	 * @param ctx the parse tree
@@ -388,16 +428,6 @@ public interface SQLListener extends ParseTreeListener {
 	 */
 	void exitAlter_table_add(SQLParser.Alter_table_addContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SQLParser#create_table_stmt}.
-	 * @param ctx the parse tree
-	 */
-	void enterCreate_table_stmt(SQLParser.Create_table_stmtContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SQLParser#create_table_stmt}.
-	 * @param ctx the parse tree
-	 */
-	void exitCreate_table_stmt(SQLParser.Create_table_stmtContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link SQLParser#delete_stmt}.
 	 * @param ctx the parse tree
 	 */
@@ -417,16 +447,6 @@ public interface SQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDrop_table_stmt(SQLParser.Drop_table_stmtContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SQLParser#factored_select_stmt}.
-	 * @param ctx the parse tree
-	 */
-	void enterFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SQLParser#factored_select_stmt}.
-	 * @param ctx the parse tree
-	 */
-	void exitFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SQLParser#insert_stmt}.
 	 * @param ctx the parse tree
@@ -727,16 +747,6 @@ public interface SQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitJoin_constraint(SQLParser.Join_constraintContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SQLParser#select_core}.
-	 * @param ctx the parse tree
-	 */
-	void enterSelect_core(SQLParser.Select_coreContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SQLParser#select_core}.
-	 * @param ctx the parse tree
-	 */
-	void exitSelect_core(SQLParser.Select_coreContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SQLParser#signed_number}.
 	 * @param ctx the parse tree

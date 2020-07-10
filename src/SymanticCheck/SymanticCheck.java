@@ -81,7 +81,7 @@ public class SymanticCheck {
             ArrayList<String> colkeys=new ArrayList<>();
             colkeys=HelperClass.GetColumnKeys(Main.symbolTable.getDeclaredTypes().get(i));
             for (int j = 0; j < colkeys.size(); j++) {
-                if (!HelperClass.TypeIsInSymbolTable(Main.symbolTable.getDeclaredTypes().get(i).getColumns().get(colkeys.get(j)).get(0))) {
+                if (!HelperClass.TypeIsInSymbolTable(Main.symbolTable.getDeclaredTypes().get(i))) {
                     ErrorList.add(new SymanticCheckOutput(ErrorsName.UsingOfUndeclaredType,colkeys.get(j),OutputType.Error,Integer.toString( Main.symbolTable.getDeclaredTypes().get(i).getLineNum())));
                 }
             }
@@ -149,6 +149,7 @@ public class SymanticCheck {
             ArrayList<String> scopsumbolkeys=new ArrayList<>();
             scopsumbolkeys=HelperClass.GetVariableKeys(Main.symbolTable.getScopes().get(i));
             for (int j = 0; j < scopsumbolkeys.size(); j++) {
+                //Edited by hm for fixing
                 if (HelperClass.CheckUnAssignedVariableBefore(Main.symbolTable.getScopes().get(i),scopsumbolkeys.get(j)))
                 {
                     ErrorList.add(new SymanticCheckOutput(ErrorsName.UsingUnassignedVariable,scopsumbolkeys.get(j),OutputType.Warning,Integer.toString( Main.symbolTable.getScopes().get(i).getSymbolMap().get(scopsumbolkeys.get(j)).get(0).getLineNum())));
@@ -163,7 +164,8 @@ public class SymanticCheck {
             ArrayList<String> colkeys=new ArrayList<>();
             colkeys=HelperClass.GetColumnKeys(Main.symbolTable.getDeclaredTypes().get(i));
             for (int j = 0; j < colkeys.size(); j++) {
-                if (Main.symbolTable.getDeclaredTypes().get(i).getColumns().get(colkeys.get(j)).size()>1) {
+                //Edited by hm for fixing
+                if (Main.symbolTable.getDeclaredTypes().get(i).getColumns().size()>1) {
                     ErrorList.add(new SymanticCheckOutput(ErrorsName.DuplicateColumnNameInSameTableOrType,colkeys.get(j),OutputType.Error,Integer.toString( Main.symbolTable.getDeclaredTypes().get(i).getLineNum())));
                 }
             }

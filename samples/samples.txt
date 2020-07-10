@@ -1,5 +1,9 @@
+create aggregation_function f("D:\Apps", sum ,number ,hello ,[string, number]);
+create table t (id number) type="csv" , path="D:\Apps\mhd";
+create type toto (nono string);
+select * from toto where x > 1;
+
 f(){
-m();
+    x= select hello from nono where x=5;
+    print(x);
 }
-m(){}
-create table users(id number,name string,id boolean);

@@ -4,14 +4,14 @@ import Java.AST.Visitor.ASTVisitor;
 
 public class PrintStmt extends JavaStatement {
 
-    String stmt;
+    String varName;
 
-    public void setStmt(String stmt) {
-        this.stmt = stmt;
+    public void setVarName(String varName) {
+        this.varName = varName;
     }
 
-    public String getStmt() {
-        return stmt;
+    public String getVarName() {
+        return varName;
     }
 
     @Override

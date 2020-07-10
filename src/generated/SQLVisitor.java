@@ -191,11 +191,35 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCreate_type_stmt(SQLParser.Create_type_stmtContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link SQLParser#create_table_stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCreate_table_stmt(SQLParser.Create_table_stmtContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SQLParser#create_aggrigation_func}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitCreate_aggrigation_func(SQLParser.Create_aggrigation_funcContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SQLParser#factored_select_stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SQLParser#select_core}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSelect_core(SQLParser.Select_coreContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SQLParser#value_in_quote}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitValue_in_quote(SQLParser.Value_in_quoteContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SQLParser#parse}.
 	 * @param ctx the parse tree
@@ -239,12 +263,6 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAlter_table_add(SQLParser.Alter_table_addContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SQLParser#create_table_stmt}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCreate_table_stmt(SQLParser.Create_table_stmtContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link SQLParser#delete_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -256,12 +274,6 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitDrop_table_stmt(SQLParser.Drop_table_stmtContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SQLParser#factored_select_stmt}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SQLParser#insert_stmt}.
 	 * @param ctx the parse tree
@@ -442,12 +454,6 @@ public interface SQLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitJoin_constraint(SQLParser.Join_constraintContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SQLParser#select_core}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSelect_core(SQLParser.Select_coreContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SQLParser#signed_number}.
 	 * @param ctx the parse tree

@@ -7,7 +7,7 @@ import java.util.Map;
 public class Type {
 
     private String name;
-    private Map<String, ArrayList<Type>> columns = new HashMap<String, ArrayList<Type>>();
+    private Map<String, Type> columns = new HashMap<String, Type>();
     int lineNum;
 
     public final static String NUMBER_CONST = "number";
@@ -23,23 +23,16 @@ public class Type {
         this.name = name;
     }
 
-    public Map<String, ArrayList<Type>> getColumns() {
+    public Map<String, Type> getColumns() {
         return columns;
     }
 
-    public void setColumns(Map<String, ArrayList<Type>> columns) {
+    public void setColumns(Map<String, Type> columns) {
         this.columns = columns;
     }
 
     public void addColumn(String name, Type type) {
-        if (this.columns.get(name) == null) {
-            ArrayList<Type> types = new ArrayList<>();
-            types.add(type);
-            this.columns.put(name, types);
-        } else {
-            this.columns.get(name).add(type);
-        }
-
+        this.columns.put(name, type);
     }
 
     public void setLineNum(int lineNum) {
