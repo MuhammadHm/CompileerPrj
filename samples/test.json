@@ -1,0 +1,12 @@
+{
+  "Faculties": [
+    {
+      "name": "Damascus",
+      "id": "1"
+    },
+    {
+      "name": "aleppo",
+      "id": "2"
+    }
+  ]
+}

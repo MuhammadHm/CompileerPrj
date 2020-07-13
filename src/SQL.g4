@@ -340,8 +340,8 @@ expr
  | expr ( '=' | '==' | '!=' | '<>' | K_IS | K_IS K_NOT | K_IN | K_LIKE | K_GLOB | K_MATCH | K_REGEXP ) expr
  | expr K_AND expr
  | expr K_OR expr
- | function_name '(' ( K_DISTINCT? expr ( ',' expr )* | '*' )? ')'
  | '(' expr ')'
+ | function_name '(' ( K_DISTINCT? expr ( ',' expr )* | '*' )? ')'
 // | expr K_NOT? K_IN ( '(' ( select_stmt
 //                           | expr ( ',' expr )*
 //                           )?
@@ -420,12 +420,12 @@ result_column
 
 table_or_subquery
  : ( database_name '.' )? table_name ( K_AS? table_alias )?
-   ( K_INDEXED K_BY index_name
-   | K_NOT K_INDEXED )?
+//   ( K_INDEXED K_BY index_name
+//   | K_NOT K_INDEXED )?
  | '(' ( table_or_subquery ( ',' table_or_subquery )*
        | join_clause )
    ')' ( K_AS? table_alias )?
- | '(' select_stmt ')' ( K_AS? table_alias )?
+// | '(' select_stmt ')' ( K_AS? table_alias )?
  ;
 
 join_clause

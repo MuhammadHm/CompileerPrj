@@ -28,19 +28,22 @@ public class ${classSpecification.getClassName()} {
     }
 
     public static void loadData(){
-        Object json = readJson(this.path);
-
-
-
-    }
-     public Object readJson(String path){
-            Gson gson = new Gson();
+        if (data == null) {
             try {
-                Object object = gson.fromJson(new FileReader(path), Object.class);
-                return object;
+                JsonReader reader = new JsonReader(new FileReader("samples\\test.json"));
+                Gson gson = new Gson();
+                JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+                JsonElement jsonElement = jsonObject.get("Faculties");
+                Faculties[] arrObject = gson.fromJson(jsonElement, Faculties[].class);
+                data = new ArrayList<>(Arrays.asList(arrObject));
+                for (int i = 0; i < data.size(); i++) {
+                    System.out.println("name "+data.get(i).name);
+                    System.out.println("id "+data.get(i).id);
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            return null;
         }
+    }
+
 }

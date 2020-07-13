@@ -1,5 +1,7 @@
 package Java.SymbolTable;
 
+import Java.AST.SQLStmt.SelectStmt;
+
 import java.util.ArrayList;
 
 
@@ -9,6 +11,7 @@ public class SymbolTable {
     private ArrayList<Type> declaredTypes = new ArrayList<Type>();
     private ArrayList<Type> usedTypes = new ArrayList<Type>();
     private ArrayList<AggregationFunction> declaredAggregationFunction = new ArrayList<AggregationFunction>();
+    private ArrayList<SelectStmt> queries = new ArrayList<>();
 
 
     public SymbolTable() {

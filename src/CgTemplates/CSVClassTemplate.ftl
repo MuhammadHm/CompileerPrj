@@ -30,4 +30,5 @@ public class ${classSpecification.getClassName()} {
     public static void loadData(){
 
     }
+
 }

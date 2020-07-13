@@ -855,6 +855,15 @@ public class BaseVisitor extends SQLBaseVisitor {
     public SelectStmt visitFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx) {
         System.out.println("visit Factored_select_stmt");
         SelectStmt select = new SelectStmt();
+        //TODO continue here
+        for (int i = 0; i < ctx.select_core().result_column().size(); i++) {
+            if (ctx.select_core().result_column(i).expr() != null) {
+                visitExpr(ctx.select_core().result_column(i).expr());
+            }
+            else {
+                select.addResultCol(ctx.select_core().result_column(i).getText());
+            }
+        }
 
 
         // Getting Aggregation function props from columns
@@ -943,7 +952,6 @@ public class BaseVisitor extends SQLBaseVisitor {
                 }
             }
         }
-
         /*
         if (ctx.select_core() != null) {
             select.setSelectCore(visitSelect_core(ctx.select_core()));
@@ -1147,54 +1155,34 @@ public class BaseVisitor extends SQLBaseVisitor {
     @Override
     public Expression visitExpr(SQLParser.ExprContext ctx) {
         System.out.println("visit Expression");
-        // : literal_value
-        // | j_increment_operator
-        // | ( ( database_name '.' )? table_name '.' )? column_name
-        // | unary_operator expr
-        // | expr '||' expr
-        // | expr ( '*' | '/' | '%' ) expr
-        // | expr ( '+' | '-' ) expr
-        // | expr ( '<<' | '>>' | '&' | '|' ) expr
-        // | expr ( '<' | '<=' | '>' | '>=' ) expr
-        // | expr ( '=' | '==' | '!=' | '<>' | K_IS | K_IS K_NOT | K_IN | K_LIKE | K_GLOB | K_MATCH | K_REGEXP ) expr
-        // | expr K_AND expr
-        // | expr K_OR expr
-        // | function_name '(' ( K_DISTINCT? expr ( ',' expr )* | '*' )? ')'
-        // | '(' expr ')'
-        // | expr K_NOT? K_IN ( '(' ( select_stmt
-        //                           | expr ( ',' expr )*
-        //                           )?
-        //                       ')'
-        //                     | ( database_name '.' )? table_name )
-        //  | ( ( K_NOT )? K_EXISTS )? '(' select_stmt ')';
-
         Expression expression = new Expression();
+
         if (ctx.literal_value() != null) {
             System.out.println("literal value expression");
             expression.setLiteralValue(ctx.literal_value().getText());
             return expression;
         }
-        if (ctx.unary_operator() != null) {
-            System.out.println("unary operator expression");
-            expression.setUnaryOperator(ctx.unary_operator().getText());
-            expression.setExpression(visitExpr(ctx.expr(0)));
+        if (ctx.column_name() != null) {
+            String tableName = ctx.table_name() != null ? visitAny_name(ctx.table_name().any_name()).getName() + "." : "";
+            expression.setColumnName(tableName + visitAny_name(ctx.column_name().any_name()).getName());
             return expression;
         }
-        if (ctx.select_stmt() != null) {
-            System.out.println("select stmt expression");
-            expression.setSelectStmt(visitSelect_stmt(ctx.select_stmt()));
+        if (ctx.expr(0) != null && ctx.expr(1) != null) {
+            expression.setLeftExpr(visitExpr(ctx.expr(0)));
+            String operation = ctx.getChild(1).getText();
+            System.out.println("operation :" + operation);
+            expression.setOperation(operation);
+            expression.setRightExpr(visitExpr(ctx.expr(1)));
             return expression;
         }
-        for (int i = 1; i < ctx.expr().size(); i++) {
-            if (ctx.expr(i) != null) {
-                System.out.println("Logical Expression");
-                LogicExpression logicExpression = new LogicExpression();
-                logicExpression.setLeftExpression(visitExpr(ctx.expr(i)));
-                if (ctx.expr(i + 1) != null)
-                    logicExpression.setRightExpression(visitExpr(ctx.expr(i + 1)));
-                break;
+        if (ctx.function_name() != null) {
+            expression.setFunctionName(visitAny_name(ctx.function_name().any_name()).getName());
+            for (int i = 0; i < ctx.expr().size(); i++) {
+                expression.addFuncParam(visitExpr(ctx.expr(i)));
             }
+            return expression;
         }
+
         return expression;
     }
 

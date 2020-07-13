@@ -4,6 +4,7 @@ import Java.AST.Parse;
 import Java.AST.Visitor.BaseASTVisitor;
 import Java.Base.BaseVisitor;
 import Java.SymbolTable.SymbolTable;
+import Utils.JsonManger;
 import Utils.TypeManager;
 import generated.SQLLexer;
 import generated.SQLParser;
@@ -33,6 +34,8 @@ public class Main {
             System.out.println("\nAbstract Syntax Tree End\n");
 
             TypeManager.convertDeclaredTypes2Classes();
+
+            JsonManger.loadData();
 
         } catch (IOException e) {
             e.printStackTrace();

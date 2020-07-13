@@ -16,21 +16,17 @@ public class SelectCore extends Statement {
     // ;
     ArrayList<AnyName> resultColumns;
     ArrayList<AnyName> tableNames;
-    String join;
+    ArrayList<AnyName> joinTables;
     Expression where;
     ArrayList<Expression>  groupByExpr;
-    ArrayList<Expression> values;
 
     public SelectCore(){
         resultColumns=new ArrayList<>();
         tableNames=new ArrayList<>();
         groupByExpr=new ArrayList<>();
-        values=new ArrayList<>();
+
     }
 
-    public void setJoin(String join) {
-        this.join = join;
-    }
 
     public void setWhere(Expression where) {
         this.where = where;
@@ -43,9 +39,6 @@ public class SelectCore extends Statement {
     }
     public void addGroupByExpr(Expression expression){
         groupByExpr.add(expression);
-    }
-    public void addValue(Expression expression){
-        values.add(expression);
     }
     @Override
     public void accept(ASTVisitor astVisitor) {
@@ -71,12 +64,6 @@ public class SelectCore extends Statement {
             System.out.println("ast group by stmt");
             for (int i = 0; i < groupByExpr.size(); i++) {
                 groupByExpr.get(i).accept(astVisitor);
-            }
-        }
-        if (!values.isEmpty()){
-            System.out.println("ast values");
-            for (int i = 0; i < values.size(); i++) {
-                values.get(i).accept(astVisitor);
             }
         }
     }
