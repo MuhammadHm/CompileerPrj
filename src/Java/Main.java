@@ -5,6 +5,7 @@ import Java.AST.Parse;
 import Java.AST.Visitor.BaseASTVisitor;
 import Java.Base.BaseVisitor;
 import Java.SymbolTable.SymbolTable;
+import Utils.TypeManager;
 import generated.SQLLexer;
 import generated.SQLParser;
 import org.antlr.v4.runtime.CharStream;
@@ -31,7 +32,7 @@ public class Main {
             System.out.println("\n\nAbstract Syntax Tree: \n");
             p.accept(new BaseASTVisitor());
 
-            new ClassGenerator("hello",null,null,null).createClassFile();
+            TypeManager.convertDeclaredTypes2Classes();
 
         } catch (IOException e) {
             e.printStackTrace();

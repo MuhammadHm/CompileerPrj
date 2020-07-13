@@ -153,7 +153,7 @@ select_core
     ( K_FROM ( table_or_subquery ( ',' table_or_subquery )* | join_clause ) )?
     ( K_WHERE expr )?
     ( K_GROUP K_BY expr ( ',' expr )* ( K_HAVING expr )? )?
-  | K_VALUES '(' expr ( ',' expr )* ')' ( ',' '(' expr ( ',' expr )* ')' )*
+//  | K_VALUES '(' expr ( ',' expr )* ')' ( ',' '(' expr ( ',' expr )* ')' )*
   ;
 
 
@@ -330,7 +330,6 @@ column_default_value
 expr
  : literal_value
  | j_bool_value
- | j_increment_operator
  | ( ( database_name '.' )? table_name '.' )? column_name
  | unary_operator expr
  | expr '||' expr

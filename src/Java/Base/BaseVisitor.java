@@ -18,6 +18,7 @@ import Utils.SymbolManager;
 import Utils.TypeManager;
 import generated.SQLBaseVisitor;
 import generated.SQLParser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -851,19 +852,108 @@ public class BaseVisitor extends SQLBaseVisitor {
         SelectStmt select = new SelectStmt();
 
 
+        // Getting Aggregation function props from columns
+        for (int i = 0; i < ctx.select_core().result_column().size(); i++) {
+            // get aggregation functions from selected columns
+            if (ctx.select_core().result_column(i).expr() != null && ctx.select_core().result_column(i).expr().function_name() != null) {
+                String funcName = visitAny_name(ctx.select_core().result_column(i).expr().function_name().any_name()).getName();
+                ArrayList<String> funcParams = new ArrayList<>();
+                var exprContext = ctx.select_core().result_column(i).expr();
+                // if params not star
+                if (exprContext.STAR() == null) {
+                    for (int j = 0; j < exprContext.expr().size(); j++) {
+                        funcParams.add(visitAny_name(exprContext.expr(j).column_name().any_name()).getName());
+                    }
+                } else {
+                    funcParams.add("*");
+                }
+                //TODO link with aggregation func in ST passing funcName and funcParams
+            }
+        }
+        // Getting Aggregation function props from where
+        if (ctx.select_core().K_WHERE() != null && ctx.select_core().expr(0) != null) {
+            if (ctx.select_core().expr(0).function_name() != null) {
+                String funcName = visitAny_name(ctx.select_core().expr(0).function_name().any_name()).getName();
+                ArrayList<String> funcParams = new ArrayList<>();
+                var exprContext = ctx.select_core().expr(0);
+                if (exprContext.STAR() == null) {
+                    for (int i = 0; i < exprContext.expr().size(); i++) {
+                        if (exprContext.expr(i) != null && exprContext.expr(i).column_name() != null) {
+                            funcParams.add(visitAny_name(exprContext.expr(i).column_name().any_name()).getName());
+                        }
+                    }
+                } else {
+                    funcParams.add("*");
+                }
+                //TODO link with agg func
+            }
+            else if (ctx.select_core().expr(0).expr() != null) {
+                var exprCtx = ctx.select_core().expr(0);
+                for (int i = 0; i < exprCtx.expr().size(); i++) {
+                    if (exprCtx.expr(i).function_name() != null) {
+                        String funcName = visitAny_name(exprCtx.expr(i).function_name().any_name()).getName();
+                        ArrayList<String> funcParams = new ArrayList<>();
+                        if (exprCtx.expr(i).STAR() == null) {
+                            for (int j = 0; j < exprCtx.expr(i).expr().size(); j++) {
+                                if (exprCtx.expr(i).expr(j) != null && exprCtx.expr(i).expr(j).column_name() != null) {
+                                    funcParams.add(visitAny_name(exprCtx.expr(i).expr(j).column_name().any_name()).getName());
+                                }
+                            }
+                        } else {
+                            funcParams.add("*");
+                        }
+                        //TODO link with agg func
+                    }
+                }
+            }
+        }
+        // Getting Aggregation function props from having
+        if (ctx.select_core().K_HAVING() != null) {
+            var exprContext = ctx.select_core().expr().get(ctx.select_core().expr().size() - 1);
+            if (exprContext.function_name() != null) {
+                String funcName = visitAny_name(exprContext.function_name().any_name()).getName();
+                ArrayList<String> funcParams = new ArrayList<>();
+                if (exprContext.STAR() == null)
+                    for (int i = 0; i < exprContext.expr().size(); i++) {
+                        funcParams.add(visitAny_name(exprContext.expr(i).column_name().any_name()).getName());
+                    }
+                else {
+                    funcParams.add("*");
+                }
+                //TODO link with agg func
+            } else {
+                for (int i = 0; i < exprContext.expr().size(); i++) {
+                    if (exprContext.expr(i).function_name() != null) {
+                        String funcName = visitAny_name(exprContext.expr(i).function_name().any_name()).getName();
+                        ArrayList<String> funcParams = new ArrayList<>();
+                        if (exprContext.expr(i).STAR() == null)
+                            for (int j = 0; j < exprContext.expr().size(); j++) {
+                                funcParams.add(visitAny_name(exprContext.expr(i).expr(j).column_name().any_name()).getName());
+                            }
+                        else {
+                            funcParams.add("*");
+                        }
+                        //TODO link with agg func
+                    }
+
+                }
+            }
+        }
+
+        /*
         if (ctx.select_core() != null) {
             select.setSelectCore(visitSelect_core(ctx.select_core()));
             Type type = new Type();
             type.setLineNum(ctx.getStart().getLine());
             String table = visitAny_name(ctx.select_core().table_or_subquery().get(0).table_name().any_name()).getName();
             type.setName(table);
-
             if (ctx.select_core().result_column(0).STAR() == null) {
                 for (int i = 0; i < ctx.select_core().result_column().size(); i++) {
-
-                    String colName = visitAny_name(ctx.select_core().result_column(i).expr().column_name().any_name()).getName();
-                    System.out.println("col Name "+colName);
-                    type.addColumn(colName, TypeManager.guessType(null));
+                    if(ctx.select_core().result_column(i).expr().column_name()!=null){
+                        String colName = visitAny_name(ctx.select_core().result_column(i).expr().column_name().any_name()).getName();
+                        System.out.println("col Name " + colName);
+                        type.addColumn(colName, TypeManager.guessType(null));
+                    }
                 }
             } else {
                 type.addColumn("*", TypeManager.guessType(null));
@@ -876,6 +966,7 @@ public class BaseVisitor extends SQLBaseVisitor {
             }
         }
         select.setName("Select");
+        */
         return select;
     }
 
@@ -1072,6 +1163,7 @@ public class BaseVisitor extends SQLBaseVisitor {
         //                       ')'
         //                     | ( database_name '.' )? table_name )
         //  | ( ( K_NOT )? K_EXISTS )? '(' select_stmt ')';
+
         Expression expression = new Expression();
         if (ctx.literal_value() != null) {
             System.out.println("literal value expression");
@@ -1411,13 +1503,12 @@ public class BaseVisitor extends SQLBaseVisitor {
                 selectCore.addGroupByExpr(visitExpr(ctx.expr(i)));
             }
         }
-        if (ctx.K_VALUES() != null && ctx.expr(0) != null) {
-            System.out.println("visit values");
-            for (int i = 1; i < ctx.expr().size(); i++) {
-                selectCore.addValue(visitExpr(ctx.expr(i)));
-            }
-
-        }
+//        if (ctx.K_VALUES() != null && ctx.expr(0) != null) {
+//            System.out.println("visit values");
+//            for (int i = 1; i < ctx.expr().size(); i++) {
+//                selectCore.addValue(visitExpr(ctx.expr(i)));
+//            }
+//        }
 
         return selectCore;
     }
