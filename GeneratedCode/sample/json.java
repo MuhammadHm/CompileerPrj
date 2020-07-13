@@ -13,8 +13,20 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 public class json {
-
+    //Attributes
     private String nono;
     private boolean y;
+    private String type="json";
+    private String path="hello";
+    public static ArrayList<json> data;
 
+
+    //Methods
+    public json(){
+
+    }
+
+    public static void loadData(){
+
+    }
 }

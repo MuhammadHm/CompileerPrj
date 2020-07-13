@@ -13,9 +13,21 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 public class ${classSpecification.getClassName()} {
-
-<#list columns as column>
+    //Attributes
+    <#list columns as column>
     private ${column};
-</#list>
+    </#list>
+    private String type="${classSpecification.getClassName()}";
+    private String path="${classSpecification.getPath()}";
+    public static ArrayList<${classSpecification.getClassName()}> data;
 
+
+    //Methods
+    public ${classSpecification.getClassName()}(){
+
+    }
+
+    public static void loadData(){
+
+    }
 }
