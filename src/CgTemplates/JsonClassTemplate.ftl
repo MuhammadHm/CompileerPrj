@@ -28,6 +28,19 @@ public class ${classSpecification.getClassName()} {
     }
 
     public static void loadData(){
+        Object json = readJson(this.path);
+
+
 
     }
+     public Object readJson(String path){
+            Gson gson = new Gson();
+            try {
+                Object object = gson.fromJson(new FileReader(path), Object.class);
+                return object;
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
 }

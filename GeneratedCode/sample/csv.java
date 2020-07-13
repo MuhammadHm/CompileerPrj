@@ -13,8 +13,20 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 public class csv {
-
+    //Attributes
     private double x;
     private boolean y;
+    private String type="csv";
+    private String path="hello";
+    public static ArrayList<csv> data;
 
+
+    //Methods
+    public csv(){
+
+    }
+
+    public static void loadData(){
+
+    }
 }
