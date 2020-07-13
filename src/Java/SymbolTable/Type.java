@@ -8,6 +8,8 @@ public class Type {
 
     private String name;
     private Map<String, Type> columns = new HashMap<String, Type>();
+    private String type;
+    private String path;
     int lineNum;
 
     public final static String NUMBER_CONST = "number";
@@ -41,5 +43,21 @@ public class Type {
 
     public int getLineNum() {
         return lineNum;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getPath() {
+        return path;
     }
 }

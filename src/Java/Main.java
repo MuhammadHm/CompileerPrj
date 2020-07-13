@@ -1,6 +1,5 @@
 package Java;
 
-import CodeGeneration.ClassGenerator;
 import Java.AST.Parse;
 import Java.AST.Visitor.BaseASTVisitor;
 import Java.Base.BaseVisitor;
@@ -29,8 +28,9 @@ public class Main {
             ParseTree tree = parser.parse();
             Parse p = (Parse) new BaseVisitor().visit(tree);
 
-            System.out.println("\n\nAbstract Syntax Tree: \n");
+            System.out.println("\nAbstract Syntax Tree Start\n");
             p.accept(new BaseASTVisitor());
+            System.out.println("\nAbstract Syntax Tree End\n");
 
             TypeManager.convertDeclaredTypes2Classes();
 

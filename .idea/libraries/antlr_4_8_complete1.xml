@@ -1,7 +1,9 @@
 <component name="libraryTable">
-  <library name="antlr-4.8-complete">
+  <library name="antlr-4.8-complete1">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/antlr-4.8-complete.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/freemarker.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/gson-2.8.6.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/hamcrest-core-1.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/json-simple-1.1.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/junit-4.10.jar!/" />

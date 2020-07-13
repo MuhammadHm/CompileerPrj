@@ -1,8 +1,8 @@
 package Utils;
 
-import CodeGeneration.ClassGenerator;
+import CodeGeneration.ClassSpecification;
+import CodeGeneration.FileManager;
 import Java.Main;
-import Java.SymbolTable.SymbolTable;
 import Java.SymbolTable.Type;
 
 public class TypeManager {
@@ -28,12 +28,17 @@ public class TypeManager {
         return varType;
     }
 
-    public static void convertType2Class(Type type){
+    public static void convertType2Class(Type type) {
         //TODO pass type & path
-        ClassGenerator classGenerator=new ClassGenerator(type.getName(),"csv","path","sample1",type.getColumns());
-        classGenerator.generateClass();
+        ClassSpecification classSpecification = new ClassSpecification(type.getName(), type.getType(), type.getPath(), "sample", type.getColumns());
+        try {
+            new FileManager().generateJavaSourceFile(classSpecification);
+        } catch (Exception e) {
+            System.out.println("error in convert");
+        }
     }
-    public static void convertDeclaredTypes2Classes(){
+
+    public static void convertDeclaredTypes2Classes() {
         for (int i = 0; i < Main.symbolTable.getDeclaredTypes().size(); i++) {
             Type type = Main.symbolTable.getDeclaredTypes().get(i);
             convertType2Class(type);

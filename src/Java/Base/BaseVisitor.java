@@ -775,6 +775,11 @@ public class BaseVisitor extends SQLBaseVisitor {
         if (ctx.table_name() != null)
             type.setName(visitAny_name(ctx.table_name().any_name()).getName());
 
+        if (ctx.value_in_quote(0) != null)
+            type.setType(ctx.value_in_quote(0).getText());
+        if (ctx.value_in_quote(0) != null)
+            type.setPath(ctx.value_in_quote(1).getText());
+
         if (!ctx.column_def().isEmpty()) {
 //            Map<String, Type> columns = new HashMap<String, Type>();
 
@@ -886,8 +891,7 @@ public class BaseVisitor extends SQLBaseVisitor {
                     funcParams.add("*");
                 }
                 //TODO link with agg func
-            }
-            else if (ctx.select_core().expr(0).expr() != null) {
+            } else if (ctx.select_core().expr(0).expr() != null) {
                 var exprCtx = ctx.select_core().expr(0);
                 for (int i = 0; i < exprCtx.expr().size(); i++) {
                     if (exprCtx.expr(i).function_name() != null) {
