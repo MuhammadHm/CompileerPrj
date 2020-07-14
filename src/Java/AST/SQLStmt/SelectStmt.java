@@ -8,29 +8,22 @@ import java.util.ArrayList;
 
 public class SelectStmt extends Statement {
 
-    // : K_SELECT ( K_DISTINCT | K_ALL )? result_column ( ',' result_column )*
-    //   ( K_FROM ( table_or_subquery ( ',' table_or_subquery )* | join_clause ) )?
-    //   ( K_WHERE expr )?
-    //   ( K_GROUP K_BY expr ( ',' expr )* ( K_HAVING expr )? )?
-    // | K_VALUES '(' expr ( ',' expr )* ')' ( ',' '(' expr ( ',' expr )* ')' )*
-    // ;
-    ArrayList<String> resultColumns;
-    boolean isDistinct;
-    ArrayList<String> tableNames;
-    ArrayList<String> joinedTables;
-    Expression where;
+    ArrayList<Expression> resultColumns;
     ArrayList<Expression> groupByExprs;
+    ArrayList<Expression> orderByTerms;
+    ArrayList<String> tableNames;
+    Expression where;
     Expression havingExpr;
-    Expression orderByTerm;
     String orderingType;  //ASC or DESC
-
+    Join joinClause;
+    boolean isDistinct;
 
 
     public SelectStmt() {
         resultColumns = new ArrayList<>();
         tableNames = new ArrayList<>();
         groupByExprs = new ArrayList<>();
-        joinedTables = new ArrayList<>();
+        orderByTerms = new ArrayList<>();
     }
 
     @Override
@@ -38,11 +31,11 @@ public class SelectStmt extends Statement {
         astVisitor.visit(this);
     }
 
-    public ArrayList<String> getResultColumns() {
+    public ArrayList<Expression> getResultColumns() {
         return resultColumns;
     }
 
-    public void setResultColumns(ArrayList<String> resultColumns) {
+    public void setResultColumns(ArrayList<Expression> resultColumns) {
         this.resultColumns = resultColumns;
     }
 
@@ -60,14 +53,6 @@ public class SelectStmt extends Statement {
 
     public void setTableNames(ArrayList<String> tableNames) {
         this.tableNames = tableNames;
-    }
-
-    public ArrayList<String> getJoinedTables() {
-        return joinedTables;
-    }
-
-    public void setJoinedTables(ArrayList<String> joinedTables) {
-        this.joinedTables = joinedTables;
     }
 
     public Expression getWhere() {
@@ -94,13 +79,6 @@ public class SelectStmt extends Statement {
         this.havingExpr = havingExpr;
     }
 
-    public Expression getOrderByTerm() {
-        return orderByTerm;
-    }
-
-    public void setOrderByTerm(Expression orderByTerm) {
-        this.orderByTerm = orderByTerm;
-    }
 
     public String getOrderingType() {
         return orderingType;
@@ -109,7 +87,35 @@ public class SelectStmt extends Statement {
     public void setOrderingType(String orderingType) {
         this.orderingType = orderingType;
     }
-    public void addResultCol(String column){
+
+    public Join getJoinClause() {
+        return joinClause;
+    }
+
+    public void setJoinClause(Join joinClause) {
+        this.joinClause = joinClause;
+    }
+
+    public void addResultColumn(Expression column) {
         resultColumns.add(column);
+    }
+
+    public void addTable(String table) {
+        tableNames.add(table);
+    }
+
+    public void addGroupByExpr(Expression expression) {
+        groupByExprs.add(expression);
+    }
+
+    public ArrayList<Expression> getOrderByTerms() {
+        return orderByTerms;
+    }
+
+    public void setOrderByTerms(ArrayList<Expression> orderByTerms) {
+        this.orderByTerms = orderByTerms;
+    }
+    public void addOrderTerm(Expression orderTerm){
+        this.orderByTerms.add(orderTerm);
     }
 }

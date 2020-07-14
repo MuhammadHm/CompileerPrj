@@ -36,7 +36,7 @@ public class Expression extends Node {
     String operation;
     Expression rightExpr;
     String functionName;
-    ArrayList<Expression> functionParams;
+    ArrayList<Expression> functionParams=new ArrayList<>();
 
 
     public Expression getLeftExpr() {

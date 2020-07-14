@@ -57,4 +57,16 @@ public class SymbolTable {
     public ArrayList<Type> getUsedTypes() {
         return usedTypes;
     }
+
+    public ArrayList<SelectStmt> getQueries() {
+        return queries;
+    }
+
+    public void setQueries(ArrayList<SelectStmt> queries) {
+        this.queries = queries;
+    }
+
+    public void addQuery(SelectStmt selectStmt) {
+        this.queries.add(selectStmt);
+    }
 }

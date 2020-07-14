@@ -1,2 +1,6 @@
-create table json(y boolean, nono string) type="json", path="hello";
-create table csv (x number , y boolean) type="csv", path="hello";
+select t,sum(x)
+from t join k
+where x>5 and u=6
+group by x
+having x>5
+order by x;

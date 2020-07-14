@@ -162,11 +162,28 @@ public class BaseVisitor extends SQLBaseVisitor {
                         }
                     }
                 } else if (ctx.j_init_var(i).factored_select_stmt() != null) {
-                    initVarStmt.setSelectStmt(visitFactored_select_stmt(ctx.j_init_var(i).factored_select_stmt()));
+
+                    SelectStmt selectStmt=visitFactored_select_stmt(ctx.j_init_var(i).factored_select_stmt());
+                    //initVarStmt.setSelectStmt(visitFactored_select_stmt(ctx.j_init_var(i).factored_select_stmt()));
                     String tableType = visitAny_name(ctx.j_init_var(i).factored_select_stmt().select_core().table_or_subquery().get(0).table_name().any_name()).getName();
                     //System.out.println("table type "+ tableType);
                     SymbolManager.createSymbol(varName, tableType, false, false, lineNum);
-                } else
+
+                    Type varType = new Type();
+                    varType.setName(varName + "_" + tableType);
+                    var select = ctx.j_init_var(i).factored_select_stmt();
+                    //TODO complete here
+                    for (int j = 0; j < select.select_core().result_column().size() ; j++) {
+                        var resultColumn = select.select_core().result_column();
+
+
+                    }
+//                    varType.addColumn();
+
+                    Main.symbolTable.addType(varType);
+
+                }
+                else
                     SymbolManager.createSymbol(varName, null, false, true, lineNum);
 
                 varStmts.add(initVarStmt);
@@ -855,17 +872,49 @@ public class BaseVisitor extends SQLBaseVisitor {
     public SelectStmt visitFactored_select_stmt(SQLParser.Factored_select_stmtContext ctx) {
         System.out.println("visit Factored_select_stmt");
         SelectStmt select = new SelectStmt();
-        //TODO continue here
+        //TODO continue here and add select stmt to Symbol table
+
+        //Result Columns
         for (int i = 0; i < ctx.select_core().result_column().size(); i++) {
             if (ctx.select_core().result_column(i).expr() != null) {
-                visitExpr(ctx.select_core().result_column(i).expr());
+                select.addResultColumn(visitExpr(ctx.select_core().result_column(i).expr()));
+            } else if (ctx.select_core().result_column(i).STAR() != null) {
+                Expression expression = new Expression();
+                expression.setColumnName("*");
+                select.addResultColumn(expression);
             }
-            else {
-                select.addResultCol(ctx.select_core().result_column(i).getText());
+        }
+        //From Tables
+        for (int i = 0; i < ctx.select_core().table_or_subquery().size(); i++) {
+            var table = ctx.select_core().table_or_subquery(i).table_name().any_name();
+            select.addTable(visitAny_name(table).getName());
+        }
+        //Join Clause
+        if (ctx.select_core().join_clause() != null) {
+            select.setJoinClause(visitJoin_clause(ctx.select_core().join_clause()));
+        }
+        //Where Stmt
+        if (ctx.select_core().K_WHERE() != null) {
+            select.setWhere(visitExpr(ctx.select_core().expr(0)));
+        }
+        //Group By Stmt
+        if (ctx.select_core().K_GROUP() != null) {
+            for (int i = ctx.select_core().K_WHERE() != null ? 1 : 0; i < ctx.select_core().expr().size(); i++) {
+                select.addGroupByExpr(visitExpr(ctx.select_core().expr(i)));
+            }
+            if (ctx.select_core().K_HAVING() != null) {
+                select.setHavingExpr(visitExpr(ctx.select_core().expr(ctx.select_core().expr().size() - 1)));
+            }
+        }
+        //Ordering Term
+        if (ctx.ordering_term() != null) {
+            for (int i = 0; i < ctx.ordering_term().size(); i++) {
+                select.addOrderTerm(visitExpr(ctx.ordering_term(i).expr()));
             }
         }
 
-
+        Main.symbolTable.addQuery(select);
+/*
         // Getting Aggregation function props from columns
         for (int i = 0; i < ctx.select_core().result_column().size(); i++) {
             // get aggregation functions from selected columns
@@ -951,8 +1000,8 @@ public class BaseVisitor extends SQLBaseVisitor {
 
                 }
             }
-        }
-        /*
+        }*/
+/*
         if (ctx.select_core() != null) {
             select.setSelectCore(visitSelect_core(ctx.select_core()));
             Type type = new Type();
@@ -1177,8 +1226,10 @@ public class BaseVisitor extends SQLBaseVisitor {
         }
         if (ctx.function_name() != null) {
             expression.setFunctionName(visitAny_name(ctx.function_name().any_name()).getName());
-            for (int i = 0; i < ctx.expr().size(); i++) {
-                expression.addFuncParam(visitExpr(ctx.expr(i)));
+            if (ctx.expr() != null) {
+                for (int i = 0; i < ctx.expr().size(); i++) {
+                    expression.addFuncParam(visitExpr(ctx.expr(i)));
+                }
             }
             return expression;
         }
@@ -1443,8 +1494,20 @@ public class BaseVisitor extends SQLBaseVisitor {
     }
 
     @Override
-    public Object visitJoin_clause(SQLParser.Join_clauseContext ctx) {
-        return visitChildren(ctx);
+    public Join visitJoin_clause(SQLParser.Join_clauseContext ctx) {
+        Join join = new Join();
+
+        for (int i = 0; i < ctx.table_or_subquery().size(); i++) {
+            join.addTable(visitAny_name(ctx.table_or_subquery(i).table_name().any_name()).getName());
+        }
+        if (ctx.join_constraint() != null) {
+            for (int i = 0; i < ctx.join_constraint().size(); i++) {
+                if (ctx.join_constraint(i).expr() != null)
+                    join.addJoinConstraint(visitExpr(ctx.join_constraint(i).expr()));
+            }
+        }
+
+        return join;
     }
 
     @Override
