@@ -4,6 +4,7 @@ import Java.SymbolTable.Type;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class ClassSpecification {
@@ -13,16 +14,14 @@ public class ClassSpecification {
     String path;
     String packageName;
     String templateName;
-    Map<String, Type> columns;
-
-
+    ArrayList<Type> columns;
 
     //Methods
-    public ClassSpecification(String className, String type, String path, String packageName, Map<String, Type> columns) {
+    public ClassSpecification(String className, String type, String path, String packageName, ArrayList<Type> columns) {
         this.className = className;
         this.type = type;
         this.path = path;
-        this.columns = columns;
+        this.columns= columns;
         this.packageName = packageName;
     }
 
@@ -34,7 +33,7 @@ public class ClassSpecification {
         this.className = className;
     }
 
-    public void setColumns(Map<String, Type> columns) {
+    public void setColumns(ArrayList<Type> columns) {
         this.columns = columns;
     }
 
@@ -62,7 +61,7 @@ public class ClassSpecification {
         return packageName;
     }
 
-    public Map<String, Type> getColumns() {
+    public ArrayList<Type> getColumns() {
         return columns;
     }
 
@@ -73,5 +72,7 @@ public class ClassSpecification {
     public String getTemplateName() {
         return templateName;
     }
+
+
 
 }

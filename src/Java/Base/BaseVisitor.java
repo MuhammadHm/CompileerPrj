@@ -760,6 +760,7 @@ public class BaseVisitor extends SQLBaseVisitor {
                 String varName = visitAny_name(ctx.column_def(i).column_name().any_name()).getName();
 
                 type.addColumn(varName, TypeManager.guessType(varType));
+                type.addListColumn(varName);
 //                columns.put(varName, TypeManager.guessType(varType));
             }
 //            type.setColumns(columns);
@@ -804,6 +805,7 @@ public class BaseVisitor extends SQLBaseVisitor {
                 String varType = visitAny_name(ctx.column_def(i).type_name(0).name().any_name()).getName();
                 String varName = visitAny_name(ctx.column_def(i).column_name().any_name()).getName();
                 type.addColumn(varName, TypeManager.guessType(varType));
+                type.addListColumn(varName);
 //                columns.put(varName, TypeManager.guessType(varType));
             }
 //            type.setColumns(columns);

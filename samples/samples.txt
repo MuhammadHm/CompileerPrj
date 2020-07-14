@@ -1,5 +1,9 @@
+create table User(Name string, age number,adress Adress) type="json", path="D:\\users.json";
+create type Adress(city string, street string) ;
+create table Car(Name string, Price number,IsPaid boolean) type="csv", path="D:\\cs.csv";
+
 select t,sum(x)
-from t join k
+from x,t join k on x=y
 where x>5 and u=6
 group by x
 having x>5

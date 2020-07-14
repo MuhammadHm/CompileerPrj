@@ -32,8 +32,9 @@ public class FileManager {
         try {
             this.JavaDataClassGenerator();
 
-            File path = new File(".\\GeneratedCode\\" + classSpecification.getPackageName());
-            String fileDirectory = ".\\GeneratedCode\\" + classSpecification.getPackageName() + "\\" + classSpecification.getClassName() + ".java";
+            File path = new File(".\\src\\GeneratedCode\\" + classSpecification.getPackageName());
+            System.out.println(path);
+            String fileDirectory = ".\\src\\GeneratedCode\\" + classSpecification.getPackageName() + "\\" + classSpecification.getClassName() + ".java";
             if (path.mkdir()) {
                 System.out.println("Successfully Created Dir.");
                 path = new File(fileDirectory);
@@ -59,7 +60,9 @@ public class FileManager {
     public void readTemplate(ClassSpecification classSpecification, String fileDirectory) throws Exception {
         Map root = new HashMap();
 
-        if (classSpecification.getType().equals("json"))
+        if (classSpecification.getType() == null && classSpecification.getPath() == null)
+            classSpecification.setTemplateName("TypeTemplate.ftl");
+        else if (classSpecification.getType().equals("json"))
             classSpecification.setTemplateName("JsonClassTemplate.ftl");
         else
             classSpecification.setTemplateName("CSVClassTemplate.ftl");
@@ -75,10 +78,14 @@ public class FileManager {
     public ArrayList<String> getColumnsArray(ClassSpecification classSpecification) throws Exception {
         ArrayList<String> arrayList = new ArrayList<>();
 
-        for (Map.Entry<String, Type> entry : classSpecification.getColumns().entrySet()) {
-            Type type = entry.getValue();
-            String varName = entry.getKey();
-            String varDeclare = getVarDeclare(type.getName(), varName);
+        for (int i = 0; i < classSpecification.getColumns().size(); i++) {
+            Type type = classSpecification.getColumns().get(i);
+            String varName = type.getName();
+            String typeStr = "";
+            for (var xx : type.getColumns().keySet()) {
+                typeStr = xx;
+            }
+            String varDeclare = getVarDeclare(typeStr,varName);
             arrayList.add(varDeclare);
         }
 
@@ -97,6 +104,8 @@ public class FileManager {
             case "boolean":
                 varDeclare = "boolean " + varName;
                 break;
+            default:
+                varDeclare = type + " " + varName;
         }
         return varDeclare;
     }

@@ -5,6 +5,9 @@ import CodeGeneration.FileManager;
 import Java.Main;
 import Java.SymbolTable.Type;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class TypeManager {
 
     public static Type guessType(String type) {
@@ -28,9 +31,23 @@ public class TypeManager {
         return varType;
     }
 
+    public static ArrayList<Type> covertToTypeArray(Type type) {
+
+        Map<String, Type> map = type.getColumns();
+        ArrayList<Type> listColumns = new ArrayList<>();
+        for (int i = 0; i < type.getColumnsList().size(); i++) {
+            Type type1 = new Type();
+            type1.addColumn(map.get(type.getColumnsList().get(i)).getName(), null);
+            type1.setName(type.getColumnsList().get(i));
+            listColumns.add(type1);
+        }
+
+        return listColumns;
+    }
+
     public static void convertType2Class(Type type) {
         //TODO pass type & path
-        ClassSpecification classSpecification = new ClassSpecification(type.getName(), type.getType(), type.getPath(), "sample", type.getColumns());
+        ClassSpecification classSpecification = new ClassSpecification(type.getName(), type.getType(), type.getPath(), "sample1", covertToTypeArray(type));
         try {
             new FileManager().generateJavaSourceFile(classSpecification);
         } catch (Exception e) {

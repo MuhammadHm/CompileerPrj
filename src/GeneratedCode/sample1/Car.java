@@ -1,4 +1,4 @@
-package GeneratedCode.${classSpecification.getPackageName()};
+package GeneratedCode.sample1;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,23 +11,23 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-public class ${classSpecification.getClassName()} {
+public class Car {
     //Attributes
-    <#list columns as column>
-    public ${column};
-    </#list>
-    private String type="${classSpecification.getClassName()}";
-    private String path="${classSpecification.getPath()}";
-    private ArrayList<${classSpecification.getClassName()}> data;
+    public String Name;
+    public double Price;
+    public boolean IsPaid;
+    private String type="Car";
+    private String path="D:\\cs.csv";
+    private ArrayList<Car> data;
 
 
     //Methods
-    public ${classSpecification.getClassName()}(){
+    public Car(){
 
     }
 
     public void loadData(){
-    ArrayList<${classSpecification.getClassName()}> allData=new ArrayList<>();
+    ArrayList<Car> allData=new ArrayList<>();
 
         String line = "";
         String splitBy = ",";
@@ -36,7 +36,7 @@ public class ${classSpecification.getClassName()} {
             while ((line = br.readLine()) != null)
             {
                 String[] dataRow = line.split(splitBy);
-                ${classSpecification.getClassName()} objectLine=new ${classSpecification.getClassName()}();
+                Car objectLine=new Car();
                 for (int i = 0; i < dataRow.length; i++) {
                     setValueIntoObject(dataRow[i],objectLine,i);
                 }
@@ -46,7 +46,7 @@ public class ${classSpecification.getClassName()} {
         data=allData;
 
     }
-    public ArrayList<${classSpecification.getClassName()}> getData()
+    public ArrayList<Car> getData()
     {
         return data;
     }

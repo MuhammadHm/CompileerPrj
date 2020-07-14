@@ -8,6 +8,7 @@ public class Type {
 
     private String name;
     private Map<String, Type> columns = new HashMap<String, Type>();
+    private ArrayList<String> columnsList = new ArrayList<>();
     private String type;
     private String path;
     int lineNum;
@@ -37,6 +38,11 @@ public class Type {
         this.columns.put(name, type);
     }
 
+    public void addListColumn(String string) {
+        this.columnsList.add(string);
+    }
+
+
     public void setLineNum(int lineNum) {
         this.lineNum = lineNum;
     }
@@ -59,5 +65,13 @@ public class Type {
 
     public String getPath() {
         return path;
+    }
+
+    public ArrayList<String> getColumnsList() {
+        return columnsList;
+    }
+
+    public void setColumnsList(ArrayList<String> columnsList) {
+        this.columnsList = columnsList;
     }
 }

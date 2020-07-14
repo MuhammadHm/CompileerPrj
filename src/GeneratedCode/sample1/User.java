@@ -1,4 +1,4 @@
-package GeneratedCode.${classSpecification.getPackageName()};
+package GeneratedCode.sample1;
 
 
 import org.json.simple.JSONArray;
@@ -15,19 +15,19 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
-public class ${classSpecification.getClassName()} {
+public class User {
     //Attributes
-    <#list columns as column>
-    public ${column};
-    </#list>
+    public String Name;
+    public double age;
+    public Adress adress;
 
-    private String type="${classSpecification.getClassName()}";
-    private String path="${classSpecification.getPath()}";
-    private  ArrayList<${classSpecification.getClassName()}> data;
+    private String type="User";
+    private String path="D:\\users.json";
+    private  ArrayList<User> data;
 
 
     //Methods
-    public ${classSpecification.getClassName()}(){
+    public User(){
 
     }
 
@@ -37,8 +37,8 @@ public class ${classSpecification.getClassName()} {
                        JsonReader reader = new JsonReader(new FileReader(this.path));
                        Gson gson = new Gson();
                        JsonObject jsonObject = gson.fromJson(reader,JsonObject.class );
-                       JsonElement jsonElement = jsonObject.get("${classSpecification.getClassName()}");
-                       ${classSpecification.getClassName()}[] arrObject = gson.fromJson(jsonElement, ${classSpecification.getClassName()}[].class);
+                       JsonElement jsonElement = jsonObject.get("User");
+                       User[] arrObject = gson.fromJson(jsonElement, User[].class);
                         this.data = new ArrayList<>(Arrays.asList(arrObject));
 
                    } catch (FileNotFoundException e) {
@@ -47,7 +47,7 @@ public class ${classSpecification.getClassName()} {
         }
 
 
-          public ArrayList<${classSpecification.getClassName()}> getData()
+          public ArrayList<User> getData()
             {
             return data;
             }

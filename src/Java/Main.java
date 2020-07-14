@@ -1,10 +1,11 @@
 package Java;
 
+import GeneratedCode.sample1.Car;
+import GeneratedCode.sample1.User;
 import Java.AST.Parse;
 import Java.AST.Visitor.BaseASTVisitor;
 import Java.Base.BaseVisitor;
 import Java.SymbolTable.SymbolTable;
-import Utils.JsonManger;
 import Utils.TypeManager;
 import generated.SQLLexer;
 import generated.SQLParser;
@@ -34,8 +35,13 @@ public class Main {
             System.out.println("\nAbstract Syntax Tree End\n");
 
             TypeManager.convertDeclaredTypes2Classes();
-
-            JsonManger.loadData();
+            Car c=new Car();
+            c.loadData();
+            var aaa= c.getData();
+            User u=new User();
+            u.loadData();
+            var bb=u.getData();
+            System.out.println();
 
         } catch (IOException e) {
             e.printStackTrace();
