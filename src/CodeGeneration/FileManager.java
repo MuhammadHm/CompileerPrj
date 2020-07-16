@@ -46,6 +46,7 @@ public class FileManager {
             } else {
                 System.out.println("Dir already exists.");
             }
+
             this.readTemplate(classSpecification, fileDirectory);
 
 
@@ -53,7 +54,6 @@ public class FileManager {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-
 
     }
 

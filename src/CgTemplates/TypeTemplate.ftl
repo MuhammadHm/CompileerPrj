@@ -12,9 +12,17 @@ public class ${classSpecification.getClassName()} {
     <#list columns as column>
     public ${column};
     </#list>
+    public ArrayList<${classSpecification.getClassName()}> data;
 
     //Methods
-    public ${classSpecification.getClassName()}(){
+    public ${classSpecification.getClassName()}(){}
 
+    public ArrayList<${classSpecification.getClassName()}> getData() {
+            return data;
     }
+
+    public void setData(ArrayList<${classSpecification.getClassName()}> data) {
+        this.data = data;
+    }
+
 }

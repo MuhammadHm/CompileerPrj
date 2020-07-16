@@ -1,8 +1,5 @@
 package Java;
 
-//import GeneratedCode.sample1.Car;
-//import GeneratedCode.sample1.User;
-
 import CodeGeneration.MainGenerator;
 import Java.AST.Parse;
 import Java.AST.Visitor.BaseASTVisitor;
@@ -40,17 +37,7 @@ public class Main {
             System.out.println("\nAbstract Syntax Tree End\n");
 
             TypeManager.convertDeclaredTypes2Classes();
-
             new MainGenerator().generate();
-
-
-//            Car c=new Car();
-//            c.loadData();
-//            var aaa= c.getData();
-//            User u=new User();
-//            u.loadData();
-//            var bb=u.getData();
-//            System.out.println();
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -172,24 +172,52 @@ public class BaseVisitor extends SQLBaseVisitor {
                     SymbolManager.createSymbol(varName, tableType, false, false, lineNum);
 
                     Type varType = new Type();
-                    varType.setName(varName + "_" + tableType);
-                    var select = ctx.j_init_var(i).factored_select_stmt();
-                    for (int j = 0; j < select.select_core().result_column().size(); j++) {
-                        var resultColumn = select.select_core().result_column(i);
-                        Type columnType = new Type();
-                        if (resultColumn.STAR() != null) {
-                            columnType.setName(tableType);
-                            varType.addColumn("*", columnType);
-                        } else if (resultColumn.expr() != null) {
-                            var columnExpr = visitExpr(resultColumn.expr());
-                            if (columnExpr.getColumnName() != null) {
-                                //TODO get column type
-                                varType.addColumn(columnExpr.getColumnName(), columnType);
+                    if (selectStmt.getTableNames().size() > 0) {
+                        Type table = Main.symbolTable.getDeclaredTypeByName(tableType);
+                        varType.setName(varName + "_" + tableType);
+                        for (int j = 0; j < selectStmt.getResultColumns().size(); j++) {
+                            if (selectStmt.getResultColumns().get(j).getColumnName() != null) {
+                                if (selectStmt.getResultColumns().get(j).getColumnName().equals("*")) {
+                                    varType.setColumns(table.getColumns());
+                                    break;
+                                } else {
+                                    var colName = selectStmt.getResultColumns().get(j).getColumnName();
+                                    System.out.println("colName " + colName);
+                                    varType.addColumn(colName, table.getColumns().get(colName));
+                                    varType.addListColumn(colName);
+                                }
                             }
                         }
                     }
-
+                    else if (selectStmt.getJoinClause() != null) {
+                        String typeName = varName;
+                        for (var x : selectStmt.getJoinClause().getTables()) {
+                            Type table = Main.symbolTable.getDeclaredTypeByName(x);
+                            typeName+= "_"+table.getName();
+                            varType.getColumns().putAll(table.getColumns());
+                            varType.getColumnsList().addAll(table.getColumns().keySet());
+                        }
+                        varType.setName(typeName);
+                    }
+//                    Type varType = new Type();
+//                    varType.setName(varName + "_" + tableType);
+//                    var select = ctx.j_init_var(i).factored_select_stmt();
+//                    for (int j = 0; j < select.select_core().result_column().size(); j++) {
+//                        var resultColumn = select.select_core().result_column(i);
+//                        Type columnType = new Type();
+//                        if (resultColumn.STAR() != null) {
+//                            columnType.setName(tableType);
+//                            varType.addColumn("*", columnType);
+//                        } else if (resultColumn.expr() != null) {
+//                            var columnExpr = visitExpr(resultColumn.expr());
+//                            if (columnExpr.getColumnName() != null) {
+//                                //TODO get column type
+//                                varType.addColumn(columnExpr.getColumnName(), columnType);
+//                            }
+//                        }
+//                    }
                     Main.symbolTable.addType(varType);
+
 
                 } else
                     SymbolManager.createSymbol(varName, null, false, true, lineNum);
@@ -875,6 +903,10 @@ public class BaseVisitor extends SQLBaseVisitor {
         SelectStmt select = new SelectStmt();
         //TODO continue here and add select stmt to Symbol table
 
+        if (ctx.select_core().K_DISTINCT() != null) {
+            select.setDistinctColumn(ctx.select_core().result_column(0).getText());
+        }
+
         //From Tables
         for (int i = 0; i < ctx.select_core().table_or_subquery().size(); i++) {
             var table = ctx.select_core().table_or_subquery(i).table_name().any_name();
@@ -886,8 +918,8 @@ public class BaseVisitor extends SQLBaseVisitor {
                 select.addResultColumn(visitExpr(ctx.select_core().result_column(i).expr()));
             } else if (ctx.select_core().result_column(i).STAR() != null) {
                 for (var typo : Main.symbolTable.getDeclaredTypes()) {
-                    if (typo.getName().equalsIgnoreCase(select.getTableNames().get(0))){
-                        for (var varName  : typo.getColumns().keySet()) {
+                    if (typo.getName().equalsIgnoreCase(select.getTableNames().get(0))) {
+                        for (var varName : typo.getColumns().keySet()) {
                             Expression expression = new Expression();
                             expression.setColumnName(varName);
                             select.addResultColumn(expression);
@@ -918,7 +950,7 @@ public class BaseVisitor extends SQLBaseVisitor {
         //Ordering Term
         if (ctx.ordering_term() != null) {
             for (int i = 0; i < ctx.ordering_term().size(); i++) {
-                select.addOrderTerm(visitExpr(ctx.ordering_term(i).expr()));
+                select.addOrderTerm(ctx.ordering_term(i).expr().getText());
             }
         }
 

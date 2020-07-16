@@ -62,6 +62,9 @@ public class MainGenerator {
 
         root.put("packageName", Main.packageName);
         root.put("queries", Main.symbolTable.getQueries());
+//        var joinColumns = getJoinColumns();
+//        root.put("join_columns", getJoinColumns());
+
 //        root.put("declaredVars",getDeclaredVars());
         template.process(root, outputFileWriter);
     }
@@ -86,6 +89,18 @@ public class MainGenerator {
 
         }
 
+    }
+
+    public ArrayList<String> getJoinColumns() {
+        ArrayList<String> allColumns = new ArrayList<>();
+        for (var x : Main.symbolTable.getClassSpecifications()) {
+            try {
+                allColumns.addAll(new FileManager().getColumnsArray(x));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return allColumns;
     }
 
     public void getExprProps(Expression expr) {
@@ -140,7 +155,7 @@ public class MainGenerator {
     }
 
     public ArrayList<String> getDeclaredVars() {
-        ArrayList<String> vars=new ArrayList<>();
+        ArrayList<String> vars = new ArrayList<>();
         vars.addAll(Main.symbolTable.getScopes().get(1).getSymbolMap().keySet());
         return vars;
     }

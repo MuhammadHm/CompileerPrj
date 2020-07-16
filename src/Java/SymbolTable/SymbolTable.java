@@ -1,5 +1,6 @@
 package Java.SymbolTable;
 
+import CodeGeneration.ClassSpecification;
 import Java.AST.SQLStmt.SelectStmt;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class SymbolTable {
     private ArrayList<Type> usedTypes = new ArrayList<Type>();
     private ArrayList<AggregationFunction> declaredAggregationFunction = new ArrayList<AggregationFunction>();
     private ArrayList<SelectStmt> queries = new ArrayList<>();
-
+    private ArrayList<ClassSpecification> classSpecifications = new ArrayList<>();
 
     public SymbolTable() {
         Scope scope = new Scope();
@@ -69,4 +70,32 @@ public class SymbolTable {
     public void addQuery(SelectStmt selectStmt) {
         this.queries.add(selectStmt);
     }
+
+    public void addClassSpecification(ClassSpecification classSpecification) {
+        classSpecifications.add(classSpecification);
+    }
+
+    public ArrayList<ClassSpecification> getClassSpecifications() {
+        return classSpecifications;
+    }
+
+    public ClassSpecification getClassSpecificationByName(String name) {
+        for (var x : classSpecifications) {
+            if (x.getClassName().equalsIgnoreCase(name)) {
+                return x;
+            }
+        }
+        return null;
+    }
+
+    public Type getDeclaredTypeByName(String name) {
+        for (var x : declaredTypes) {
+            if (x.getName().equalsIgnoreCase(name)) {
+                return x;
+            }
+        }
+        return null;
+    }
+
+
 }

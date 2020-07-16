@@ -1,23 +1,14 @@
 create table User(f_name string,l_name string,city string, age number,address Address,id number,salary number) type="json", path="D:\\users.json";
- create type Address(city string, street string) ;
- create table Car(name string, price number,isPaid boolean) type="csv", path="D:\\cs.csv";
+create type Address(city string, street string) ;
+create table Car(name string, price number,isPaid boolean) type="csv", path="D:\\cs.csv";
+create aggregation_function sum("C:\Users\MuhammadHm\Desktop\Project1.jar",CommonAggregations,Sum,number,[number]);
 
  f(){
-     var x = select f_name,l_name,sum(x)
+     var x = select age,f_name ,sum(age)
          from User
-         where age>7
-         or id==5
-         and 100 <> salary*5
-         and f_name like 'm%'
-         or l_name like '%y'
-         and not city like '%mas%'
-         and address.city == 'damas';
+         where age>1
+         order by age;
 
-    var yy = select *
-         from Car
-         where name like '%s'
-         and price > 10
-         and not isPaid;
-
+    print(X);
 
  }

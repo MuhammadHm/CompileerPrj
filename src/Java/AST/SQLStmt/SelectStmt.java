@@ -10,13 +10,14 @@ public class SelectStmt extends Statement {
 
     ArrayList<Expression> resultColumns;
     ArrayList<Expression> groupByExprs;
-    ArrayList<Expression> orderByTerms;
+    ArrayList<String> orderByTerms;
     ArrayList<String> tableNames;
     Expression where;
     Expression havingExpr;
     String orderingType;  //ASC or DESC
     Join joinClause;
     boolean isDistinct;
+    String distinctColumn;
 
 
     public SelectStmt() {
@@ -108,14 +109,23 @@ public class SelectStmt extends Statement {
         groupByExprs.add(expression);
     }
 
-    public ArrayList<Expression> getOrderByTerms() {
+    public ArrayList<String> getOrderByTerms() {
         return orderByTerms;
     }
 
-    public void setOrderByTerms(ArrayList<Expression> orderByTerms) {
+    public void setOrderByTerms(ArrayList<String> orderByTerms) {
         this.orderByTerms = orderByTerms;
     }
-    public void addOrderTerm(Expression orderTerm){
+
+    public void addOrderTerm(String orderTerm){
         this.orderByTerms.add(orderTerm);
+    }
+
+    public String getDistinctColumn() {
+        return distinctColumn;
+    }
+
+    public void setDistinctColumn(String distinctColumn) {
+        this.distinctColumn = distinctColumn;
     }
 }

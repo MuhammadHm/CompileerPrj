@@ -50,6 +50,7 @@ public class TypeManager {
         ClassSpecification classSpecification = new ClassSpecification(type.getName(), type.getType(), type.getPath(), Main.packageName, covertToTypeArray(type));
         try {
             new FileManager().generateJavaSourceFile(classSpecification);
+            Main.symbolTable.addClassSpecification(classSpecification);
         } catch (Exception e) {
             System.out.println("error in convert");
         }
@@ -61,4 +62,5 @@ public class TypeManager {
             convertType2Class(type);
         }
     }
+
 }
