@@ -16,19 +16,15 @@ public class ${classSpecification.getClassName()} {
     <#list columns as column>
     public ${column};
     </#list>
-    private String type="${classSpecification.getClassName()}";
+    private String type="${classSpecification.getType()}";
     private String path="${classSpecification.getPath()}";
     private ArrayList<${classSpecification.getClassName()}> data;
 
-
     //Methods
-    public ${classSpecification.getClassName()}(){
-
-    }
+    public ${classSpecification.getClassName()}(){}
 
     public void loadData(){
     ArrayList<${classSpecification.getClassName()}> allData=new ArrayList<>();
-
         String line = "";
         String splitBy = ",";
         try {
@@ -44,15 +40,12 @@ public class ${classSpecification.getClassName()} {
             }
         } catch (Exception e) {}
         data=allData;
-
     }
-    public ArrayList<${classSpecification.getClassName()}> getData()
-    {
+    public ArrayList<${classSpecification.getClassName()}> getData(){
         return data;
     }
 
-     public void setValueIntoObject(String value,Object o,int index)
-        {
+     public void setValueIntoObject(String value,Object o,int index){
          try{
              double v=Double.parseDouble(value);
              o.getClass().getFields()[index].setDouble(o,v);
@@ -69,5 +62,5 @@ public class ${classSpecification.getClassName()} {
                 o.getClass().getFields()[index].set(o,value);
             }
             catch (Exception e){}
-        }
+     }
 }

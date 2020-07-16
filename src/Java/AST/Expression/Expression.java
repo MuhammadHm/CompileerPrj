@@ -1,43 +1,38 @@
 package Java.AST.Expression;
 
 import Java.AST.Node;
-import Java.AST.SQLStmt.SelectStmt;
-import Java.AST.SQLStmt.Statement;
 import Java.AST.Visitor.ASTVisitor;
 
 import java.util.ArrayList;
 
 public class Expression extends Node {
-//: literal_value
-// | j_increment_operator
-// | ( ( database_name '.' )? table_name '.' )? column_name
-// | unary_operator expr
-// | expr '||' expr
-// | expr ( '*' | '/' | '%' ) expr
-// | expr ( '+' | '-' ) expr
-// | expr ( '<<' | '>>' | '&' | '|' ) expr
-// | expr ( '<' | '<=' | '>' | '>=' ) expr
-// | expr ( '=' | '==' | '!=' | '<>' | K_IS | K_IS K_NOT | K_IN | K_LIKE | K_GLOB | K_MATCH | K_REGEXP ) expr
-// | expr K_AND expr
-// | expr K_OR expr
-// | function_name '(' ( K_DISTINCT? expr ( ',' expr )* | '*' )? ')'
-// | '(' expr ')'
-// | expr K_NOT? K_IN ( '(' ( select_stmt
-//                           | expr ( ',' expr )*
-//                           )?
-//                       ')'
-//                     | ( database_name '.' )? table_name )
-//  | ( ( K_NOT )? K_EXISTS )? '(' select_stmt ')';
 
     String literalValue;
     String columnName;
-    //String unaryOperator;
-    Expression leftExpr;
-    String operation;
-    Expression rightExpr;
     String functionName;
+    String operation;
+    String unaryOperator="";
+    Expression unaryExpr;
+    Expression leftExpr;
+    Expression rightExpr;
     ArrayList<Expression> functionParams=new ArrayList<>();
+    String whereFinalExpression;
 
+    public String getFinalExpression() {
+        return whereFinalExpression;
+    }
+
+    public Expression getUnaryExpr() {
+        return unaryExpr;
+    }
+
+    public void setUnaryExpr(Expression unaryExpr) {
+        this.unaryExpr = unaryExpr;
+    }
+
+    public void setFinalExpression(String finalExpression) {
+        this.whereFinalExpression = finalExpression;
+    }
 
     public Expression getLeftExpr() {
         return leftExpr;
@@ -99,7 +94,16 @@ public class Expression extends Node {
     public void setFunctionParams(ArrayList<Expression> functionParams) {
         this.functionParams = functionParams;
     }
+
     public void addFuncParam(Expression expr){
         this.functionParams.add(expr);
+    }
+
+    public String getUnaryOperator() {
+        return unaryOperator;
+    }
+
+    public void setUnaryOperator(String unaryOperator) {
+        this.unaryOperator = unaryOperator;
     }
 }

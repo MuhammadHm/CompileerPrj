@@ -47,7 +47,7 @@ public class TypeManager {
 
     public static void convertType2Class(Type type) {
         //TODO pass type & path
-        ClassSpecification classSpecification = new ClassSpecification(type.getName(), type.getType(), type.getPath(), "sample1", covertToTypeArray(type));
+        ClassSpecification classSpecification = new ClassSpecification(type.getName(), type.getType(), type.getPath(), Main.packageName, covertToTypeArray(type));
         try {
             new FileManager().generateJavaSourceFile(classSpecification);
         } catch (Exception e) {

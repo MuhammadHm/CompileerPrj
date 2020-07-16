@@ -1,4 +1,4 @@
-package GeneratedCode.sample1;
+package GeneratedCode.sample;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,22 +13,18 @@ import java.io.FileReader;
 
 public class Car {
     //Attributes
-    public String Name;
-    public double Price;
-    public boolean IsPaid;
-    private String type="Car";
+    public String name;
+    public double price;
+    public boolean isPaid;
+    private String type="csv";
     private String path="D:\\cs.csv";
     private ArrayList<Car> data;
 
-
     //Methods
-    public Car(){
-
-    }
+    public Car(){}
 
     public void loadData(){
     ArrayList<Car> allData=new ArrayList<>();
-
         String line = "";
         String splitBy = ",";
         try {
@@ -44,15 +40,12 @@ public class Car {
             }
         } catch (Exception e) {}
         data=allData;
-
     }
-    public ArrayList<Car> getData()
-    {
+    public ArrayList<Car> getData(){
         return data;
     }
 
-     public void setValueIntoObject(String value,Object o,int index)
-        {
+     public void setValueIntoObject(String value,Object o,int index){
          try{
              double v=Double.parseDouble(value);
              o.getClass().getFields()[index].setDouble(o,v);
@@ -69,5 +62,5 @@ public class Car {
                 o.getClass().getFields()[index].set(o,value);
             }
             catch (Exception e){}
-        }
+     }
 }

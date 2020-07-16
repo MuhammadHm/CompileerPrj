@@ -73,6 +73,4 @@ public class ClassSpecification {
         return templateName;
     }
 
-
-
 }

@@ -1,4 +1,4 @@
-package GeneratedCode.sample1;
+package GeneratedCode.sample;
 
 
 import java.io.FileNotFoundException;
@@ -7,13 +7,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Adress {
+public class yy_Car {
     //Attributes
-    private String city;
-    private String street;
 
     //Methods
-    public Adress(){
+    public yy_Car(){
 
     }
 }

@@ -163,42 +163,41 @@ public class BaseVisitor extends SQLBaseVisitor {
                     }
                 } else if (ctx.j_init_var(i).factored_select_stmt() != null) {
 
-                    SelectStmt selectStmt=visitFactored_select_stmt(ctx.j_init_var(i).factored_select_stmt());
+                    SelectStmt selectStmt = visitFactored_select_stmt(ctx.j_init_var(i).factored_select_stmt());
                     //initVarStmt.setSelectStmt(visitFactored_select_stmt(ctx.j_init_var(i).factored_select_stmt()));
-                    String tableType = visitAny_name(ctx.j_init_var(i).factored_select_stmt().select_core().table_or_subquery().get(0).table_name().any_name()).getName();
+                    String tableType = "";
+                    if (ctx.j_init_var(i).factored_select_stmt().select_core().table_or_subquery(0) != null)
+                        tableType = visitAny_name(ctx.j_init_var(i).factored_select_stmt().select_core().table_or_subquery(0).table_name().any_name()).getName();
                     //System.out.println("table type "+ tableType);
                     SymbolManager.createSymbol(varName, tableType, false, false, lineNum);
 
                     Type varType = new Type();
                     varType.setName(varName + "_" + tableType);
                     var select = ctx.j_init_var(i).factored_select_stmt();
-                    //TODO complete here
-                    for (int j = 0; j < select.select_core().result_column().size() ; j++) {
-                        var resultColumn = select.select_core().result_column();
-
-
+                    for (int j = 0; j < select.select_core().result_column().size(); j++) {
+                        var resultColumn = select.select_core().result_column(i);
+                        Type columnType = new Type();
+                        if (resultColumn.STAR() != null) {
+                            columnType.setName(tableType);
+                            varType.addColumn("*", columnType);
+                        } else if (resultColumn.expr() != null) {
+                            var columnExpr = visitExpr(resultColumn.expr());
+                            if (columnExpr.getColumnName() != null) {
+                                //TODO get column type
+                                varType.addColumn(columnExpr.getColumnName(), columnType);
+                            }
+                        }
                     }
-//                    varType.addColumn();
 
                     Main.symbolTable.addType(varType);
 
-                }
-                else
+                } else
                     SymbolManager.createSymbol(varName, null, false, true, lineNum);
 
                 varStmts.add(initVarStmt);
             }
         }
-//        if (ctx.j_init_array() != null)
-//            initVarStmt.setInitArrayStmt(visitJ_init_array(ctx.j_init_array()));
-//        if (ctx.j_json_object() != null)
-//            initVarStmt.setJsonObject(visitJ_json_object(ctx.j_json_object()));
-//        if (ctx.j_json_array() != null)
-//            initVarStmt.setJsonArray(visitJ_json_array(ctx.j_json_array()));
-//        if (ctx.j_function_call() != null)
-//            initVarStmt.setCallStmt(visitJ_function_call(ctx.j_function_call()));
-//        if (ctx.j_one_line_cond() != null)
-//            initVarStmt.setOneLineCondition(visitJ_one_line_cond(ctx.j_one_line_cond()));
+
         VarDeclareStmt varDeclareStmt = new VarDeclareStmt();
         varDeclareStmt.setVariables(varStmts);
         return varDeclareStmt;
@@ -876,21 +875,29 @@ public class BaseVisitor extends SQLBaseVisitor {
         SelectStmt select = new SelectStmt();
         //TODO continue here and add select stmt to Symbol table
 
-        //Result Columns
-        for (int i = 0; i < ctx.select_core().result_column().size(); i++) {
-            if (ctx.select_core().result_column(i).expr() != null) {
-                select.addResultColumn(visitExpr(ctx.select_core().result_column(i).expr()));
-            } else if (ctx.select_core().result_column(i).STAR() != null) {
-                Expression expression = new Expression();
-                expression.setColumnName("*");
-                select.addResultColumn(expression);
-            }
-        }
         //From Tables
         for (int i = 0; i < ctx.select_core().table_or_subquery().size(); i++) {
             var table = ctx.select_core().table_or_subquery(i).table_name().any_name();
             select.addTable(visitAny_name(table).getName());
         }
+        //Result Columns
+        for (int i = 0; i < ctx.select_core().result_column().size(); i++) {
+            if (ctx.select_core().result_column(i).expr() != null) {
+                select.addResultColumn(visitExpr(ctx.select_core().result_column(i).expr()));
+            } else if (ctx.select_core().result_column(i).STAR() != null) {
+                for (var typo : Main.symbolTable.getDeclaredTypes()) {
+                    if (typo.getName().equalsIgnoreCase(select.getTableNames().get(0))){
+                        for (var varName  : typo.getColumns().keySet()) {
+                            Expression expression = new Expression();
+                            expression.setColumnName(varName);
+                            select.addResultColumn(expression);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
         //Join Clause
         if (ctx.select_core().join_clause() != null) {
             select.setJoinClause(visitJoin_clause(ctx.select_core().join_clause()));
@@ -1221,9 +1228,14 @@ public class BaseVisitor extends SQLBaseVisitor {
         if (ctx.expr(0) != null && ctx.expr(1) != null) {
             expression.setLeftExpr(visitExpr(ctx.expr(0)));
             String operation = ctx.getChild(1).getText();
-            System.out.println("operation :" + operation);
+//            System.out.println("operation :" + operation);
             expression.setOperation(operation);
             expression.setRightExpr(visitExpr(ctx.expr(1)));
+            return expression;
+        }
+        if (ctx.unary_operator() != null) {
+            expression.setUnaryOperator(ctx.unary_operator().getText());
+            expression.setUnaryExpr(visitExpr(ctx.expr(0)));
             return expression;
         }
         if (ctx.function_name() != null) {
