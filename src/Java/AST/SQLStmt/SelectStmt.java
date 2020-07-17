@@ -18,6 +18,7 @@ public class SelectStmt extends Statement {
     Join joinClause;
     boolean isDistinct;
     String distinctColumn;
+    ArrayList<String> joinColumns;
 
 
     public SelectStmt() {
@@ -25,6 +26,7 @@ public class SelectStmt extends Statement {
         tableNames = new ArrayList<>();
         groupByExprs = new ArrayList<>();
         orderByTerms = new ArrayList<>();
+        joinColumns = new ArrayList<>();
     }
 
     @Override
@@ -80,7 +82,6 @@ public class SelectStmt extends Statement {
         this.havingExpr = havingExpr;
     }
 
-
     public String getOrderingType() {
         return orderingType;
     }
@@ -117,7 +118,7 @@ public class SelectStmt extends Statement {
         this.orderByTerms = orderByTerms;
     }
 
-    public void addOrderTerm(String orderTerm){
+    public void addOrderTerm(String orderTerm) {
         this.orderByTerms.add(orderTerm);
     }
 
@@ -128,4 +129,14 @@ public class SelectStmt extends Statement {
     public void setDistinctColumn(String distinctColumn) {
         this.distinctColumn = distinctColumn;
     }
+
+    public ArrayList<String> getJoinColumns() {
+        for (int i = 0; i < joinClause.getJoinConstraints().size(); i += 2) {
+            String s = joinClause.getJoinConstraints().get(i).getColumnName() + " == " + joinClause.getJoinConstraints().get(i + 1).getColumnName();
+            joinColumns.add(s);
+        }
+        return joinColumns;
+    }
+
+
 }

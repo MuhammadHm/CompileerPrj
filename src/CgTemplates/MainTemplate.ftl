@@ -36,28 +36,21 @@ public class Main {
                      return c;
                  }
              });
-             <#else>
-                // Joining
-                var data${query?index} = dataManager${query?index}.getData();
 
              </#if>
 
-             System.out.println();
-             for(var row : data${query?index}){
-                <#if query.getResultColumns()??>
-                    <#list query.getResultColumns() as column >
-                 <#if column.getColumnName()??>
-                    System.out.print(row.${column.getColumnName()}+" ");
-                 </#if>
-                    </#list>
-                    System.out.println();
-              }
-                  System.out.println("_______________________________________");
-              </#if>
+                <#else>
+                // Joining
+//                var data${query?index} = dataManager${query?index}.getData();
+                <#list query.getJoinClause().getTables() as table>
 
-        <#else >
-            <#list query.getJoinClause().getTables() as table>
-            </#list>
+                ${table} ${table}${table?index} = new ${table}();
+                ${table}${table?index}.loadData();
+
+                var x_User_Car = new x_User_Car();
+                x_User_Car.loadData(User0.getData(),Car1.getData());
+                </#list>
+
         </#if>
 
 

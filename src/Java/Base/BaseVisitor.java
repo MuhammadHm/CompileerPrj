@@ -198,10 +198,23 @@ public class BaseVisitor extends SQLBaseVisitor {
                     } else if (selectStmt.getJoinClause() != null) {
                         String typeName = varName;
                         for (var x : selectStmt.getJoinClause().getTables()) {
+                            Type columnType = new Type();
                             Type table = Main.symbolTable.getDeclaredTypeByName(x);
                             typeName += "_" + table.getName();
-                            varType.getColumns().putAll(table.getColumns());
-                            varType.getColumnsList().addAll(table.getColumns().keySet());
+                            columnType.setName(table.getName());
+
+                            varType.addColumn(table.getName().toLowerCase(), columnType);
+                            varType.addListColumn(table.getName().toLowerCase());
+                        }
+                        for (int j = 0; j < selectStmt.getResultColumns().size(); j++) {
+                            if (selectStmt.getResultColumns().get(j).getFunctionName() != null) {
+                                var funcName = selectStmt.getResultColumns().get(j).getFunctionName() + "_" + selectStmt.getResultColumns().get(j).getFunctionParams().get(0).getColumnName();
+                                var aggFunc = Main.symbolTable.getAggregationFuncByName(selectStmt.getResultColumns().get(j).getFunctionName());
+                                Type funcType = new Type();
+                                funcType.setName(aggFunc.getReturnType());
+                                varType.addColumn(funcName, funcType);
+                                varType.addListColumn(funcName);
+                            }
                         }
                         varType.setName(typeName);
                     }

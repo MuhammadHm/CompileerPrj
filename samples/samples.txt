@@ -2,10 +2,13 @@ create table User(f_name string,l_name string,city string, age number,address Ad
 create type Address(city string, street string) ;
 create table Car(name string, price number,isPaid boolean) type="csv", path="D:\\cs.csv";
 create aggregation_function sum("C:\\Users\\MuhammadHm\\Desktop\\Project1.jar",CommonAggregations,Sum,number,[number]);
+create aggregation_function avg("C:\\Users\\MuhammadHm\\Desktop\\Project1.jar",CommonAggregations,Avg,number,[number]);
+
 
  f(){
-     var x = select distinct age, distinct f_name ,sum(age)
-         from User
+     var x = select distinct User.age, User.f_name,Car.name
+         from User join Car on Car.id=User.id
+
          order by age;
 
 

@@ -39,8 +39,11 @@ public class Join extends Node {
     public void addTable(String table){
         tables.add(table);
     }
+
     public void addJoinConstraint(Expression constraint){
         joinConstraints.add(constraint);
     }
+
+
 
 }

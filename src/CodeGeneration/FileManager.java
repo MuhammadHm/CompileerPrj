@@ -74,6 +74,9 @@ public class FileManager {
         root.put("classSpecification", classSpecification);
         root.put("columns", getColumnsArray(classSpecification));
         root.put("packageName", Main.packageName);
+        root.put("columnsName", getColumnsNames(getColumnsArray(classSpecification)));
+        root.put("ClassNames", getClassNames(getColumnsArray(classSpecification)));
+//        root.put("queries" , Main.symbolTable.getQueries());
 
         template.process(root, outputFileWriter);
     }
@@ -88,7 +91,7 @@ public class FileManager {
             for (var xx : type.getColumns().keySet()) {
                 typeStr = xx;
             }
-            String varDeclare = getVarDeclare(typeStr,varName);
+            String varDeclare = getVarDeclare(typeStr, varName);
             arrayList.add(varDeclare);
         }
 
@@ -112,6 +115,26 @@ public class FileManager {
         }
         return varDeclare;
     }
+
+    public ArrayList<String> getColumnsNames(ArrayList<String> columns) {
+        ArrayList<String> res = new ArrayList<>();
+        for (var col : columns) {
+            res.add(col.split(" ")[1]);
+        }
+        return res;
+    }
+
+    public String getClassNames(ArrayList<String> columns) {
+        String res = "";
+        for (int i = 0; i < columns.size(); i++) {
+            if (i!=columns.size()-1)
+                res += "ArrayList<" + columns.get(i).split(" ")[0] + "> " + columns.get(i).split(" ")[1] + ",";
+            else
+                res += "ArrayList<" + columns.get(i).split(" ")[0] + "> " + columns.get(i).split(" ")[1];
+        }
+        return res;
+    }
+
 
 /*
     public void generateClass() {
