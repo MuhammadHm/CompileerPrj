@@ -1,4 +1,4 @@
-package GeneratedCode.${classSpecification.getPackageName()};
+package GeneratedCode.${packageName};
 
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;

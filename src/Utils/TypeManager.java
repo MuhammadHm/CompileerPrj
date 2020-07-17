@@ -63,4 +63,8 @@ public class TypeManager {
         }
     }
 
+//    public static <T> ArrayList<T> flat(Object t){
+//
+//    }
+
 }

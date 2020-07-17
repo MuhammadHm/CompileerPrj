@@ -1,13 +1,13 @@
 create table User(f_name string,l_name string,city string, age number,address Address,id number,salary number) type="json", path="D:\\users.json";
 create type Address(city string, street string) ;
 create table Car(name string, price number,isPaid boolean) type="csv", path="D:\\cs.csv";
-create aggregation_function sum("C:\Users\MuhammadHm\Desktop\Project1.jar",CommonAggregations,Sum,number,[number]);
+create aggregation_function sum("C:\\Users\\MuhammadHm\\Desktop\\Project1.jar",CommonAggregations,Sum,number,[number]);
 
  f(){
-     var x = select age,f_name ,sum(age)
+     var x = select distinct age, distinct f_name ,sum(age)
          from User
-         where age>1
          order by age;
+
 
     print(X);
 

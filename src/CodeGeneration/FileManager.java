@@ -1,5 +1,6 @@
 package CodeGeneration;
 
+import Java.Main;
 import Java.SymbolTable.Type;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -72,6 +73,8 @@ public class FileManager {
         Writer outputFileWriter = new FileWriter(outputFile);
         root.put("classSpecification", classSpecification);
         root.put("columns", getColumnsArray(classSpecification));
+        root.put("packageName", Main.packageName);
+
         template.process(root, outputFileWriter);
     }
 

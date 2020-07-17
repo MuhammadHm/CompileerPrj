@@ -1,6 +1,5 @@
 package GeneratedCode.sample;
 
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,6 +10,7 @@ public class x_User {
     //Attributes
     public double age;
     public String f_name;
+    public double sum_age;
     public ArrayList<x_User> data;
 
     //Methods

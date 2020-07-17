@@ -55,6 +55,14 @@ public class SymbolTable {
         this.declaredAggregationFunction.add(aggregationFunction);
     }
 
+    public ArrayList<AggregationFunction> getDeclaredAggregationFunction() {
+        return declaredAggregationFunction;
+    }
+
+    public void setDeclaredAggregationFunction(ArrayList<AggregationFunction> declaredAggregationFunction) {
+        this.declaredAggregationFunction = declaredAggregationFunction;
+    }
+
     public ArrayList<Type> getUsedTypes() {
         return usedTypes;
     }
@@ -96,6 +104,13 @@ public class SymbolTable {
         }
         return null;
     }
-
+    public AggregationFunction getAggregationFuncByName(String name) {
+        for (var x : declaredAggregationFunction) {
+            if (x.getAggregationFunctionName().equalsIgnoreCase(name)) {
+                return x;
+            }
+        }
+        return null;
+    }
 
 }

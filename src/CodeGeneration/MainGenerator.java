@@ -62,10 +62,7 @@ public class MainGenerator {
 
         root.put("packageName", Main.packageName);
         root.put("queries", Main.symbolTable.getQueries());
-//        var joinColumns = getJoinColumns();
-//        root.put("join_columns", getJoinColumns());
-
-//        root.put("declaredVars",getDeclaredVars());
+        root.put("aggFuncs",Main.symbolTable.getDeclaredAggregationFunction());
         template.process(root, outputFileWriter);
     }
 
@@ -76,6 +73,10 @@ public class MainGenerator {
             this.readTemplate(fileDirectory, "MainTemplate.ftl");
             this.generateJavaSourceFile("DataManager");
             this.readTemplate(fileDirectory, "DataManager.ftl");
+            this.generateJavaSourceFile("AggregationFunctions");
+            this.readTemplate(fileDirectory, "AggregationFunctions.ftl");
+//            this.generateJarLoaders();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -85,7 +86,8 @@ public class MainGenerator {
         for (int i = 0; i < Main.symbolTable.getQueries().size(); i++) {
             var query = Main.symbolTable.getQueries().get(i);
             getExprProps(query.getWhere());
-            query.getWhere().setFinalExpression(exprResult);
+            if(query.getWhere() != null)
+                query.getWhere().setFinalExpression(exprResult);
 
         }
 
@@ -160,4 +162,14 @@ public class MainGenerator {
         return vars;
     }
 
+//    public void generateJarLoaders() {
+//        for (var aggFunc : Main.symbolTable.getDeclaredAggregationFunction()) {
+//            try {
+//                this.generateJavaSourceFile(aggFunc.getAggregationFunctionName());
+//                this.readTemplate(fileDirectory, "AggregationFunctions.ftl");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }

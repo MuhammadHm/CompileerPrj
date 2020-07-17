@@ -10,7 +10,9 @@ public class Main {
              o0.loadData();
              DataManager<User> dataManager0 = new DataManager<>();
              dataManager0.setData(o0.getData());
-             dataManager0.AddPredicate(n ->  n.age  > 1);
+
+
+
              var data0 = dataManager0.getData();
              data0.sort(new Comparator<User>() {
                  @Override
@@ -25,9 +27,6 @@ public class Main {
                      return c;
                  }
              });
-
-
-
 
              System.out.println();
              for(var row : data0){

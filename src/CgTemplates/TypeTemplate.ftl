@@ -1,5 +1,4 @@
-package GeneratedCode.${classSpecification.getPackageName()};
-
+package GeneratedCode.${packageName};
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

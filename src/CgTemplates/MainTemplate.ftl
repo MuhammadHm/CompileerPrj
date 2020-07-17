@@ -12,10 +12,15 @@ public class Main {
              o${query?index}.loadData();
              DataManager<${query.getTableNames()[0]}> dataManager${query?index} = new DataManager<>();
              dataManager${query?index}.setData(o${query?index}.getData());
+
+             <#if query.getWhere() ??>
              dataManager${query?index}.AddPredicate(n -> ${query.getWhere().getFinalExpression()});
+             </#if>
+
              <#if query.getDistinctColumn() ??>
                 dataManager${query?index}.setDisCol("${query.getDistinctColumn()}");
              </#if>
+
              <#if query.getOrderByTerms()[0] ?? >
              var data${query?index} = dataManager0.getData();
              data${query?index}.sort(new Comparator<${query.getTableNames()[0]}>() {
@@ -31,10 +36,8 @@ public class Main {
                      return c;
                  }
              });
-
-
-
              <#else>
+                // Joining
                 var data${query?index} = dataManager${query?index}.getData();
 
              </#if>

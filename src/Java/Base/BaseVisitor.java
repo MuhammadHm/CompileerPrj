@@ -186,14 +186,20 @@ public class BaseVisitor extends SQLBaseVisitor {
                                     varType.addColumn(colName, table.getColumns().get(colName));
                                     varType.addListColumn(colName);
                                 }
+                            } else if (selectStmt.getResultColumns().get(j).getFunctionName() != null) {
+                                var funcName = selectStmt.getResultColumns().get(j).getFunctionName() + "_" + selectStmt.getResultColumns().get(j).getFunctionParams().get(0).getColumnName();
+                                var aggFunc = Main.symbolTable.getAggregationFuncByName(selectStmt.getResultColumns().get(j).getFunctionName());
+                                Type funcType = new Type();
+                                funcType.setName(aggFunc.getReturnType());
+                                varType.addColumn(funcName, funcType);
+                                varType.addListColumn(funcName);
                             }
                         }
-                    }
-                    else if (selectStmt.getJoinClause() != null) {
+                    } else if (selectStmt.getJoinClause() != null) {
                         String typeName = varName;
                         for (var x : selectStmt.getJoinClause().getTables()) {
                             Type table = Main.symbolTable.getDeclaredTypeByName(x);
-                            typeName+= "_"+table.getName();
+                            typeName += "_" + table.getName();
                             varType.getColumns().putAll(table.getColumns());
                             varType.getColumnsList().addAll(table.getColumns().keySet());
                         }
@@ -914,7 +920,17 @@ public class BaseVisitor extends SQLBaseVisitor {
         }
         //Result Columns
         for (int i = 0; i < ctx.select_core().result_column().size(); i++) {
-            if (ctx.select_core().result_column(i).expr() != null) {
+            if (ctx.select_core().result_column(i).expr() != null &&
+                    ctx.select_core().result_column(i).expr().column_name() != null &&
+                    ctx.select_core().result_column(i).expr().column_name().any_name() != null &&
+                    ctx.select_core().result_column(i).expr().column_name().any_name().keyword() != null) {
+
+                String column = ctx.select_core().result_column(i).column_alias().getText();
+                Expression expression = new Expression();
+                expression.setColumnName(column);
+                select.addResultColumn(expression);
+                select.setDistinctColumn(column);
+            } else if (ctx.select_core().result_column(i).expr() != null) {
                 select.addResultColumn(visitExpr(ctx.select_core().result_column(i).expr()));
             } else if (ctx.select_core().result_column(i).STAR() != null) {
                 for (var typo : Main.symbolTable.getDeclaredTypes()) {
@@ -928,6 +944,7 @@ public class BaseVisitor extends SQLBaseVisitor {
                     }
                 }
             }
+
         }
 
         //Join Clause
