@@ -342,11 +342,11 @@ expr
  | expr K_OR expr
  | '(' expr ')'
  | function_name '(' ( K_DISTINCT? expr ( ',' expr )* | '*' )? ')'
-// | expr K_NOT? K_IN ( '(' ( select_stmt
-//                           | expr ( ',' expr )*
-//                           )?
-//                       ')'
-//                     | ( database_name '.' )? table_name )
+ | expr K_NOT? K_IN ( '(' ( select_stmt
+                           | expr ( ',' expr )*
+                           )?
+                       ')'
+                     | ( database_name '.' )? table_name )
 //  | ( ( K_NOT )? K_EXISTS )? '(' select_stmt ')'
   ;
 

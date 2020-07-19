@@ -14,8 +14,7 @@ public class AggregationFunctions {
 
     <#list aggFuncs as aggFunc >
 
-    public static void ${aggFunc.getAggregationFunctionName()}() {
-        var myNumbers = new ArrayList<>(Arrays.asList(1.0, 2.0, 3.0, 12.0));
+    public static Double ${aggFunc.getAggregationFunctionName()}(ArrayList<Double> myNumbers) {
         try{
             String JarPath = "${aggFunc.getJarPath()}";
             //String JarName = "CommonAggregations.jar";
@@ -30,15 +29,16 @@ public class AggregationFunctions {
             Class<?> myClass = Class.forName(ClassName, true, myClassLoader);
             Method mySingeltonGetterMethod = myClass.getMethod("get" + ClassName, null);
             Object myObject = mySingeltonGetterMethod.invoke(null);
-            var myValue = myObject.getClass().getMethod(MethodName, List.class)
+            var myValue =(Double) myObject.getClass().getMethod(MethodName, List.class)
                     .invoke(myObject, myNumbers);
 
-            System.out.println(myValue);
 
+            return myValue;
         }
         catch(Exception e){
             e.printStackTrace();
         }
+        return null;
     }
     </#list>
 }

@@ -1,6 +1,8 @@
 package Java;
 
 import CodeGeneration.MainGenerator;
+//import GeneratedCode.sample.AggregationFunctions;
+//import GeneratedCode.sample.AggregationFunctions;
 import Java.AST.Parse;
 import Java.AST.Visitor.BaseASTVisitor;
 import Java.Base.BaseVisitor;
@@ -13,13 +15,14 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.antlr.v4.runtime.CharStreams.fromFileName;
 
 public class Main {
 
     public static SymbolTable symbolTable;
-    public static String packageName = "sample";
+    public static String packageName = "sample6";
 
     public static void main(String[] args) {
         symbolTable = new SymbolTable();
@@ -38,6 +41,7 @@ public class Main {
 
             TypeManager.convertDeclaredTypes2Classes();
             new MainGenerator().generate();
+
 
         } catch (IOException e) {
             e.printStackTrace();

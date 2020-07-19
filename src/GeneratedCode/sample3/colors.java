@@ -1,4 +1,4 @@
-package GeneratedCode.sample;
+package GeneratedCode.sample3;
 
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
@@ -14,29 +14,25 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
-public class User {
+public class colors {
     //Attributes
-    public String f_name;
-    public String l_name;
-    public String city;
-    public double age;
-    public Address address;
-    public double id;
-    public double salary;
+    public Double id;
+    public String color;
+    public String value;
     private String type="json";
-    private String path="D:\\users.json";
-    private  ArrayList<User> data;
+    private String path="F:\\Data\\Colors.json";
+    private  ArrayList<colors> data;
 
     //Methods
-    public User(){}
+    public colors(){}
 
     public void loadData(){
         try {
                JsonReader reader = new JsonReader(new FileReader(this.path));
                Gson gson = new Gson();
                JsonObject jsonObject = gson.fromJson(reader,JsonObject.class );
-               JsonElement jsonElement = jsonObject.get("User");
-               User[] arrObject = gson.fromJson(jsonElement, User[].class);
+               JsonElement jsonElement = jsonObject.get("colors");
+               colors[] arrObject = gson.fromJson(jsonElement, colors[].class);
                this.data = new ArrayList<>(Arrays.asList(arrObject));
 
        } catch (FileNotFoundException e) {
@@ -44,7 +40,7 @@ public class User {
        }
     }
 
-    public ArrayList<User> getData(){
+    public ArrayList<colors> getData(){
         return data;
     }
 }

@@ -18,15 +18,27 @@ public class SelectStmt extends Statement {
     Join joinClause;
     boolean isDistinct;
     String distinctColumn;
-    ArrayList<String> joinColumns;
+    String joinColumns = "";
+    String className;
 
+    public void setJoinColumns(String joinColumns) {
+        this.joinColumns = joinColumns;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
 
     public SelectStmt() {
         resultColumns = new ArrayList<>();
         tableNames = new ArrayList<>();
         groupByExprs = new ArrayList<>();
         orderByTerms = new ArrayList<>();
-        joinColumns = new ArrayList<>();
+
     }
 
     @Override
@@ -130,12 +142,15 @@ public class SelectStmt extends Statement {
         this.distinctColumn = distinctColumn;
     }
 
-    public ArrayList<String> getJoinColumns() {
-        for (int i = 0; i < joinClause.getJoinConstraints().size(); i += 2) {
-            String s = joinClause.getJoinConstraints().get(i).getColumnName() + " == " + joinClause.getJoinConstraints().get(i + 1).getColumnName();
-            joinColumns.add(s);
+    public String getJoinColumns() {
+        if (joinClause != null && !joinClause.getJoinConstraints().isEmpty()) {
+            var expr = joinClause.getJoinConstraints().get(0);
+            String left = expr.getLeftExpr().getColumnName();
+            String right = expr.getRightExpr().getColumnName();
+            joinColumns = left + " == " + right;
+            return joinColumns;
         }
-        return joinColumns;
+        return "";
     }
 
 

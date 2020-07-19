@@ -98,7 +98,7 @@ public class SymbolTable {
 
     public Type getDeclaredTypeByName(String name) {
         for (var x : declaredTypes) {
-            if (x.getName().equalsIgnoreCase(name)) {
+            if (x.getName().contains(name)) {
                 return x;
             }
         }

@@ -1,4 +1,4 @@
-package GeneratedCode.sample;
+package GeneratedCode.sample6;
 
 import java.util.ArrayList;
 import java.util.List;

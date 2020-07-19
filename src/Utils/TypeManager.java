@@ -37,9 +37,12 @@ public class TypeManager {
         ArrayList<Type> listColumns = new ArrayList<>();
         for (int i = 0; i < type.getColumnsList().size(); i++) {
             Type type1 = new Type();
-            type1.addColumn(map.get(type.getColumnsList().get(i)).getName(), null);
-            type1.setName(type.getColumnsList().get(i));
-            listColumns.add(type1);
+            if(map.get(type.getColumnsList().get(i)) != null){
+
+                type1.addColumn(map.get(type.getColumnsList().get(i)).getName(), null);
+                type1.setName(type.getColumnsList().get(i));
+                listColumns.add(type1);
+            }
         }
 
         return listColumns;

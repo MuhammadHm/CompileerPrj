@@ -1,4 +1,4 @@
-package GeneratedCode.sample;
+package GeneratedCode.sample6;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,13 +8,15 @@ import java.util.Arrays;
 
 public class Address {
     //Attributes
-    public String city;
-    public String street;
-    public ArrayList<Address> data;
-    public ArrayList<String> joinPredicates = new ArrayList<>();
+    public String Country;
+    public String City;
+
+    public static ArrayList<Address> data =new ArrayList<>();
+
+    String joinPredicate;
 
     //Methods
-    public Address(){}
+
 
     public ArrayList<Address> getData() {
             return data;
@@ -24,17 +26,13 @@ public class Address {
         this.data = data;
     }
 
-    public void loadData(ArrayList<String> city,ArrayList<String> street) {
-
-         for (var city0 : city) {
-         for (var street1 : street) {
-        if(){
+    public void loadData() {
+        if(data.isEmpty()){
+        if(true){
                 Address Address0 = new Address();
-                Address0.city = city0;
-                Address0.street = street1;
                 data.add(Address0);
         }
-        }
+
         }
     }
 

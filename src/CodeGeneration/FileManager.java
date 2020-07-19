@@ -76,6 +76,7 @@ public class FileManager {
         root.put("packageName", Main.packageName);
         root.put("columnsName", getColumnsNames(getColumnsArray(classSpecification)));
         root.put("ClassNames", getClassNames(getColumnsArray(classSpecification)));
+        root.put("joinPredicate", getJoinConstarint());
 //        root.put("queries" , Main.symbolTable.getQueries());
 
         template.process(root, outputFileWriter);
@@ -105,10 +106,10 @@ public class FileManager {
                 varDeclare = "String " + varName;
                 break;
             case "number":
-                varDeclare = "double " + varName;
+                varDeclare = "Double " + varName;
                 break;
             case "boolean":
-                varDeclare = "boolean " + varName;
+                varDeclare = "Boolean " + varName;
                 break;
             default:
                 varDeclare = type + " " + varName;
@@ -119,20 +120,28 @@ public class FileManager {
     public ArrayList<String> getColumnsNames(ArrayList<String> columns) {
         ArrayList<String> res = new ArrayList<>();
         for (var col : columns) {
-            res.add(col.split(" ")[1]);
+            if (!col.split(" ")[0].equals("String") && !col.split(" ")[0].equals("Double") && !col.split(" ")[0].equals("Boolean"))
+                res.add(col.split(" ")[1]);
         }
         return res;
     }
 
-    public String getClassNames(ArrayList<String> columns) {
-        String res = "";
+    public ArrayList<String> getClassNames(ArrayList<String> columns) {
+        ArrayList<String> res = new ArrayList<>();
         for (int i = 0; i < columns.size(); i++) {
-            if (i!=columns.size()-1)
-                res += "ArrayList<" + columns.get(i).split(" ")[0] + "> " + columns.get(i).split(" ")[1] + ",";
-            else
-                res += "ArrayList<" + columns.get(i).split(" ")[0] + "> " + columns.get(i).split(" ")[1];
+            if (!columns.get(i).split(" ")[0].equals("String") && !columns.get(i).split(" ")[0].equals("Double") && !columns.get(i).split(" ")[0].equals("Boolean"))
+                res.add("ArrayList<" + columns.get(i).split(" ")[0] + "> " + columns.get(i).split(" ")[1] + "Array ");
         }
         return res;
+    }
+
+    public static String getJoinConstarint() {
+        for (var x : Main.symbolTable.getQueries()) {
+            if (!x.getJoinColumns().isEmpty()){
+                return x.getJoinColumns();
+            }
+        }
+        return "true";
     }
 
 

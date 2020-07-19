@@ -1,4 +1,4 @@
-package GeneratedCode.sample;
+package GeneratedCode.sample3;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,20 +11,25 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-public class Car {
+public class movies {
     //Attributes
     public String name;
-    public double price;
-    public boolean isPaid;
+    public String genre;
+    public String lead_studio;
+    public Double audience_score;
+    public Double profitability;
+    public Double rotten_tomato;
+    public Double worldwide_gross;
+    public Double year;
     private String type="csv";
-    private String path="D:\\cs.csv";
-    private ArrayList<Car> data;
+    private String path="F:\\Data\\movies.csv";
+    private ArrayList<movies> data;
 
     //Methods
-    public Car(){}
+    public movies(){}
 
     public void loadData(){
-    ArrayList<Car> allData=new ArrayList<>();
+    ArrayList<movies> allData=new ArrayList<>();
         String line = "";
         String splitBy = ",";
         try {
@@ -32,7 +37,7 @@ public class Car {
             while ((line = br.readLine()) != null)
             {
                 String[] dataRow = line.split(splitBy);
-                Car objectLine=new Car();
+                movies objectLine=new movies();
                 for (int i = 0; i < dataRow.length; i++) {
                     setValueIntoObject(dataRow[i],objectLine,i);
                 }
@@ -41,21 +46,21 @@ public class Car {
         } catch (Exception e) {}
         data=allData;
     }
-    public ArrayList<Car> getData(){
+    public ArrayList<movies> getData(){
         return data;
     }
 
      public void setValueIntoObject(String value,Object o,int index){
          try{
              double v=Double.parseDouble(value);
-             o.getClass().getFields()[index].setDouble(o,v);
+             o.getClass().getFields()[index].set(o,v);
          }
          catch (Exception e){}
             try{
                   if(value.toLowerCase().equals("true"))
-                          o.getClass().getFields()[index].setBoolean(o,true);
+                          o.getClass().getFields()[index].set(o,true);
                          else if(value.toLowerCase().equals("false"))
-                              o.getClass().getFields()[index].setBoolean(o,false);
+                              o.getClass().getFields()[index].set(o,false);
             }
             catch (Exception e){}
             try{

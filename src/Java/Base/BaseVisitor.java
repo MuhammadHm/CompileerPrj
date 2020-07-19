@@ -174,7 +174,8 @@ public class BaseVisitor extends SQLBaseVisitor {
                     Type varType = new Type();
                     if (selectStmt.getTableNames().size() > 0) {
                         Type table = Main.symbolTable.getDeclaredTypeByName(tableType);
-                        varType.setName(varName + "_" + tableType);
+                        varType.setName(varName);
+                        selectStmt.setClassName(varName);
                         for (int j = 0; j < selectStmt.getResultColumns().size(); j++) {
                             if (selectStmt.getResultColumns().get(j).getColumnName() != null) {
                                 if (selectStmt.getResultColumns().get(j).getColumnName().equals("*")) {
@@ -195,12 +196,14 @@ public class BaseVisitor extends SQLBaseVisitor {
                                 varType.addListColumn(funcName);
                             }
                         }
+
                     } else if (selectStmt.getJoinClause() != null) {
                         String typeName = varName;
                         for (var x : selectStmt.getJoinClause().getTables()) {
                             Type columnType = new Type();
                             Type table = Main.symbolTable.getDeclaredTypeByName(x);
-                            typeName += "_" + table.getName();
+                            //typeName += "_" + table.getName();
+
                             columnType.setName(table.getName());
 
                             varType.addColumn(table.getName().toLowerCase(), columnType);
@@ -217,6 +220,7 @@ public class BaseVisitor extends SQLBaseVisitor {
                             }
                         }
                         varType.setName(typeName);
+                        selectStmt.setClassName(typeName);
                     }
 //                    Type varType = new Type();
 //                    varType.setName(varName + "_" + tableType);
@@ -939,6 +943,8 @@ public class BaseVisitor extends SQLBaseVisitor {
                     ctx.select_core().result_column(i).expr().column_name().any_name().keyword() != null) {
 
                 String column = ctx.select_core().result_column(i).column_alias().getText();
+
+
                 Expression expression = new Expression();
                 expression.setColumnName(column);
                 select.addResultColumn(expression);
@@ -947,14 +953,15 @@ public class BaseVisitor extends SQLBaseVisitor {
                 select.addResultColumn(visitExpr(ctx.select_core().result_column(i).expr()));
             } else if (ctx.select_core().result_column(i).STAR() != null) {
                 for (var typo : Main.symbolTable.getDeclaredTypes()) {
-                    if (typo.getName().equalsIgnoreCase(select.getTableNames().get(0))) {
-                        for (var varName : typo.getColumns().keySet()) {
-                            Expression expression = new Expression();
-                            expression.setColumnName(varName);
-                            select.addResultColumn(expression);
+                    if (!select.getTableNames().isEmpty())
+                        if (typo.getName().equalsIgnoreCase(select.getTableNames().get(0))) {
+                            for (var varName : typo.getColumns().keySet()) {
+                                Expression expression = new Expression();
+                                expression.setColumnName(varName);
+                                select.addResultColumn(expression);
+                            }
+                            break;
                         }
-                        break;
-                    }
                 }
             }
 
@@ -1287,6 +1294,15 @@ public class BaseVisitor extends SQLBaseVisitor {
             expression.setColumnName(tableName + visitAny_name(ctx.column_name().any_name()).getName());
             return expression;
         }
+        if (ctx.expr().size() > 2) {
+            expression.setLeftExpr(visitExpr(ctx.expr(0)));
+            String operation = ctx.getChild(1).getText();
+            expression.setOperation(operation);
+            for (int i = 1; i < ctx.expr().size(); i++) {
+                expression.addInParams(visitExpr(ctx.expr().get(i)));
+            }
+            return expression;
+        }
         if (ctx.expr(0) != null && ctx.expr(1) != null) {
             expression.setLeftExpr(visitExpr(ctx.expr(0)));
             String operation = ctx.getChild(1).getText();
@@ -1309,6 +1325,7 @@ public class BaseVisitor extends SQLBaseVisitor {
             }
             return expression;
         }
+
 
         return expression;
     }

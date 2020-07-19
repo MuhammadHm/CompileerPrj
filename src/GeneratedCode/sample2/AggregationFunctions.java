@@ -1,4 +1,4 @@
-package GeneratedCode.sample;
+package GeneratedCode.sample2;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -13,10 +13,63 @@ import java.util.List;
 public class AggregationFunctions {
 
 
-    public static void sum() {
-        var myNumbers = new ArrayList<>(Arrays.asList(1.0, 2.0, 3.0, 12.0));
+    public static Double count(ArrayList<Double> myNumbers) {
         try{
-            String JarPath = "C:\\Users\\MuhammadHm\\Desktop\\Project1.jar";
+            String JarPath = "F:\\jarTest.jar";
+            //String JarName = "CommonAggregations.jar";
+            String ClassName = "CommonAggregations";
+            String MethodName = "Count";
+
+            URLClassLoader myClassLoader = new URLClassLoader(
+                    new URL[]{new File(JarPath).toURI().toURL()},
+                    AggregationFunctions.class.getClassLoader()
+            );
+
+            Class<?> myClass = Class.forName(ClassName, true, myClassLoader);
+            Method mySingeltonGetterMethod = myClass.getMethod("get" + ClassName, null);
+            Object myObject = mySingeltonGetterMethod.invoke(null);
+            var myValue =(Double) myObject.getClass().getMethod(MethodName, List.class)
+                    .invoke(myObject, myNumbers);
+
+
+            return myValue;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Double avg(ArrayList<Double> myNumbers) {
+        try{
+            String JarPath = "F:\\jarTest.jar";
+            //String JarName = "CommonAggregations.jar";
+            String ClassName = "CommonAggregations";
+            String MethodName = "Average";
+
+            URLClassLoader myClassLoader = new URLClassLoader(
+                    new URL[]{new File(JarPath).toURI().toURL()},
+                    AggregationFunctions.class.getClassLoader()
+            );
+
+            Class<?> myClass = Class.forName(ClassName, true, myClassLoader);
+            Method mySingeltonGetterMethod = myClass.getMethod("get" + ClassName, null);
+            Object myObject = mySingeltonGetterMethod.invoke(null);
+            var myValue =(Double) myObject.getClass().getMethod(MethodName, List.class)
+                    .invoke(myObject, myNumbers);
+
+
+            return myValue;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Double sum(ArrayList<Double> myNumbers) {
+        try{
+            String JarPath = "F:\\jarTest.jar";
             //String JarName = "CommonAggregations.jar";
             String ClassName = "CommonAggregations";
             String MethodName = "Sum";
@@ -29,41 +82,15 @@ public class AggregationFunctions {
             Class<?> myClass = Class.forName(ClassName, true, myClassLoader);
             Method mySingeltonGetterMethod = myClass.getMethod("get" + ClassName, null);
             Object myObject = mySingeltonGetterMethod.invoke(null);
-            var myValue = myObject.getClass().getMethod(MethodName, List.class)
+            var myValue =(Double) myObject.getClass().getMethod(MethodName, List.class)
                     .invoke(myObject, myNumbers);
 
-            System.out.println(myValue);
 
+            return myValue;
         }
         catch(Exception e){
             e.printStackTrace();
         }
-    }
-
-    public static void avg() {
-        var myNumbers = new ArrayList<>(Arrays.asList(1.0, 2.0, 3.0, 12.0));
-        try{
-            String JarPath = "C:\\Users\\MuhammadHm\\Desktop\\Project1.jar";
-            //String JarName = "CommonAggregations.jar";
-            String ClassName = "CommonAggregations";
-            String MethodName = "Avg";
-
-            URLClassLoader myClassLoader = new URLClassLoader(
-                    new URL[]{new File(JarPath).toURI().toURL()},
-                    AggregationFunctions.class.getClassLoader()
-            );
-
-            Class<?> myClass = Class.forName(ClassName, true, myClassLoader);
-            Method mySingeltonGetterMethod = myClass.getMethod("get" + ClassName, null);
-            Object myObject = mySingeltonGetterMethod.invoke(null);
-            var myValue = myObject.getClass().getMethod(MethodName, List.class)
-                    .invoke(myObject, myNumbers);
-
-            System.out.println(myValue);
-
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
+        return null;
     }
 }

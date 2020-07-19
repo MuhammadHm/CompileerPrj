@@ -1,17 +1,19 @@
-create table User(f_name string,l_name string,city string, age number,address Address,id number,salary number) type="json", path="D:\\users.json";
-create type Address(city string, street string) ;
-create table Car(name string, price number,isPaid boolean) type="csv", path="D:\\cs.csv";
-create aggregation_function sum("C:\\Users\\MuhammadHm\\Desktop\\Project1.jar",CommonAggregations,Sum,number,[number]);
-create aggregation_function avg("C:\\Users\\MuhammadHm\\Desktop\\Project1.jar",CommonAggregations,Avg,number,[number]);
+create table movies(name string,genre string,lead_studio string, audience_score number,
+                    profitability number, rotten_tomato number,worldwide_gross number,year number)
+                    type = "csv", path = "F:\\Data\\movies.csv";
+create table colors(id number, color string, value string) type="json" , path= "F:\\Data\\Colors.json";
+create table Faculties (id number,name string, Address Address) type="json", path="F:\\Data\\Uni.json";
+create type Address(Country string, City string);
+
+create aggregation_function count("F:\\jarTest.jar",CommonAggregations ,Count,number,[number]);
+create aggregation_function avg("F:\\jarTest.jar",CommonAggregations , Average,number,[number]);
+create aggregation_function sum("F:\\jarTest.jar",CommonAggregations , Sum ,number,[number]);
+
+fn()
+{
+    var cl = select distinct id,color
+    from colors;
 
 
- f(){
-     var x = select distinct User.age, User.f_name,Car.name
-         from User join Car on Car.id=User.id
-
-         order by age;
-
-
-    print(X);
-
- }
+    print(cl);
+}

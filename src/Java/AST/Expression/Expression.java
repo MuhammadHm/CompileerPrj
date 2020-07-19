@@ -11,12 +11,21 @@ public class Expression extends Node {
     String columnName;
     String functionName;
     String operation;
-    String unaryOperator="";
+    String unaryOperator = "";
     Expression unaryExpr;
     Expression leftExpr;
     Expression rightExpr;
-    ArrayList<Expression> functionParams=new ArrayList<>();
+    ArrayList<Expression> functionParams = new ArrayList<>();
+    ArrayList<Expression> inParams = new ArrayList<>();
     String whereFinalExpression;
+
+    public ArrayList<Expression> getInParams() {
+        return inParams;
+    }
+
+    public void addInParams(Expression inParams) {
+        this.inParams.add(inParams);
+    }
 
     public String getFinalExpression() {
         return whereFinalExpression;
@@ -51,7 +60,7 @@ public class Expression extends Node {
     }
 
     @Override
-    public void accept(ASTVisitor astVisitor){
+    public void accept(ASTVisitor astVisitor) {
         astVisitor.visit(this);
     }
 
@@ -95,7 +104,7 @@ public class Expression extends Node {
         this.functionParams = functionParams;
     }
 
-    public void addFuncParam(Expression expr){
+    public void addFuncParam(Expression expr) {
         this.functionParams.add(expr);
     }
 
@@ -105,5 +114,9 @@ public class Expression extends Node {
 
     public void setUnaryOperator(String unaryOperator) {
         this.unaryOperator = unaryOperator;
+    }
+
+    public String getFuncParam() {
+        return functionParams.get(0).getColumnName();
     }
 }

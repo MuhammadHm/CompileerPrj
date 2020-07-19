@@ -62,7 +62,7 @@ public class MainGenerator {
 
         root.put("packageName", Main.packageName);
         root.put("queries", Main.symbolTable.getQueries());
-        root.put("aggFuncs",Main.symbolTable.getDeclaredAggregationFunction());
+        root.put("aggFuncs", Main.symbolTable.getDeclaredAggregationFunction());
         template.process(root, outputFileWriter);
     }
 
@@ -86,7 +86,7 @@ public class MainGenerator {
         for (int i = 0; i < Main.symbolTable.getQueries().size(); i++) {
             var query = Main.symbolTable.getQueries().get(i);
             getExprProps(query.getWhere());
-            if(query.getWhere() != null)
+            if (query.getWhere() != null)
                 query.getWhere().setFinalExpression(exprResult);
 
         }
@@ -107,7 +107,20 @@ public class MainGenerator {
 
     public void getExprProps(Expression expr) {
         exprResult = new String("");
-        getExprTerminalNode(expr);
+//        if (expr.getOperation().equals("in")) {
+//            exprResult = "";
+//            // exprResult = expr.getLeftExpr().getColumnName()+ "==" + expr.
+//
+//            for (int i = 0; i < expr.getInParams().size(); i++) {
+//                if (i == expr.getInParams().size() - 1)
+//                    exprResult += "n."+expr.getLeftExpr().getColumnName() + "==" + expr.getInParams().get(i).getLiteralValue();
+//                else
+//                    exprResult += "n."+expr.getLeftExpr().getColumnName() + "==" + expr.getInParams().get(i).getLiteralValue() + " || ";
+//
+//            }
+//        } else
+            getExprTerminalNode(expr);
+
         System.out.println("final result: " + exprResult);
     }
 
@@ -153,6 +166,8 @@ public class MainGenerator {
             return "!=";
         if (operation.equalsIgnoreCase("not"))
             return "!";
+        if(operation.equalsIgnoreCase("="))
+            return "==";
         return operation;
     }
 

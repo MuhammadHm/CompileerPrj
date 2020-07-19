@@ -1,4 +1,4 @@
-package GeneratedCode.${packageName};
+package GeneratedCode.sample2;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,20 +11,24 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-public class ${classSpecification.getClassName()} {
+public class movies {
     //Attributes
-    <#list columns as column>
-    public ${column};
-    </#list>
-    private String type="${classSpecification.getType()}";
-    private String path="${classSpecification.getPath()}";
-    private ArrayList<${classSpecification.getClassName()}> data;
+    public String name;
+    public String genre;
+    public String lead_studio;
+    public Double profitability;
+    public Double rotten_tomato;
+    public Double worldwide_gross;
+    public Double year;
+    private String type="csv";
+    private String path="F:\\Data\\movies.csv";
+    private ArrayList<movies> data;
 
     //Methods
-    public ${classSpecification.getClassName()}(){}
+    public movies(){}
 
     public void loadData(){
-    ArrayList<${classSpecification.getClassName()}> allData=new ArrayList<>();
+    ArrayList<movies> allData=new ArrayList<>();
         String line = "";
         String splitBy = ",";
         try {
@@ -32,7 +36,7 @@ public class ${classSpecification.getClassName()} {
             while ((line = br.readLine()) != null)
             {
                 String[] dataRow = line.split(splitBy);
-                ${classSpecification.getClassName()} objectLine=new ${classSpecification.getClassName()}();
+                movies objectLine=new movies();
                 for (int i = 0; i < dataRow.length; i++) {
                     setValueIntoObject(dataRow[i],objectLine,i);
                 }
@@ -41,7 +45,7 @@ public class ${classSpecification.getClassName()} {
         } catch (Exception e) {}
         data=allData;
     }
-    public ArrayList<${classSpecification.getClassName()}> getData(){
+    public ArrayList<movies> getData(){
         return data;
     }
 
